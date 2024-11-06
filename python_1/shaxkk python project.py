@@ -34,7 +34,22 @@ else:
 
 print("Welcome to the APPLE SAUCE PROGRAM")
 
-userAppleSauceCount = input ("How many apple sauces would you like: ")
+while True:
+    # Get the user's input
+    userAppleSauceCount = int(input("How many apple sauces would you like: "))
+    
+    # Check if the input is less than 1
+    if userAppleSauceCount < 1:
+        print("Please enter a number greater than 0.")
+    else:
+        # If valid input, break the loop
+        print("The user said", userAppleSauceCount)
+        break
 
-print( "The user said", userAppleSauceCount)
-
+'''
+Explanation of while loop
+- The program enters a while loop, which will continue until the user enters a valid number.
+- Inside the loop, it prompts for input and checks if the entered number is less than 1.
+- If the input is invalid, it displays a message and prompts again.
+- When the input is valid, it displays the number and exits the loop.
+'''
