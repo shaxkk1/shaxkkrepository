@@ -18,6 +18,7 @@ def displayMenu():
     print("2: subtraction")  # Option 2: Subtraction
     print("3: multiplication")  # Option 3: Multiplication
     print("4: division")  # Option 4: Division
+    print("5: modulus") # Option 5: Modulus
 
 # Function to perform addition of two numbers and print the result
 def addNumbers(firstNumber, secondNumber):
@@ -44,6 +45,23 @@ def divideNumbers(firstNumber, secondNumber):
     else:
         print("Error: Cannot divide by zero.")  # Handle division by zero case
 
+# Function to calculate modulus (remainder) of two numbers
+def modulusNumbers(firstNumber, secondNumber):
+    """
+    Calculates the modulus (remainder) of firstNumber divided by secondNumber.
+    
+    Parameters:
+    firstNumber (int or float): The dividend.
+    secondNumber (int or float): The divisor.
+    
+    Returns:
+    None: Prints the result or an error message if the divisor is zero.
+    """
+    if secondNumber != 0:
+        print(f"The result of {firstNumber} % {secondNumber} (modulus) is: {firstNumber % secondNumber}")
+    else:
+        print("Error: Division by zero is not allowed.")
+
 # Call addNumbers as an example with hardcoded values
 addNumbers(4, 5)  # Expected output: The sum of 4 and 5 is 9
 addNumbers(6, 11)  # Expected output: The sum of 6 and 11 is 17
@@ -53,21 +71,17 @@ def main():
     """
     The main function handles the program flow and user interaction.
     """
-    """                  0            1             2               3           4   
-    """
-    allFeatures = ["Addition", "Subtraction", "Division", "Multiplication", "Modulus"]
-    # Display the menu to the user, showing available operations
-    #displayMenu()
+    allFeatures = ["Addition", "Subtraction", "Multiplication", "Division", "Modulus"]
     
+    # Display the menu to the user, showing available operations
+    displayMenu()
+
     print("Here are the features in the application: ")
 
-# Start the loop
     # Iterate over all features in the list and print each one
     for currentFeature in allFeatures:
         print(currentFeature)
 
-    # Advance Loop
-    # Print the third feature in the list (index 2 since indexing starts at 0)
     print("\nSelected feature (Index 2):")
     print(allFeatures[2])
 
@@ -75,10 +89,10 @@ def main():
     # Iterate over the list using index-based access
     for currentFeatureIndex in range(len(allFeatures)):
         print(allFeatures[currentFeatureIndex])
-    
-    # Get the user's choice of operation (1-4)
+
+    # Get the user's choice of operation (1-5)
     try:
-        userOption = int(input("\nPlease select an option (1-4): "))
+        userOption = int(input("\nPlease select an option (1-5): "))
         
         # Get user input for the numbers to perform the operation on
         userFirstNumber = int(input("What's your first number: "))
@@ -93,9 +107,11 @@ def main():
             multiplyNumbers(userFirstNumber, userSecondNumber)
         elif userOption == 4:
             divideNumbers(userFirstNumber, userSecondNumber)
+        elif userOption == 5:
+            modulusNumbers(userFirstNumber, userSecondNumber)
         else:
             # If the user selects an invalid option, print an error message
-            print("Invalid option selected. Please choose a number between 1 and 4.")
+            print("Invalid option selected. Please choose a number between 1 and 5.")
     except ValueError:
         print("Invalid input. Please enter numbers only.")
 
