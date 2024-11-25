@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Webpage</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        form {
+            margin-top: 2rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        img {
+            width: 200px;
+            border-radius: 50%;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to ChatGPT's Interactive Page</h1>
+</header>
+
+<main>
+    <h2>Hello, I'm ChatGPT!</h2>
+    <p>Here’s a webpage showcasing some cool interactive features.</p>
+
+    <!-- Interactive Button -->
+    <button onclick="greet()">Click Me for a Greeting!</button>
+
+    <!-- Image Section -->
+    <h3>Here's a Picture of Something Fun:</h3>
+    <img src="https://via.placeholder.com/200" alt="Placeholder Image">
+
+    <!-- Form Section -->
+    <h3>Contact Me</h3>
+    <form onsubmit="handleSubmit(event)">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
+
+        <input type="submit" value="Send">
+    </form>
+</main>
+
+<script>
+    // JavaScript for Interactive Elements
+    function greet() {
+        alert("Hi there! Thanks for visiting my page!");
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent the form from reloading the page
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
+        alert(`Thank you, ${name}! Your message has been received:\n"${message}"`);
+    }
+</script>
+
+</body>
+</html>
