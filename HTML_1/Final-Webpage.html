@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Fun Webpage</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #333;
+            padding: 0.5rem 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #ff9800;
+        }
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        section {
+            margin: 2rem 0;
+        }
+        img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            text-align: left;
+        }
+        footer {
+            background-color: #4caf50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to Sean's Interactive Fun Page</h1>
+    <p>Explore games, cool features, and more!</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#games">Games</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<main>
+    <!-- Introduction Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hi, I'm Sean! Click the button below to receive a special greeting:</p>
+        <button onclick="greet()">Click Me!</button>
+    </section>
+
+    <!-- Links to Games Section -->
+    <section id="games">
+        <h2>Try Out These Fun Games!</h2>
+        <ul>
+            <li><a href="https://g.co/kgs/W7AaJ2t">Play Pac-Man</a></li>
+            <li><a href="https://tetris.com/play-tetris" target="_blank">Play Tetris</a></li>
+            <li><a href="https://www.sudoku.com/" target="_blank">Play Sudoku</a></li>
+        </ul>
+    </section>
+
+    <!-- Image Gallery Section -->
+    <section id="gallery">
+        <h2>Cool Images to Enjoy</h2>
+        <img src="https://media.cnn.com/api/v1/images/stellar/prod/200518114838-05-pac-man-40.jpg?q=w_1110,c_fill/f_webp" alt="Pac Man">
+        <img src="https://m.media-amazon.com/images/I/61M3rDwh4qL.png" alt="Tetris">
+        <img src="https://blogs.mathworks.com/deep-learning/files/2018/11/sudoku_raw.png" alt="Sudoku">
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form onsubmit="handleSubmit(event)">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
+            <input type="submit" value="Send">
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Sean | Have fun exploring!</p>
+</footer>
+
+<script>
+    // JavaScript for Interactive Features
+    function greet() {
+        const greetings = [
+            "Hello! Hope you’re having a great time exploring this page!",
+            "Hi there! Thanks for stopping by!",
+            "Hey! Wishing you a fantastic day!",
+            "Greetings! Enjoy your time here!",
+            "Hello, friend! So glad you're here!",
+            "You're amazing! Keep being awesome!",
+            "Hello, superstar! 🌟",
+            "Sending you good vibes and positive energy!",
+            "Hey there! You’re doing great today!",
+            "Keep smiling—it suits you!",
+            "You're one in a million. Stay incredible!",
+            "Here's a virtual high-five! ✋",
+            "Hello, legend! Keep shining brightly!",
+            "You’ve got this! Believe in yourself.",
+            "Hope today is as fantastic as you are!"
+        ];
+        // Pick a random greeting
+        const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+        alert(randomGreeting);
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent the form from reloading the page
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
+        alert(`Thank you, ${name}! Your message has been sent:\n"${message}"`);
+    }
+</script>
+
+
+</body>
+</html>
