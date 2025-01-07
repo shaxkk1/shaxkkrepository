@@ -3,66 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive CSS Webpage</title>
+    <title>Enhanced Interactive Webpage</title>
     <!-- Linking to External Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to the Interactive CSS Webpage</h1>
-        <p>Experience the magic of interactivity with CSS and JavaScript!</p>
+        <h1>Welcome to the Interactive CSS & JS Webpage</h1>
+        <p>Discover the magic of interactivity with CSS and JavaScript.</p>
     </header>
 
     <nav>
         <a href="#about">About</a>
         <a href="#features">Features</a>
+        <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
     </nav>
 
     <main>
         <section id="about">
             <h2>About This Page</h2>
-            <p>This page combines the power of CSS and JavaScript to create a dynamic, interactive user experience.</p>
+            <p>This page showcases interactive elements, animations, and user-friendly designs.</p>
+            <button id="greetButton">Get a Greeting</button>
         </section>
 
         <section id="features">
             <h2>Features</h2>
             <ul>
-                <li>Responsive design with CSS</li>
+                <li>Dynamic content changes</li>
                 <li>Hover animations</li>
-                <li>Interactive button effects</li>
+                <li>Interactive forms</li>
+                <li>Custom animations</li>
             </ul>
-            <button id="surpriseBtn">Click for a Surprise!</button>
+        </section>
+
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <div class="gallery">
+                <img src="https://via.placeholder.com/150" alt="Placeholder Image 1">
+                <img src="https://via.placeholder.com/150" alt="Placeholder Image 2">
+                <img src="https://via.placeholder.com/150" alt="Placeholder Image 3">
+            </div>
         </section>
 
         <section id="contact">
             <h2>Contact Us</h2>
-            <form onsubmit="handleSubmit(event)">
+            <form id="contactForm">
                 <label for="name">Your Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 <label for="message">Your Message:</label>
-                <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
-                <button type="submit">Send</button>
+                <textarea id="message" name="message" placeholder="Enter your message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
             </form>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Interactive CSS Webpage | Created with ❤️</p>
+        <p>&copy; 2025 Interactive Webpage | Built with ❤️</p>
     </footer>
 
     <script>
-        // JavaScript for interactivity
-        document.getElementById("surpriseBtn").addEventListener("click", () => {
-            alert("Surprise! Keep exploring for more fun.");
+        // Greeting Button Interaction
+        document.getElementById("greetButton").addEventListener("click", () => {
+            const greetings = [
+                "Hello! Have a great day!",
+                "Welcome! Thanks for visiting.",
+                "Hi there! Enjoy exploring this page!",
+                "Greetings! You're awesome!"
+            ];
+            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+            alert(randomGreeting);
         });
 
-        function handleSubmit(event) {
-            event.preventDefault(); // Prevent form submission
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-            alert(`Thank you, ${name}! Your message: "${message}" has been received.`);
-        }
+        // Form Submission Interaction
+        document.getElementById("contactForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            alert(`Thank you, ${name}! Your message has been submitted.`);
+        });
+
+        // Gallery Image Hover Animation
+        const galleryImages = document.querySelectorAll(".gallery img");
+        galleryImages.forEach((img) => {
+            img.addEventListener("mouseover", () => {
+                img.style.transform = "scale(1.2)";
+                img.style.transition = "transform 0.3s ease";
+            });
+            img.addEventListener("mouseout", () => {
+                img.style.transform = "scale(1)";
+            });
+        });
     </script>
 </body>
 </html>
