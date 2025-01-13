@@ -1,0 +1,110 @@
+body {
+  background-image: url("https://t4.ftcdn.net/jpg/06/00/72/01/360_F_600720159_exulCqxncJnZ1GAmLFKkxEM0oigAInCO.jpg");
+}
+p {
+  color: white;
+  font-family: cursive;
+  letter-spacing: 2px;
+  text-align: left;
+  margin: 10px;
+}
+h1 {
+  color: white;
+  border-color: blue;
+  border-width: 5px;
+  border-style: dotted;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: monospace;
+  text-decoration: underline;
+  text-align: center;
+}
+h2{
+  border-style: ridge;
+  border-color: coral;
+  background-color:darkgoldenrod;
+  text-align: center;
+  text-decoration: underline;
+  color: palevioletred;
+  text-shadow: -2px 2px black;
+}
+h3{
+  color: white;
+  font-family: fantasy;
+  text-align: left;
+}
+
+h4{
+  background: black;
+  font-family: inherit;
+  color: white;
+}
+h5{
+  background: green;
+  text-align: left;
+  font-family: inherit;
+  color: white;
+}
+h6{
+  text-align: right;
+  color: white;
+  background: blue;
+}
+.hyper-link{
+  color: whitesmoke;
+  font-family: inherit;
+}
+img{
+  float: right;
+  border-color: blanchedalmond;
+  border-width: 10px;
+  border-style: double;
+  border-radius: 10px;
+  margin: 5px;
+}
+.index{
+  border-style: ridge;
+  border-color: gold;
+  background-color:beige;
+  color: blue;
+  font-family: inherit;
+  letter-spacing: 3px;
+  padding: 5px;
+}
+
+.plan-your-meals{
+  border-style: ridge;
+  border-color: gold;
+  background-color:darkred;
+  color: yellow;
+  font-family: inherit;
+  letter-spacing: 3px;
+  padding: 5px;
+}
+
+.pack-the-appropriate-clothing {
+  border-style: inset;
+  border-color: steelblue;
+  background-color: silver;
+  color: black;
+  font-family: inherit;
+  letter-spacing: 3px;
+  padding: 5px;
+}
+
+.leave-no-trace {
+  border-style: outset;
+  border-color: black;
+  background-color: yellow;
+  color: darkslategray;
+  font-family: inherit;
+  letter-spacing: 3px;
+  padding: 5px;
+}
+
+.creative-commons-license-4 {
+  color: snow;
+  font-family: inherit;
+  letter-spacing: 3px;
+  padding: 5px;
+}
