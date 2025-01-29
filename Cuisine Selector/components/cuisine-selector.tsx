@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Check } from "lucide-react"
@@ -587,6 +585,43 @@ function getRandomDish(
       ],
     },
     // Add more cuisines here...
+    Irish: {  // Fixed syntax: removed curly brace and added colon
+      Breakfast: [
+        { name: "Irish Apple Cake", description: "The warm, cinnamon-scented cake is layered with tart apples and a buttery crumble." },
+        { name: "Reuben Casserole", description: "This recipe is everything you love about the classic corned beef sandwich but it starts with a creamy hash brown base so it's perfect for breakfast!" },
+        { name: "Maple Bacon Scones", description: "These buttery, flaky scones are infused with rich maple syrup and studded with crispy, smoky bacon pieces." },
+        { name: "Corned Beef Hash", description: "This recipe combines two classic Irish dishes: corned beef and potatoes!" },
+        { name: "Boxty", description: "Potatoes and eggs? Count us in! These fluffy pan-fried potato pancakes make for a delicious side dish with runny eggs." },
+      ],
+      Lunch: [
+        { name: "Irish Beef Stew", description: "This hearty recipe uses chuck beef, Guinness, red wine, potatoes, carrots, and onions." },
+        { name: "Irish Shepard's Pie", description: "This recipe features ground lamb, frozen peas and carrots, Irish cheddar cheese, and cream cheese." },
+        { name: "Reuben Sandwich", description: "This recipe uses Paleo Chef Sriracha, Irish soda bread buns, and coconut sugar." },
+        { name: "Irish Sausage Rolls", description: "This recipe for a fun and tasty St. Patrick's Day dish uses ground pork or turkey sausage, puff pastry, and optional fennel seeds." },
+        { name: "Lamb Burgers", description: "This recipe includes whole-wheat flour, cumin powder, and sauerkraut, and the buns can be made ahead." },
+      ],
+      Snack: [
+        { name: "Dubliner Cheese Garlic Knots", description: "Soft, buttery knots of dough infused with garlic and generously topped with melted Dubliner cheese." },
+        { name: "Flatbread with Irish Cheddar, Apples and Bacon", description: "This flatbread combines the rich, sharp flavor of Irish cheddar with the sweet crispness of apples and the smoky savoriness of bacon for a perfect balance of flavors." },
+        { name: "Smoked Salmon on Potato Cakes with Natural Yoghurt", description: "This dish features crispy, golden potato cakes topped with silky smoked salmon and a dollop of creamy natural yogurt for a perfect balance of textures and flavors." },
+        { name: "Garlic Stuffed Mushrooms", description: "A savory and flavorful snack featuring tender mushroom caps filled with a rich, garlicky stuffing." },
+        { name: "Cornbread", description: "A classic, slightly sweet and savory bread made from cornmeal, offering a hearty, crumbly texture." },
+      ],
+      Dinner: [
+        { name: "Fish and Chips", description: "A popular dish of battered and fried fish (usually cod or haddock) served with crispy fries, often paired with mushy peas." },
+        { name: "Coddle", description: "A one-pot dish made with sausages, bacon, onions, and potatoes, simmered together to create a warming and filling meal." },
+        { name: "Bangers and Mash", description: "Sausages (bangers) served with mashed potatoes and topped with a rich onion gravy." },
+        { name: "Irish Stew", description: "A hearty and comforting dish made with lamb or beef, potatoes, carrots, onions, and herbs, all simmered together in a savory broth." },
+        { name: "Shepard's Pie", description: "A savory pie made with ground lamb (or beef, for a Cottage Pie), mixed with vegetables like peas and carrots, topped with a layer of mashed potatoes, and baked until golden." },
+      ],
+      Dessert: [
+        { name: "Chocolate Whoopie Pies", description: "A splash of Guinness in the cake batter adds complexity and depth of flavor — and an Irish twist." },
+        { name: "Guinness Chocolate Layer Cake", description: "Top off your St. Patrick's Day with layers of chocolate cake, chocolate ganache and Baileys buttercream frosting." },
+        { name: "Irish Apple Cake", description: "This popular Irish dessert calls for tart apples baked into a tender, flavorful cake. Need we say more?" },
+        { name: "Perfect Apple Crumble", description: "This classic comfort dessert is also a staple in Ireland. Don't forget to serve it with ice cream!" },
+        { name: "Baileys Truffles", description: "For those who like their Baileys desserts in bite-size form." },
+      ],
+    }
   }
 
   if (dishes[cuisine] && dishes[cuisine][mealType]) {
@@ -742,3 +777,4 @@ export default function CuisineSelector() {
     </div>
   )
 }
+
