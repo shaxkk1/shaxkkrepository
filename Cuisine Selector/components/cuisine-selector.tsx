@@ -1,6 +1,8 @@
+"use client"
+
 import { useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check } from "lucide-react"
+import { Check } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -30,6 +32,17 @@ const cuisines = [
   "Polish",
   "Hungarian",
   "Portuguese",
+  "Thai",
+  "Moroccan",
+  "Brazilian",
+  "Russian",
+  "Indonesian",
+  "Malaysian",
+  "Filipino",
+  "Caribbean",
+  "South African",
+  "Egyptian",
+  "Australian",
 ]
 
 function getRecommendation(selectedCuisines: string[]): string {
@@ -141,74 +154,74 @@ function getRandomDish(
       Breakfast: [
         { name: "Huevos Rancheros", description: "Fried eggs served on corn tortillas with salsa" },
         { name: "Chilaquiles", description: "Tortilla chips simmered in salsa, topped with cheese and cream" },
-        { name: "Mexican Omelette", description: "Omelette filled with peppers, onions, and cheese" },
-        { name: "Breakfast Burrito", description: "Tortilla wrapped around eggs, cheese, and meat" },
+        { name: "Machaca con Huevos", description: "Scrambled eggs with shredded dried beef" },
         { name: "Molletes", description: "Open-faced sandwich with refried beans and melted cheese" },
+        { name: "Atole", description: "Warm, thick drink made from corn masa and flavored with fruit or chocolate" },
       ],
       Lunch: [
-        { name: "Tacos", description: "Folded tortillas filled with meat, vegetables, and salsa" },
+        { name: "Tacos al Pastor", description: "Marinated pork tacos with pineapple" },
         { name: "Enchiladas", description: "Rolled tortillas filled with meat and covered in chili sauce" },
-        { name: "Quesadillas", description: "Tortilla filled with melted cheese and other ingredients" },
-        { name: "Tostadas", description: "Crispy tortilla topped with beans, meat, and vegetables" },
-        { name: "Pozole", description: "Rich soup made with hominy and meat" },
+        { name: "Pozole", description: "Hominy and meat soup garnished with vegetables" },
+        { name: "Chiles en Nogada", description: "Poblano chiles filled with fruit and meat, topped with walnut sauce" },
+        { name: "Tostadas", description: "Crispy tortillas topped with beans, meat, and vegetables" },
       ],
       Snack: [
         { name: "Elote", description: "Grilled corn on the cob with mayo, cheese, and chili powder" },
         { name: "Guacamole and Chips", description: "Avocado dip served with crispy tortilla chips" },
-        { name: "Taquitos", description: "Rolled and fried tacos filled with meat or cheese" },
-        { name: "Nachos", description: "Tortilla chips topped with melted cheese and various toppings" },
+        { name: "Tamales", description: "Steamed corn dough filled with meat or cheese" },
+        { name: "Quesadillas", description: "Folded tortillas filled with melted cheese and other ingredients" },
         { name: "Churros", description: "Fried dough pastry dusted with cinnamon sugar" },
       ],
       Dinner: [
-        { name: "Fajitas", description: "Grilled meat with peppers and onions, served with tortillas" },
-        { name: "Chiles Rellenos", description: "Stuffed peppers dipped in egg batter and fried" },
         { name: "Mole Poblano", description: "Rich sauce made with chocolate and chili, served over meat" },
+        { name: "Cochinita Pibil", description: "Slow-roasted pork marinated in citrus and achiote" },
+        { name: "Chiles Rellenos", description: "Stuffed peppers dipped in egg batter and fried" },
         { name: "Carne Asada", description: "Grilled and sliced beef served with tortillas and salsa" },
-        { name: "Tamales", description: "Steamed corn dough filled with meat or cheese" },
+        { name: "Pescado a la Veracruzana", description: "Fish prepared with tomatoes, olives, and capers" },
       ],
       Dessert: [
         { name: "Tres Leches Cake", description: "Sponge cake soaked in three types of milk" },
         { name: "Flan", description: "Creamy caramel custard dessert" },
         { name: "Sopapillas", description: "Fried pastry puffs drizzled with honey" },
-        { name: "Churros con Chocolate", description: "Fried dough pastry served with thick hot chocolate" },
         { name: "Arroz con Leche", description: "Creamy rice pudding flavored with cinnamon" },
+        { name: "Buñuelos", description: "Crispy fried dough topped with cinnamon sugar" },
       ],
     },
     Italian: {
       Breakfast: [
-        { name: "Cornetto and Cappuccino", description: "Italian croissant served with frothy coffee" },
+        { name: "Cornetto e Cappuccino", description: "Italian croissant served with frothy coffee" },
         { name: "Frittata", description: "Open-faced omelette with various fillings" },
-        { name: "Italian Breakfast Sandwich", description: "Crusty bread with prosciutto and cheese" },
-        { name: "Ricotta Pancakes", description: "Fluffy pancakes made with ricotta cheese" },
+        { name: "Fette Biscottate con Marmellata", description: "Toast with jam" },
         { name: "Crostata", description: "Breakfast tart filled with jam or fruit" },
+        { name: "Biscotti", description: "Crunchy almond cookies perfect for dipping in coffee" },
       ],
       Lunch: [
-        { name: "Pasta Carbonara", description: "Pasta with eggs, cheese, pancetta, and black pepper" },
+        { name: "Pasta al Pomodoro", description: "Pasta with fresh tomato sauce and basil" },
         { name: "Caprese Salad", description: "Tomatoes, mozzarella, and basil drizzled with olive oil" },
         { name: "Panini", description: "Grilled sandwich with various fillings" },
         { name: "Minestrone Soup", description: "Hearty vegetable soup with pasta and beans" },
-        { name: "Risotto", description: "Creamy rice dish cooked with broth and Parmesan" },
+        { name: "Risotto ai Funghi", description: "Creamy rice dish with mushrooms" },
       ],
       Snack: [
         { name: "Bruschetta", description: "Grilled bread rubbed with garlic and topped with tomatoes" },
         { name: "Arancini", description: "Fried rice balls stuffed with meat and cheese" },
         { name: "Focaccia", description: "Oven-baked flatbread topped with herbs and olive oil" },
-        { name: "Mozzarella Sticks", description: "Breaded and fried cheese sticks" },
-        { name: "Gelato", description: "Italian-style ice cream in various flavors" },
+        { name: "Tramezzini", description: "Small, crustless sandwiches with various fillings" },
+        { name: "Olive Ascolane", description: "Stuffed and fried olives" },
       ],
       Dinner: [
-        { name: "Pizza", description: "Thin-crust pizza with various toppings" },
-        { name: "Lasagna", description: "Layered pasta dish with meat, cheese, and tomato sauce" },
         { name: "Osso Buco", description: "Braised veal shanks with vegetables" },
-        { name: "Chicken Parmesan", description: "Breaded chicken topped with tomato sauce and melted cheese" },
-        { name: "Seafood Linguine", description: "Pasta with mixed seafood in a light sauce" },
+        { name: "Lasagna", description: "Layered pasta dish with meat, cheese, and tomato sauce" },
+        { name: "Saltimbocca alla Romana", description: "Veal wrapped with prosciutto and sage" },
+        { name: "Spaghetti alle Vongole", description: "Spaghetti with clams in white wine sauce" },
+        { name: "Bistecca alla Fiorentina", description: "Thick-cut T-bone steak grilled over high heat" },
       ],
       Dessert: [
         { name: "Tiramisu", description: "Coffee-flavored dessert made with ladyfingers and mascarpone cheese" },
         { name: "Panna Cotta", description: "Silky, creamy dessert made with sweetened cream" },
         { name: "Cannoli", description: "Crisp pastry tubes filled with sweet ricotta cream" },
         { name: "Gelato", description: "Italian-style ice cream in various flavors" },
-        { name: "Affogato", description: "Vanilla gelato 'drowned' with a shot of hot espresso" },
+        { name: "Zabaglione", description: "Light custard made with egg yolks, sugar, and sweet wine" },
       ],
     },
     Chinese: {
@@ -217,33 +230,33 @@ function getRandomDish(
         { name: "Youtiao", description: "Chinese fried dough sticks" },
         { name: "Baozi", description: "Steamed buns filled with meat or vegetables" },
         { name: "Jianbing", description: "Savory crepe with egg, sauce, and crispy wonton" },
-        { name: "Soy Milk and Youtiao", description: "Warm soy milk served with fried dough sticks" },
+        { name: "Dou Jiang", description: "Fresh soy milk often served with youtiao" },
       ],
       Lunch: [
         { name: "Kung Pao Chicken", description: "Spicy stir-fried chicken with peanuts and vegetables" },
         { name: "Mapo Tofu", description: "Spicy tofu dish with minced meat and Sichuan peppercorns" },
         { name: "Dim Sum", description: "Variety of small dishes served in steamer baskets" },
-        { name: "Fried Rice", description: "Stir-fried rice with vegetables, egg, and meat or seafood" },
-        { name: "Beef with Broccoli", description: "Stir-fried beef and broccoli in a savory sauce" },
+        { name: "Lanzhou Beef Noodle Soup", description: "Hand-pulled noodles in beef broth" },
+        { name: "Twice-Cooked Pork", description: "Pork belly that's boiled, then stir-fried with vegetables" },
       ],
       Snack: [
         { name: "Spring Rolls", description: "Crispy rolls filled with vegetables and sometimes meat" },
-        { name: "Egg Tarts", description: "Sweet pastry tarts with an egg custard filling" },
-        { name: "Bubble Tea", description: "Tea-based drink with chewy tapioca pearls" },
+        { name: "Xiao Long Bao", description: "Steamed soup dumplings" },
         { name: "Scallion Pancakes", description: "Savory flatbread with scallions" },
-        { name: "Siu Mai", description: "Open-topped dumplings usually filled with pork and shrimp" },
+        { name: "Zongzi", description: "Sticky rice dumplings wrapped in bamboo leaves" },
+        { name: "Tanghulu", description: "Candied fruit on a stick" },
       ],
       Dinner: [
         { name: "Peking Duck", description: "Roasted duck known for its thin, crispy skin" },
         { name: "Hot Pot", description: "Communal dish of simmering soup for cooking various ingredients" },
-        { name: "Mapo Tofu", description: "Spicy tofu dish with minced meat and Sichuan peppercorns" },
-        { name: "Kung Pao Chicken", description: "Spicy stir-fried chicken with peanuts and vegetables" },
-        { name: "Twice-Cooked Pork", description: "Pork belly that's boiled, then stir-fried with vegetables" },
+        { name: "Sweet and Sour Pork", description: "Deep-fried pork in a tangy sauce" },
+        { name: "Dongpo Pork", description: "Braised pork belly named after the famous poet Su Dongpo" },
+        { name: "Sichuan Spicy Boiled Fish", description: "Fish fillets cooked in spicy broth" },
       ],
       Dessert: [
+        { name: "Egg Tarts", description: "Sweet pastry tarts with an egg custard filling" },
         { name: "Tangyuan", description: "Sweet rice balls in ginger syrup" },
         { name: "Mango Pudding", description: "Creamy mango-flavored pudding" },
-        { name: "Egg Tarts", description: "Sweet pastry tarts with an egg custard filling" },
         { name: "Almond Jelly", description: "Light almond-flavored gelatin dessert" },
         { name: "Red Bean Soup", description: "Sweet soup made from adzuki beans" },
       ],
@@ -260,26 +273,26 @@ function getRandomDish(
         { name: "Bento Box", description: "A boxed meal with a variety of small dishes" },
         { name: "Ramen", description: "Noodle soup with various toppings" },
         { name: "Udon", description: "Thick wheat noodles served in hot soup or stir-fried" },
+        { name: "Tonkatsu", description: "Breaded and deep-fried pork cutlet" },
         { name: "Onigiri", description: "Rice balls wrapped in seaweed, often with a filling" },
-        { name: "Katsu Curry", description: "Breaded, fried cutlet served with curry sauce and rice" },
       ],
       Snack: [
-        { name: "Onigiri", description: "Rice balls wrapped in seaweed, often with a filling" },
         { name: "Edamame", description: "Boiled and salted immature soybeans in the pod" },
-        { name: "Taiyaki", description: "Fish-shaped cake filled with sweet red bean paste" },
+        { name: "Takoyaki", description: "Octopus-filled wheat flour balls" },
         { name: "Mochi", description: "Soft, pounded rice cake, often filled with sweet bean paste" },
-        { name: "Dorayaki", description: "Sweet red bean paste sandwiched between two small pancakes" },
+        { name: "Taiyaki", description: "Fish-shaped cake filled with sweet red bean paste" },
+        { name: "Kakigori", description: "Shaved ice dessert with flavored syrup" },
       ],
       Dinner: [
         { name: "Sushi", description: "Vinegared rice combined with various ingredients, often raw fish" },
         { name: "Tempura", description: "Lightly battered and deep-fried seafood and vegetables" },
         { name: "Yakitori", description: "Skewered and grilled chicken" },
         { name: "Sukiyaki", description: "Thin slices of beef cooked with vegetables in a sweet soy sauce broth" },
-        { name: "Tonkatsu", description: "Breaded and deep-fried pork cutlet" },
+        { name: "Shabu-Shabu", description: "Thinly sliced meat and vegetables cooked in hot broth at the table" },
       ],
       Dessert: [
         { name: "Matcha Ice Cream", description: "Green tea flavored ice cream" },
-        { name: "Mochi Ice Cream", description: "Ice cream wrapped in a soft, pounded rice cake" },
+        { name: "Dorayaki", description: "Sweet red bean paste sandwiched between two small pancakes" },
         { name: "Daifuku", description: "Soft rice cake filled with sweet bean paste" },
         { name: "Castella", description: "Sponge cake made with honey, introduced by Portuguese merchants" },
         { name: "Anmitsu", description: "Traditional dessert with agar jelly, fruits, and sweet bean paste" },
@@ -298,21 +311,21 @@ function getRandomDish(
         { name: "Biryani", description: "Fragrant rice dish cooked with meat or vegetables" },
         { name: "Chana Masala", description: "Spicy chickpea curry" },
         { name: "Palak Paneer", description: "Spinach curry with cubes of fresh cheese" },
-        { name: "Butter Chicken", description: "Tender chicken in a rich, creamy tomato sauce" },
+        { name: "Dal Makhani", description: "Creamy black lentil curry" },
       ],
       Snack: [
         { name: "Samosas", description: "Fried pastry with savory filling" },
         { name: "Pakoras", description: "Vegetable fritters" },
         { name: "Vada Pav", description: "Spicy potato fritter in a bun" },
         { name: "Bhel Puri", description: "Puffed rice mixed with vegetables and tangy chutneys" },
-        { name: "Masala Chai", description: "Spiced tea with milk" },
+        { name: "Pani Puri", description: "Hollow crispy balls filled with flavored water and chickpeas" },
       ],
       Dinner: [
-        { name: "Tandoori Chicken", description: "Yogurt and spice marinated chicken cooked in a clay oven" },
+        { name: "Butter Chicken", description: "Tender chicken in a rich, creamy tomato sauce" },
         { name: "Rogan Josh", description: "Aromatic lamb curry" },
         { name: "Malai Kofta", description: "Fried cheese and potato balls in a creamy sauce" },
         { name: "Fish Curry", description: "Fish cooked in a spicy, tangy sauce" },
-        { name: "Naan and Curry", description: "Flatbread served with various curry dishes" },
+        { name: "Vegetable Jalfrezi", description: "Spicy mixed vegetable curry" },
       ],
       Dessert: [
         { name: "Gulab Jamun", description: "Deep-fried milk solids soaked in sugar syrup" },
@@ -435,10 +448,7 @@ function getRandomDish(
     },
     Turkish: {
       Breakfast: [
-        {
-          name: "Turkish Breakfast Platter",
-          description: "Assortment of cheese, olives, tomatoes, cucumbers, eggs, and bread",
-        },
+        { name: "Turkish Breakfast Platter", description: "Assortment of cheese, olives, tomatoes, cucumbers, eggs, and bread" },
         { name: "Menemen", description: "Scrambled eggs with tomatoes, peppers, and spices" },
         { name: "Simit", description: "Circular bread covered in sesame seeds" },
         { name: "Börek", description: "Layered pastry filled with cheese, meat, or vegetables" },
@@ -535,7 +545,7 @@ function getRandomDish(
       Dinner: [
         { name: "Lau", description: "Vietnamese hot pot" },
         { name: "Ca Kho To", description: "Caramelized fish in clay pot" },
-        { name: "Bo Luc Lac", description: "Shakingbeef" },
+        { name: "Bo Luc Lac", description: "Shaking beef" },
         { name: "Canh Chua", description: "Sweet and sour soup" },
         { name: "Cha Ca", description: "Turmeric fish with dill" },
       ],
@@ -584,197 +594,886 @@ function getRandomDish(
         { name: "Gyeongdan", description: "Sweet rice balls coated in powder" },
       ],
     },
-    // Add more cuisines here...
-    Irish: {  // Fixed syntax: removed curly brace and added colon
+    Argentinian: {
       Breakfast: [
-        { name: "Irish Apple Cake", description: "The warm, cinnamon-scented cake is layered with tart apples and a buttery crumble." },
-        { name: "Reuben Casserole", description: "This recipe is everything you love about the classic corned beef sandwich but it starts with a creamy hash brown base so it's perfect for breakfast!" },
-        { name: "Maple Bacon Scones", description: "These buttery, flaky scones are infused with rich maple syrup and studded with crispy, smoky bacon pieces." },
-        { name: "Corned Beef Hash", description: "This recipe combines two classic Irish dishes: corned beef and potatoes!" },
-        { name: "Boxty", description: "Potatoes and eggs? Count us in! These fluffy pan-fried potato pancakes make for a delicious side dish with runny eggs." },
+        { name: "Medialunas", description: "Sweet croissants" },
+        { name: "Mate", description: "Traditional caffeine-rich infused drink" },
+        { name: "Tostadas", description: "Toast with butter and jam" },
+        { name: "Facturas", description: "Assorted sweet pastries" },
+        { name: "Revuelto Gramajo", description: "Scrambled eggs with ham, potatoes, and peas" },
       ],
       Lunch: [
-        { name: "Irish Beef Stew", description: "This hearty recipe uses chuck beef, Guinness, red wine, potatoes, carrots, and onions." },
-        { name: "Irish Shepard's Pie", description: "This recipe features ground lamb, frozen peas and carrots, Irish cheddar cheese, and cream cheese." },
-        { name: "Reuben Sandwich", description: "This recipe uses Paleo Chef Sriracha, Irish soda bread buns, and coconut sugar." },
-        { name: "Irish Sausage Rolls", description: "This recipe for a fun and tasty St. Patrick's Day dish uses ground pork or turkey sausage, puff pastry, and optional fennel seeds." },
-        { name: "Lamb Burgers", description: "This recipe includes whole-wheat flour, cumin powder, and sauerkraut, and the buns can be made ahead." },
+        { name: "Choripán", description: "Chorizo sandwich" },
+        { name: "Milanesa", description: "Breaded meat cutlet" },
+        { name: "Locro", description: "Hearty stew with corn, beans, and meat" },
+        { name: "Empanadas", description: "Savory filled pastries" },
+        { name: "Matambre Arrollado", description: "Stuffed rolled flank steak" },
       ],
       Snack: [
-        { name: "Dubliner Cheese Garlic Knots", description: "Soft, buttery knots of dough infused with garlic and generously topped with melted Dubliner cheese." },
-        { name: "Flatbread with Irish Cheddar, Apples and Bacon", description: "This flatbread combines the rich, sharp flavor of Irish cheddar with the sweet crispness of apples and the smoky savoriness of bacon for a perfect balance of flavors." },
-        { name: "Smoked Salmon on Potato Cakes with Natural Yoghurt", description: "This dish features crispy, golden potato cakes topped with silky smoked salmon and a dollop of creamy natural yogurt for a perfect balance of textures and flavors." },
-        { name: "Garlic Stuffed Mushrooms", description: "A savory and flavorful snack featuring tender mushroom caps filled with a rich, garlicky stuffing." },
-        { name: "Cornbread", description: "A classic, slightly sweet and savory bread made from cornmeal, offering a hearty, crumbly texture." },
+        { name: "Alfajores", description: "Shortbread cookies filled with dulce de leche" },
+        { name: "Chipá", description: "Cheese bread" },
+        { name: "Tortilla a la Parrilla", description: "Grilled corn tortilla with cheese" },
+        { name: "Maní con Chocolate", description: "Chocolate-covered peanuts" },
+        { name: "Palitos Salados", description: "Salty breadsticks" },
       ],
       Dinner: [
-        { name: "Fish and Chips", description: "A popular dish of battered and fried fish (usually cod or haddock) served with crispy fries, often paired with mushy peas." },
-        { name: "Coddle", description: "A one-pot dish made with sausages, bacon, onions, and potatoes, simmered together to create a warming and filling meal." },
-        { name: "Bangers and Mash", description: "Sausages (bangers) served with mashed potatoes and topped with a rich onion gravy." },
-        { name: "Irish Stew", description: "A hearty and comforting dish made with lamb or beef, potatoes, carrots, onions, and herbs, all simmered together in a savory broth." },
-        { name: "Shepard's Pie", description: "A savory pie made with ground lamb (or beef, for a Cottage Pie), mixed with vegetables like peas and carrots, topped with a layer of mashed potatoes, and baked until golden." },
+        { name: "Asado", description: "Traditional barbecue with various cuts of meat" },
+        { name: "Bife de Chorizo", description: "Sirloin steak" },
+        { name: "Parrillada", description: "Mixed grill" },
+        { name: "Pastel de Papa", description: "Beef and potato casserole" },
+        { name: "Sorrentinos", description: "Stuffed pasta similar to ravioli" },
       ],
       Dessert: [
-        { name: "Chocolate Whoopie Pies", description: "A splash of Guinness in the cake batter adds complexity and depth of flavor — and an Irish twist." },
-        { name: "Guinness Chocolate Layer Cake", description: "Top off your St. Patrick's Day with layers of chocolate cake, chocolate ganache and Baileys buttercream frosting." },
-        { name: "Irish Apple Cake", description: "This popular Irish dessert calls for tart apples baked into a tender, flavorful cake. Need we say more?" },
-        { name: "Perfect Apple Crumble", description: "This classic comfort dessert is also a staple in Ireland. Don't forget to serve it with ice cream!" },
-        { name: "Baileys Truffles", description: "For those who like their Baileys desserts in bite-size form." },
+        { name: "Dulce de Leche", description: "Caramel spread" },
+        { name: "Flan", description: "Caramel custard" },
+        { name: "Helado", description: "Ice cream, often with dulce de leche flavor" },
+        { name: "Postre Vigilante", description: "Cheese and sweet potato paste dessert" },
+        { name: "Chocotorta", description: "Chocolate cookie and dulce de leche cake" },
       ],
-    }
+    },
+    Peruvian: {
+      Breakfast: [
+        { name: "Tamales", description: "Corn dough stuffed with meat, wrapped in banana leaves" },
+        { name: "Pan con Chicharrón", description: "Bread with fried pork and sweet potato" },
+        { name: "Quinoa Porridge", description: "Warm quinoa cereal with milk and fruit" },
+        { name: "Butifarra", description: "Ham sandwich with salsa criolla" },
+        { name: "Café Pasado", description: "Strong filtered coffee" },
+      ],
+      Lunch: [
+        { name: "Ceviche", description: "Raw fish marinated in citrus juices" },
+        { name: "Lomo Saltado", description: "Stir-fried beef with vegetables" },
+        { name: "Ají de Gallina", description: "Creamy chicken stew" },
+        { name: "Causa Rellena", description: "Layered potato dish with various fillings" },
+        { name: "Chupe de Camarones", description: "Creamy shrimp chowder" },
+      ],
+      Snack: [
+        { name: "Anticuchos", description: "Grilled beef heart skewers" },
+        { name: "Chifles", description: "Fried plantain chips" },
+        { name: "Cancha Salada", description: "Toasted corn kernels" },
+        { name: "Papa Rellena", description: "Stuffed potato croquettes" },
+        { name: "Tequeños", description: "Fried cheese sticks wrapped in dough" },
+      ],
+      Dinner: [
+        { name: "Pollo a la Brasa", description: "Peruvian-style roasted chicken" },
+        { name: "Arroz con Mariscos", description: "Seafood rice" },
+        { name: "Pachamanca", description: "Traditional dish of meat and vegetables cooked underground" },
+        { name: "Rocoto Relleno", description: "Stuffed spicy peppers" },
+        { name: "Carapulcra", description: "Pork and dried potato stew" },
+      ],
+      Dessert: [
+        { name: "Picarones", description: "Pumpkin and sweet potato doughnuts" },
+        { name: "Suspiro Limeño", description: "Caramel custard topped with meringue" },
+        { name: "Mazamorra Morada", description: "Purple corn pudding" },
+        { name: "Turrón de Doña Pepa", description: "Anise-flavored layered nougat" },
+        { name: "Alfajores", description: "Shortbread cookies filled with dulce de leche" },
+      ],
+    },
+    Ethiopian: {
+      Breakfast: [
+        { name: "Genfo", description: "Thick porridge made from barley or wheat" },
+        { name: "Chechebsa", description: "Shredded flatbread with spiced butter and honey" },
+        { name: "Fatira", description: "Fried dough with scrambled eggs and honey" },
+        { name: "Kinche", description: "Cracked wheat porridge" },
+        { name: "Buna", description: "Traditional coffee ceremony" },
+      ],
+      Lunch: [
+        { name: "Injera with Wat", description: "Sourdough flatbread with various stews" },
+        { name: "Doro Wat", description: "Spicy chicken stew" },
+        { name: "Shiro", description: "Chickpea powder stew" },
+        { name: "Tibs", description: "Sautéed meat with vegetables" },
+        { name: "Kitfo", description: "Minced raw beef with spiced butter" },
+      ],
+      Snack: [
+        { name: "Kolo", description: "Roasted barley snack" },
+        { name: "Dabo Kolo", description: "Small pieces of baked bread" },
+        { name: "Ambasha", description: "Slightly sweet bread" },
+        { name: "Kategna", description: "Bread with spiced butter" },
+        { name: "Besso", description: "Barley flour mixed with water and sugar" },
+      ],
+      Dinner: [
+        { name: "Beyainatu", description: "Assortment of vegetarian dishes" },
+        { name: "Gomen", description: "Collard greens with spices" },
+        { name: "Yebeg Tibs", description: "Sautéed lamb" },
+        { name: "Misir Wat", description: "Red lentil stew" },
+        { name: "Doro Alicha", description: "Mild chicken stew" },
+      ],
+      Dessert: [
+        { name: "Teff Cake", description: "Cake made with teff flour" },
+        { name: "Pastel", description: "Multi-layered cake" },
+        { name: "Baklava", description: "Layered pastry with nuts and honey" },
+        { name: "Halwa", description: "Sweet confection made with sesame" },
+        { name: "Fruit Platter", description: "Assorted fresh fruits" },
+      ],
+    },
+    Nigerian: {
+      Breakfast: [
+        { name: "Akara", description: "Deep-fried bean cakes" },
+        { name: "Pap", description: "Fermented corn porridge" },
+        { name: "Yam and Egg Sauce", description: "Boiled yam with scrambled egg stew" },
+        { name: "Moi Moi", description: "Steamed bean pudding" },
+        { name: "Bread and Akara", description: "Bread served with bean cakes" },
+      ],
+      Lunch: [
+        { name: "Jollof Rice", description: "Spicy rice dish cooked in tomato sauce" },
+        { name: "Egusi Soup", description: "Melon seed soup with meat and vegetables" },
+        { name: "Pounded Yam with Soup", description: "Yam flour dough served with various soups" },
+        { name: "Ofada Rice", description: "Local rice variety served with spicy sauce" },
+        { name: "Efo Riro", description: "Vegetable soup with meat or fish" },
+      ],
+      Snack: [
+        { name: "Chin Chin", description: "Fried pastry snack" },
+        { name: "Puff Puff", description: "Deep-fried dough balls" },
+        { name: "Plantain Chips", description: "Thin, crispy slices of fried plantain" },
+        { name: "Guguru", description: "Popped corn" },
+        { name: "Suya", description: "Spicy grilled meat" },
+      ],
+      Dinner: [
+        { name: "Amala and Ewedu", description: "Yam flour dough with jute leaves soup" },
+        { name: "Pepper Soup", description: "Spicy meat or fish broth" },
+        { name: "Eba and Okra Soup", description: "Cassava flour dough with okra soup" },
+        { name: "Nkwobi", description: "Spicy cow foot dish" },
+        { name: "Asun", description: "Spicy grilled goat meat" },
+      ],
+      Dessert: [
+        { name: "Puff Puff", description: "Sweet, deep-fried dough balls" },
+        { name: "Coconut Candy", description: "Sweet treat made from coconut" },
+        { name: "Dakuwa", description: "Sweet peanut and corn flour balls" },
+        { name: "Kunun Gyada", description: "Sweet peanut milk drink" },
+        { name: "Fruit Salad", description: "Mix of fresh tropical fruits" },
+      ],
+    },
+    German: {
+      Breakfast: [
+        { name: "Brötchen", description: "Assorted bread rolls" },
+        { name: "Müsli", description: "Cereal mix with fruits and nuts" },
+        { name: "Weisswurst", description: "White sausage typically served with sweet mustard" },
+        { name: "Käseplatte", description: "Cheese platter" },
+        { name: "Butterbrot", description: "Bread with butter and various toppings" },
+      ],
+      Lunch: [
+        { name: "Schnitzel", description: "Breaded and fried meat cutlet" },
+        { name: "Currywurst", description: "Fried sausage with curry-spiced ketchup" },
+        { name: "Kartoffelsalat", description: "German potato salad" },
+        { name: "Rinderrouladen", description: "Beef rolls stuffed with bacon, onions, and pickles" },
+        { name: "Spätzle", description: "Egg noodles" },
+      ],
+      Snack: [
+        { name: "Brezel", description: "Soft pretzel" },
+        { name: "Obatzda", description: "Cheese spread with beer" },
+        { name: "Leberkäse", description: "Meatloaf-like sausage" },
+        { name: "Kartoffelpuffer", description: "Potato pancakes" },
+        { name: "Wurst", description: "Various types of sausages" },
+      ],
+      Dinner: [
+        { name: "Sauerbraten", description: "Pot roast marinated in vinegar and spices" },
+        { name: "Schweinshaxe", description: "Roasted pork knuckle" },
+        { name: "Königsberger Klopse", description: "Meatballs in caper sauce" },
+        { name: "Jägerschnitzel", description: "Schnitzel with mushroom sauce" },
+        { name: "Bratwurst mit Sauerkraut", description: "Grilled sausage with fermented cabbage" },
+      ],
+      Dessert: [
+        { name: "Apfelstrudel", description: "Apple strudel" },
+        { name: "Schwarzwälder Kirschtorte", description: "Black Forest cake" },
+        { name: "Rote Grütze", description: "Red berry pudding" },
+        { name: "Berliner", description: "Jelly-filled doughnut" },
+        { name: "Kaiserschmarrn", description: "Shredded pancake with fruit compote" },
+      ],
+    },
+    British: {
+      Breakfast: [
+        { name: "Full English Breakfast", description: "Eggs, bacon, sausage, baked beans, grilled tomato, mushrooms, and toast" },
+        { name: "Porridge", description: "Oatmeal cooked with milk or water" },
+        { name: "Kedgeree", description: "Curried rice with smoked fish and eggs" },
+        { name: "Crumpets", description: "Griddle cake with a distinctive holey surface" },
+        { name: "Kippers", description: "Smoked herring" },
+      ],
+      Lunch: [
+        { name: "Ploughman's Lunch", description: "Cheese, bread, pickles, and salad" },
+        { name: "Shepherd's Pie", description: "Minced lamb topped with mashed potatoes" },
+        { name: "Cornish Pasty", description: "Pastry filled with meat and vegetables" },
+        { name: "Bubble and Squeak", description: "Fried leftover vegetables, usually with potato" },
+        { name: "Welsh Rarebit", description: "Cheese sauce on toast" },
+      ],
+      Snack: [
+        { name: "Scotch Egg", description: "Hard-boiled egg wrapped in sausage meat and breadcrumbs" },
+        { name: "Sausage Roll", description: "Sausage wrapped in puff pastry" },
+        { name: "Pork Pie", description: "Small pie filled with pork and jelly" },
+        { name: "Cheese and Pickle Sandwich", description: "Cheddar cheese and pickle relish sandwich" },
+        { name: "Digestive Biscuits", description: "Wheat meal cookies" },
+      ],
+      Dinner: [
+        { name: "Roast Dinner", description: "Roasted meat with potatoes, vegetables, and gravy" },
+        { name: "Fish and Chips", description: "Battered fish with thick-cut fries" },
+        { name: "Beef Wellington", description: "Beef fillet wrapped in puff pastry" },
+        { name: "Toad in the Hole", description: "Sausages baked in Yorkshire pudding batter" },
+        { name: "Lancashire Hotpot", description: "Lamb and vegetable stew topped with sliced potatoes" },
+      ],
+      Dessert: [
+        { name: "Sticky Toffee Pudding", description: "Sponge cake with dates, covered in toffee sauce" },
+        { name: "Eton Mess", description: "Strawberries, cream, and broken meringue" },
+        { name: "Spotted Dick", description: "Steamed suet pudding with dried fruit" },
+        { name: "Trifle", description: "Layered dessert with fruit, sponge cake, custard, and cream" },
+        { name: "Banoffee Pie", description: "Pie made from bananas, cream, and toffee" },
+      ],
+    },
+    Irish: {
+      Breakfast: [
+        { name: "Full Irish Breakfast", description: "Eggs, bacon, sausage, black and white pudding, tomato, and toast" },
+        { name: "Boxty", description: "Traditional Irish potato pancake" },
+        { name: "Irish Soda Bread", description: "Quick bread made with baking soda instead of yeast" },
+        { name: "Porridge with Bailey's", description: "Oatmeal with a splash of Irish cream liqueur" },
+        { name: "Baked Eggs with Smoked Salmon", description: "Eggs baked with Irish smoked salmon" },
+      ],
+      Lunch: [
+        { name: "Irish Stew", description: "Hearty stew with lamb, potatoes, and vegetables" },
+        { name: "Colcannon", description: "Mashed potatoes with kale or cabbage" },
+        { name: "Bacon and Cabbage", description: "Boiled bacon with cabbage and potatoes" },
+        { name: "Seafood Chowder", description: "Creamy soup with various seafood" },
+        { name: "Beef and Guinness Pie", description: "Beef stew with Guinness beer in a pastry crust" },
+      ],
+      Snack: [
+        { name: "Tayto Crisps", description: "Popular Irish brand of potato chips" },
+        { name: "Barmbrack", description: "Sweet bread with dried fruit" },
+        { name: "Irish Cheese and Crackers", description: "Selection of Irish cheeses with crackers" },
+        { name: "Coddle", description: "Sausage, bacon, and potato hotpot" },
+        { name: "Dulse", description: "Edible seaweed snack" },
+      ],
+      Dinner: [
+        { name: "Shepherd's Pie", description: "Minced lamb topped with mashed potatoes" },
+        { name: "Dublin Coddle", description: "Sausage, bacon, and potato stew" },
+        { name: "Boxty", description: "Traditional Irish potato pancake served with various toppings" },
+        { name: "Fish and Chips", description: "Battered fish with thick-cut fries" },
+        { name: "Corned Beef and Cabbage", description: "Salted beef brisket with cabbage and vegetables" },
+      ],
+      Dessert: [
+        { name: "Irish Coffee", description: "Coffee with whiskey and whipped cream" },
+        { name: "Apple Amber", description: "Apple dessert topped with meringue" },
+        { name: "Carrageen Moss Pudding", description: "Seaweed-based milk pudding" },
+        { name: "Bailey's Cheesecake", description: "Cheesecake flavored with Irish cream liqueur" },
+        { name: "Guinness Chocolate Cake", description: "Rich chocolate cake made with Guinness stout" },
+      ],
+    },
+    Swedish: {
+      Breakfast: [
+        { name: "Filmjölk", description: "Fermented milk product similar to yogurt" },
+        { name: "Knäckebröd", description: "Crisp bread often topped with cheese or ham" },
+        { name: "Gröt", description: "Porridge, often made with oats or rye" },
+        { name: "Äggröra", description: "Scrambled eggs often served on crisp bread" },
+        { name: "Kanelbulle", description: "Cinnamon roll" },
+      ],
+      Lunch: [
+        { name: "Smörgås", description: "Open-faced sandwich with various toppings" },
+        { name: "Ärtsoppa", description: "Yellow pea soup traditionally served on Thursdays" },
+        { name: "Janssons Frestelse", description: "Potato and anchovy casserole" },
+        { name: "Pytt i Panna", description: "Diced meat and potatoes with a fried egg" },
+        { name: "Sill och Potatis", description: "Herring and potatoes" },
+      ],
+      Snack: [
+        { name: "Tunnbrödsrulle", description: "Soft flatbread rolled with various fillings" },
+        { name: "Räkmacka", description: "Shrimp sandwich" },
+        { name: "Kanelbullar", description: "Cinnamon buns" },
+        { name: "Knäckebröd med Ost", description: "Crisp bread with cheese" },
+        { name: "Saltlakrits", description: "Salty licorice" },
+      ],
+      Dinner: [
+        { name: "Köttbullar", description: "Swedish meatballs with mashed potatoes and lingonberry jam" },
+        { name: "Gravlax", description: "Cured salmon with dill" },
+        { name: "Inkokt Lax", description: "Poached salmon" },
+        { name: "Raggmunk", description: "Potato pancake often served with lingonberry jam" },
+        { name: "Kåldolmar", description: "Cabbage rolls filled with meat and rice" },
+      ],
+      Dessert: [
+        { name: "Prinsesstårta", description: "Swedish princess cake with layers of sponge, cream, and marzipan" },
+        { name: "Kladdkaka", description: "Sticky chocolate cake" },
+        { name: "Ostkaka", description: "Swedish-style cheesecake" },
+        { name: "Semla", description: "Sweet roll filled with almond paste and whipped cream" },
+        { name: "Äppelkaka", description: "Swedish apple cake" },
+      ],
+    },
+    Danish: {
+      Breakfast: [
+        { name: "Rundstykker", description: "Danish breakfast rolls" },
+        { name: "Havregrød", description: "Oatmeal porridge" },
+        { name: "Ymer", description: "Soured milk product served with rugbrød" },
+        { name: "Pålægschokolade", description: "Thin chocolate slices for bread" },
+        { name: "Wienerbrød", description: "Danish pastry" },
+      ],
+      Lunch: [
+        { name: "Smørrebrød", description: "Open-faced sandwich on rye bread" },
+        { name: "Frikadeller", description: "Danish meatballs" },
+        { name: "Kartoffelmad", description: "Potato slice on rye bread" },
+        { name: "Leverpostej", description: "Liver pâté often served on rye bread" },
+        { name: "Hakkebøf", description: "Danish-style hamburger steak" },
+      ],
+      Snack: [
+        { name: "Pølse", description: "Danish hot dog" },
+        { name: "Æbleskiver", description: "Spherical pancake puffs" },
+        { name: "Kammerjunker", description: "Small, dry biscuits often used in Koldskål" },
+        { name: "Flødeboller", description: "Chocolate-covered marshmallow treats" },
+        { name: "Rullepølse", description: "Spiced meat roll, often served on bread" },
+      ],
+      Dinner: [
+        { name: "Stegt Flæsk", description: "Crispy pork with parsley sauce and potatoes" },
+        { name: "Frikadeller", description: "Danish meatballs served with potatoes and vegetables" },
+        { name: "Boller i Karry", description: "Meatballs in curry sauce" },
+        { name: "Flæskesteg", description: "Roast pork with crackling" },
+        { name: "Rødspætte", description: "Fried plaice with potatoes and remoulade" },
+      ],
+      Dessert: [
+        { name: "Rødgrød med Fløde", description: "Red berry pudding with cream" },
+        { name: "Koldskål", description: "Cold buttermilk soup with biscuits" },
+        { name: "Risalamande", description: "Rice pudding with almonds and cherry sauce" },
+        { name: "Æblekage", description: "Danish apple trifle" },
+        { name: "Lagkage", description: "Layer cake with cream and fruit" },
+      ],
+    },
+    Polish: {
+      Breakfast: [
+        { name: "Jajecznica", description: "Scrambled eggs often with chives or bacon" },
+        { name: "Kanapki", description: "Open-faced sandwiches" },
+        { name: "Twaróg", description: "Farmer's cheese often served with radishes" },
+        { name: "Parówki", description: "Thin sausages similar to hot dogs" },
+        { name: "Naleśniki", description: "Polish-style crepes" },
+      ],
+      Lunch: [
+        { name: "Żurek", description: "Sour rye soup with sausage and egg" },
+        { name: "Bigos", description: "Hunter's stew with sauerkraut and meat" },
+        { name: "Kotlet Schabowy", description: "Breaded pork cutlet" },
+        { name: "Gołąbki", description: "Cabbage rolls stuffed with meat and rice" },
+        { name: "Pierogi", description: "Dumplings with various fillings" },
+      ],
+      Snack: [
+        { name: "Zapiekanka", description: "Toasted open-face sandwich" },
+        { name: "Oscypek", description: "Smoked cheese from the Tatra mountains" },
+        { name: "Pączki", description: "Polish doughnuts" },
+        { name: "Kabanosy", description: "Thin, dry sausage" },
+        { name: "Obwarzanek", description: "Ring-shaped bread, similar to a bagel" },
+      ],
+      Dinner: [
+        { name: "Rosół", description: "Clear chicken soup" },
+        { name: "Zrazy", description: "Beef roulades" },
+        { name: "Kaczka z Jabłkami", description: "Roast duck with apples" },
+        { name: "Gulasz", description: "Meat stew" },
+        { name: "Kluski Śląskie", description: "Silesian dumplings" },
+      ],
+      Dessert: [
+        { name: "Sernik", description: "Polish cheesecake" },
+        { name: "Makowiec", description: "Poppy seed roll" },
+        { name: "Szarlotka", description: "Polish apple pie" },
+        { name: "Faworki", description: "Crispy pastry ribbons" },
+        { name: "Kisiel", description: "Fruit-based dessert" },
+      ],
+    },
+    Hungarian: {
+      Breakfast: [
+        { name: "Bundáskenyér", description: "Hungarian-style French toast" },
+        { name: "Körözött", description: "Spicy cheese spread" },
+        { name: "Lángos", description: "Deep-fried flatbread often topped with sour cream and cheese" },
+        { name: "Virsli", description: "Thin sausages similar to hot dogs" },
+        { name: "Túrós Táska", description: "Pastry filled with sweet cottage cheese" },
+      ],
+      Lunch: [
+        { name: "Gulyás", description: "Beef stew" },
+        { name: "Chicken Paprikash", description: "Chicken stew with paprika" },
+        { name: "Töltött Káposzta", description: "Stuffed cabbage rolls" },
+        { name: "Hortobágyi Palacsinta", description: "Savory crepes filled with meat" },
+        { name: "Lecsó", description: "Vegetable stew with peppers and tomatoes" },
+      ],
+      Snack: [
+        { name: "Kürtőskalács", description: "Chimney cake" },
+        { name: "Pogácsa", description: "Savory pastry" },
+        { name: "Rétes", description: "Strudel with various fillings" },
+        { name: "Lángos", description: "Deep-fried flatbread" },
+        { name: "Túró Rudi", description: "Chocolate-covered cottage cheese bar" },
+      ],
+      Dinner: [
+        { name: "Pörkölt", description: "Meat stew with paprika" },
+        { name: "Főzelék", description: "Vegetable stew" },
+        { name: "Halászlé", description: "Fish soup" },
+        { name: "Rakott Krumpli", description: "Potato casserole" },
+        { name: "Csirkepaprikás", description: "Chicken in paprika sauce" },
+      ],
+      Dessert: [
+        { name: "Dobos Torte", description: "Layered sponge cake with chocolate buttercream" },
+        { name: "Somlói Galuska", description: "Sponge cake with rum and chocolate sauce" },
+        { name: "Túrógombóc", description: "Sweet cheese dumplings" },
+        { name: "Gesztenyepüré", description: "Chestnut purée" },
+        { name: "Mákos Guba", description: "Bread pudding with poppy seeds" },
+      ],
+    },
+    Portuguese: {
+      Breakfast: [
+        { name: "Pastel de Nata", description: "Custard tart" },
+        { name: "Tosta Mista", description: "Grilled ham and cheese sandwich" },
+        { name: "Pão com Manteiga", description: "Bread with butter" },
+        { name: "Galão", description: "Coffee with milk" },
+        { name: "Bolo de Arroz", description: "Rice muffin" },
+      ],
+      Lunch: [
+        { name: "Bacalhau à Brás", description: "Shredded cod with onions, eggs, and potatoes" },
+        { name: "Caldo Verde", description: "Kale soup with chouriço" },
+        { name: "Francesinha", description: "Sandwich with various meats, cheese, and spicy sauce" },
+        { name: "Arroz de Pato", description: "Duck rice" },
+        { name: "Ameijoas à Bulhão Pato", description: "Clams in white wine and garlic sauce" },
+      ],
+      Snack: [
+        { name: "Rissóis", description: "Breaded and fried turnovers with various fillings" },
+        { name: "Pão com Chouriço", description: "Bread with chorizo sausage" },
+        { name: "Pastéis de Bacalhau", description: "Codfish cakes" },
+        { name: "Tremoços", description: "Lupini beans" },
+        { name: "Bifana", description: "Pork sandwich" },
+      ],
+      Dinner: [
+        { name: "Cozido à Portuguesa", description: "Portuguese boiled dinner with various meats and vegetables" },
+        { name: "Sardinhas Assadas", description: "Grilled sardines" },
+        { name: "Feijoada", description: "Bean stew with meat" },
+        { name: "Polvo à Lagareiro", description: "Roasted octopus with olive oil and garlic" },
+        { name: "Leitão à Bairrada", description: "Roasted suckling pig" },
+      ],
+      Dessert: [
+        { name: "Arroz Doce", description: "Rice pudding" },
+        { name: "Bola de Berlim", description: "Berliner doughnut" },
+        { name: "Pudim Flan", description: "Caramel custard" },
+        { name: "Queijadas", description: "Cheese and egg tarts" },
+        { name: "Bolo de Bolacha", description: "Cookie cake" },
+      ],
+    },
+    Thai: {
+      Breakfast: [
+        { name: "Joke", description: "Rice porridge" },
+        { name: "Kai Jeow", description: "Thai-style omelet" },
+        { name: "Khao Tom", description: "Rice soup" },
+        { name: "Patongo", description: "Thai doughnut" },
+        { name: "Khao Niao Sang Kaya", description: "Sticky rice with custard" },
+      ],
+      Lunch: [
+        { name: "Pad Thai", description: "Stir-fried rice noodles" },
+        { name: "Tom Yum Goong", description: "Spicy and sour shrimp soup" },
+        { name: "Som Tam", description: "Green papaya salad" },
+        { name: "Khao Pad", description: "Fried rice" },
+        { name: "Pad Kra Pao", description: "Stir-fried meat with holy basil" },
+      ],
+      Snack: [
+        { name: "Moo Ping", description: "Grilled pork skewers" },
+        { name: "Khanom Krok", description: "Coconut pancakes" },
+        { name: "Sai Oua", description: "Northern Thai sausage" },
+        { name: "Tod Mun Pla", description: "Thai fish cakes" },
+        { name: "Kluay Tod", description: "Deep-fried banana fritters" },
+      ],
+      Dinner: [
+        { name: "Massaman Curry", description: "Rich, mild curry with potatoes and peanuts" },
+        { name: "Pad See Ew", description: "Stir-fried wide rice noodles" },
+        { name: "Pla Neung Manao", description: "Steamed fish with lime and garlic" },
+        { name: "Gaeng Keow Wan Gai", description: "Green curry with chicken" },
+        { name: "Khao Soi", description: "Northern Thai curry noodle soup" },
+      ],
+      Dessert: [
+        { name: "Mango Sticky Rice", description: "Sweet sticky rice served with fresh mango" },
+        { name: "Tub Tim Grob", description: "Water chestnuts in coconut milk" },
+        { name: "Khanom Chan", description: "Layered dessert made with coconut milk" },
+        { name: "Kluay Buat Chi", description: "Bananas in coconut milk" },
+        { name: "Bua Loy", description: "Sticky rice balls in coconut milk" },
+      ],
+    },
+    Moroccan: {
+      Breakfast: [
+        { name: "Baghrir", description: "Moroccan pancakes with honey and butter" },
+        { name: "Khobz", description: "Moroccan bread served with olive oil and za'atar" },
+        { name: "Bissara", description: "Fava bean soup or dip" },
+        { name: "Sfenj", description: "Moroccan doughnuts" },
+        { name: "Chebakia", description: "Sesame cookies shaped into flowers and fried" },
+      ],
+      Lunch: [
+        { name: "Tagine", description: "Slow-cooked stew with meat and vegetables" },
+        { name: "Couscous", description: "Steamed semolina with vegetables and meat" },
+        { name: "Harira", description: "Tomato and lentil soup" },
+        { name: "Zaalouk", description: "Eggplant and tomato dip" },
+        { name: "Rfissa", description: "Shredded chicken with lentils on a bed of thin bread" },
+      ],
+      Snack: [
+        { name: "Briouats", description: "Stuffed pastry triangles" },
+        { name: "Makouda", description: "Potato fritters" },
+        { name: "Sellou", description: "Sweet snack made from toasted flour, almonds, and sesame seeds" },
+        { name: "Harcha", description: "Semolina bread" },
+        { name: "Zaban", description: "Almond cookies" },
+      ],
+      Dinner: [
+        { name: "Pastilla", description: "Sweet and savory meat pie" },
+        { name: "Mechoui", description: "Slow-roasted lamb" },
+        { name: "Kefta Tagine", description: "Meatball tagine with eggs" },
+        { name: "Chermoula Fish", description: "Fish marinated in herb sauce" },
+        { name: "Mrouzia", description: "Sweet and spicy lamb tagine with raisins and almonds" },
+      ],
+      Dessert: [
+        { name: "Kaab el Ghzal", description: "Crescent-shaped almond cookies" },
+        { name: "M'hanncha", description: "Almond snake cake" },
+        { name: "Halwa Chebakia", description: "Honey-coated sesame cookies" },
+        { name: "Ghoriba", description: "Moroccan shortbread cookies" },
+        { name: "Seffa", description: "Sweet couscous with cinnamon and almonds" },
+      ],
+    },
+    Brazilian: {
+      Breakfast: [
+        { name: "Pão de Queijo", description: "Cheese bread" },
+        { name: "Açaí na Tigela", description: "Açaí berry smoothie bowl" },
+        { name: "Tapioca", description: "Cassava flour pancake" },
+        { name: "Café com Leite", description: "Coffee with milk" },
+        { name: "Bolo de Fubá", description: "Cornmeal cake" },
+      ],
+      Lunch: [
+        { name: "Feijoada", description: "Black bean and pork stew" },
+        { name: "Moqueca", description: "Fish stew with coconut milk" },
+        { name: "Picanha", description: "Grilled prime cut of beef" },
+        { name: "Acarajé", description: "Deep-fried black-eyed pea fritters" },
+        { name: "Coxinha", description: "Chicken croquettes" },
+      ],
+      Snack: [
+        { name: "Pão de Queijo", description: "Cheese bread" },
+        { name: "Pastel", description: "Fried pastry with various fillings" },
+        { name: "Brigadeiro", description: "Chocolate truffle" },
+        { name: "Bolinho de Bacalhau", description: "Codfish fritters" },
+        { name: "Empadinha", description: "Small savory pies" },
+      ],
+      Dinner: [
+        { name: "Churrasco", description: "Brazilian barbecue" },
+        { name: "Bobó de Camarão", description: "Shrimp in cassava cream" },
+        { name: "Galinhada", description: "Chicken and rice dish" },
+        { name: "Vatapá", description: "Creamy seafood stew" },
+        { name: "Feijão Tropeiro", description: "Bean, sausage, and cassava flour dish" },
+      ],
+      Dessert: [
+        { name: "Pudim de Leite", description: "Milk pudding" },
+        { name: "Quindim", description: "Coconut custard" },
+        { name: "Beijinho", description: "Coconut truffle" },
+        { name: "Bolo de Rolo", description: "Roll cake with guava filling" },
+        { name: "Cocada", description: "Coconut candy" },
+      ],
+    },
+    Russian: {
+      Breakfast: [
+        { name: "Kasha", description: "Porridge made from various grains" },
+        { name: "Syrniki", description: "Cheese pancakes" },
+        { name: "Blini", description: "Thin pancakes" },
+        { name: "Butterbrot", description: "Open-faced sandwich" },
+        { name: "Tvorog", description: "Farmer's cheese" },
+      ],
+      Lunch: [
+        { name: "Borscht", description: "Beet soup" },
+        { name: "Shchi", description: "Cabbage soup" },
+        { name: "Pelmeni", description: "Meat dumplings" },
+        { name: "Beef Stroganoff", description: "Sautéed beef in sour cream sauce" },
+        { name: "Olivier Salad", description: "Russian potato salad" },
+      ],
+      Snack: [
+        { name: "Pirozhki", description: "Small baked or fried buns with various fillings" },
+        { name: "Caviar on Bread", description: "Red or black caviar on buttered bread" },
+        { name: "Sushki", description: "Small, crunchy bread rings" },
+        { name: "Salted Cucumber", description: "Pickled cucumber" },
+        { name: "Sunflower Seeds", description: "Roasted sunflower seeds" },
+      ],
+      Dinner: [
+        { name: "Chicken Kiev", description: "Breaded chicken breast stuffed with herb butter" },
+        { name: "Golubtsy", description: "Stuffed cabbage rolls" },
+        { name: "Beef Zharkoe", description: "Beef stew" },
+        { name: "Shashlik", description: "Skewered and grilled meat" },
+        { name: "Ukha", description: "Fish soup" },
+      ],
+      Dessert: [
+        { name: "Napoleon Cake", description: "Layered puff pastry cake" },
+        { name: "Medovik", description: "Honey cake" },
+        { name: "Ptichye Moloko", description: "Milk soufflé cake" },
+        { name: "Vatrushka", description: "Sweet cheese-filled bun" },
+        { name: "Zefir", description: "Marshmallow-like sweet" },
+      ],
+    },
+    Indonesian: {
+      Breakfast: [
+        { name: "Nasi Goreng", description: "Fried rice" },
+        { name: "Bubur Ayam", description: "Chicken congee" },
+        { name: "Lontong Sayur", description: "Rice cake with vegetable curry" },
+        { name: "Pisang Goreng", description: "Fried banana fritters" },
+        { name: "Kopi Tubruk", description: "Strong black coffee" },
+      ],
+      Lunch: [
+        { name: "Nasi Uduk", description: "Steamed rice cooked with coconut milk" },
+        { name: "Gado-gado", description: "Vegetable salad with peanut sauce dressing" },
+        { name: "Soto Ayam", description: "Chicken soup" },
+        { name: "Rendang", description: "Spicy meat dish" },
+        { name: "Mie Goreng", description: "Fried noodles" },
+      ],
+      Snack: [
+        { name: "Bakso", description: "Meatballs" },
+        { name: "Risoles", description: "Spring rolls" },
+        { name: "Kue Putu", description: "Bamboo rice cake" },
+        { name: "Martabak", description: "Stuffed pancake" },
+        { name: "Kerupuk", description: "Crackers" },
+      ],
+      Dinner: [
+        { name: "Nasi Campur", description: "Mixed rice dish" },
+        { name: "Sate", description: "Grilled skewered meat" },
+        { name: "Ikan Bakar", description: "Grilled fish" },
+        { name: "Ayam Goreng", description: "Fried chicken" },
+        { name: "Bebek Betutu", description: "Balinese spiced duck" },
+      ],
+      Dessert: [
+        { name: "Es Cendol", description: "Iced dessert with green rice flour jelly" },
+        { name: "Klepon", description: "Sweet rice cake balls with palm sugar filling" },
+        { name: "Kue Lapis", description: "Layered cake" },
+        { name: "Pisang Ijo", description: "Banana wrapped in green rice flour" },
+        { name: "Es Teler", description: "Mixed ice dessert" },
+      ],
+    },
+    Malaysian: {
+      Breakfast: [
+        { name: "Nasi Lemak", description: "Coconut rice with various side dishes" },
+        { name: "Roti Canai", description: "Flatbread served with curry" },
+        { name: "Kaya Toast", description: "Toast with coconut jam and butter" },
+        { name: "Mee Goreng", description: "Fried noodles" },
+        { name: "Dim Sum", description: "Various small dishes" },
+      ],
+      Lunch: [
+        { name: "Char Kway Teow", description: "Stir-fried rice noodles" },
+        { name: "Laksa", description: "Spicy noodle soup" },
+        { name: "Nasi Kandar", description: "Steamed rice served with various curries" },
+        { name: "Hainanese Chicken Rice", description: "Flavored rice with poached chicken" },
+        { name: "Rendang", description: "Spicy meat dish" },
+      ],
+      Snack: [
+        { name: "Satay", description: "Grilled meat skewers" },
+        { name: "Curry Puff", description: "Pastry filled with curried meat and potatoes" },
+        { name: "Pisang Goreng", description: "Fried banana fritters" },
+        { name: "Popiah", description: "Fresh spring rolls" },
+        { name: "Kuih", description: "Various traditional sweets" },
+      ],
+      Dinner: [
+        { name: "Bak Kut Teh", description: "Pork rib soup" },
+        { name: "Nasi Goreng", description: "Fried rice" },
+        { name: "Asam Pedas", description: "Sour and spicy fish stew" },
+        { name: "Mee Rebus", description: "Noodles in thick gravy" },
+        { name: "Sambal Udang", description: "Prawns in spicy chili paste" },
+      ],
+      Dessert: [
+        { name: "Cendol", description: "Iced dessert with green rice flour jelly" },
+        { name: "Ais Kacang", description: "Shaved ice dessert with various toppings" },
+        { name: "Bubur Cha Cha", description: "Sweet potato and sago dessert in coconut milk" },
+        { name: "Kuih Lapis", description: "Steamed layered cake" },
+        { name: "Apam Balik", description: "Turnover pancake with peanut filling" },
+      ],
+    },
+    Filipino: {
+      Breakfast: [
+        { name: "Tapsilog", description: "Cured beef with garlic rice and fried egg" },
+        { name: "Pandesal", description: "Salt bread" },
+        { name: "Champorado", description: "Chocolate rice porridge" },
+        { name: "Longsilog", description: "Filipino sausage with garlic rice and fried egg" },
+        { name: "Sinangag", description: "Garlic fried rice" },
+      ],
+      Lunch: [
+        { name: "Adobo", description: "Meat stewed in vinegar and soy sauce" },
+        { name: "Sinigang", description: "Sour soup with meat and vegetables" },
+        { name: "Pancit", description: "Stir-fried noodles" },
+        { name: "Kare-kare", description: "Oxtail stew in peanut sauce" },
+        { name: "Lechon", description: "Roasted pig" },
+      ],
+      Snack: [
+        { name: "Lumpia", description: "Spring rolls" },
+        { name: "Kwek-kwek", description: "Deep-fried quail eggs" },
+        { name: "Taho", description: "Soft tofu with syrup and tapioca pearls" },
+        { name: "Balut", description: "Fertilized duck egg" },
+        { name: "Turon", description: "Deep-fried banana rolls" },
+      ],
+      Dinner: [
+        { name: "Crispy Pata", description: "Deep-fried pork leg" },
+        { name: "Pinakbet", description: "Vegetable stew with shrimp paste" },
+        { name: "Bulalo", description: "Beef marrow soup" },
+        { name: "Sisig", description: "Sizzling pork dish" },
+        { name: "Chicken Inasal", description: "Grilled chicken marinated in annatto oil" },
+      ],
+      Dessert: [
+        { name: "Halo-halo", description: "Mixed shaved ice dessert" },
+        { name: "Leche Flan", description: "Caramel custard" },
+        { name: "Buko Pandan", description: "Young coconut dessert flavored with pandan" },
+        { name: "Bibingka", description: "Rice cake" },
+        { name: "Ube Halaya", description: "Purple yam jam" },
+      ],
+    },
+    Caribbean: {
+      Breakfast: [
+        { name: "Ackee and Saltfish", description: "Jamaica's national dish" },
+        { name: "Johnnycakes", description: "Fried dough" },
+        { name: "Callaloo", description: "Leafy vegetable dish" },
+        { name: "Bake and Saltfish", description: "Fried bread with salted cod" },
+        { name: "Choka", description: "Roasted and mashed vegetables" },
+      ],
+      Lunch: [
+        { name: "Jerk Chicken", description: "Spicy grilled chicken" },
+        { name: "Roti", description: "Flatbread filled with curry" },
+        { name: "Rice and Peas", description: "Rice cooked with beans or peas" },
+        { name: "Cou-Cou and Flying Fish", description: "Cornmeal and okra dish with fish" },
+        { name: "Pelau", description: "Rice dish with meat and vegetables" },
+      ],
+      Snack: [
+        { name: "Patties", description: "Savory pastries with various fillings" },
+        { name: "Doubles", description: "Fried flatbread with curried chickpeas" },
+        { name: "Plantain Chips", description: "Fried plantain slices" },
+        { name: "Accra", description: "Saltfish fritters" },
+        { name: "Bake and Shark", description: "Fried bread with shark meat" },
+      ],
+      Dinner: [
+        { name: "Curry Goat", description: "Spicy goat curry" },
+        { name: "Oxtail Stew", description: "Slow-cooked oxtail" },
+        { name: "Conch Fritters", description: "Deep-fried conch meat balls" },
+        { name: "Mofongo", description: "Mashed plantains with garlic and pork cracklings" },
+        { name: "Pepperpot", descriptio
+          { name: "Manchego Cheese", description: "Cheese made from sheep's milk" },
+          { name: "Aceitunas", description: "Marinated olives" },
+          { name: "Pan con Tomate", description: "Bread rubbed with tomato, olive oil, and garlic" },
+        ],
+        Dinner: [
+          { name: "Tapas Assortment", description: "Variety of small dishes" },
+          { name: "Fabada Asturiana", description: "Rich bean stew with pork and sausage" },
+          { name: "Pulpo a la Gallega", description: "Galician-style octopus with paprika" },
+          { name: "Cordero Asado", description: "Roast lamb" },
+          { name: "Zarzuela", description: "Seafood stew in a flavorful sauce" },
+        ],
+        Dessert: [
+          { name: "Flan", description: "Caramel custard" },
+          { name: "Crema Catalana", description: "Catalan cream with caramelized sugar top" },
+          { name: "Turrón", description: "Nougat made with almonds and honey" },
+          { name: "Arroz con Leche", description: "Spanish rice pudding" },
+          { name: "Churros con Chocolate", description: "Fried dough pastry served with thick hot chocolate" },
+        ],
+      },
+      Turkish: {
+        Breakfast: [
+          { name: "Turkish Breakfast Platter", description: "Assortment of cheese, olives, tomatoes, cucumbers, eggs, and bread" },
+          { name: "Menemen", description: "Scrambled eggs with tomatoes, peppers, and spices" },
+          { name: "Simit", description: "Circular bread covered in sesame seeds" },
+          { name: "Börek", description: "Layered pastry filled with cheese, meat, or vegetables" },
+          { name: "Turkish Tea", description: "Strong black tea served in small glasses" },
+        ],
+        Lunch: [
+          { name: "Döner Kebab", description: "Sliced meat cooked on a vertical rotisserie" },
+          { name: "Pide", description: "Turkish flatbread topped with meat, cheese, or vegetables" },
+          { name: "Mercimek Çorbası", description: "Red lentil soup" },
+          { name: "Karnıyarık", description: "Stuffed eggplant with ground meat, tomatoes, and peppers" },
+          { name: "Lahmacun", description: "Thin flatbread topped with minced meat and vegetables" },
+        ],
+        Snack: [
+          { name: "Simit", description: "Circular bread covered in sesame seeds" },
+          { name: "Kumpir", description: "Baked potato with various toppings" },
+          { name: "Midye Dolma", description: "Stuffed mussels" },
+          { name: "Çiğ Köfte", description: "Spicy vegetarian bulgur balls" },
+          { name: "Ayran", description: "Savory yogurt drink" },
+        ],
+        Dinner: [
+          { name: "İskender Kebab", description: "Sliced döner meat over pita with tomato sauce and yogurt" },
+          { name: "Manti", description: "Turkish dumplings with yogurt sauce" },
+          { name: "Imam Bayildi", description: "
+        { name: "Rusks", description: "Dry biscuit for dunking in coffee or tea" },
+        { name: "Biltong and Eggs", description: "Dried cured meat with eggs" },
+      ],
+      Lunch: [
+        { name: "Bobotie", description: "Spiced minced meat bake with egg custard" },
+        { name: "Bunny Chow", description: "Curry served in a hollowed-out loaf of bread" },
+        { name: "Chakalaka and Pap", description: "Spicy vegetable relish with maize porridge" },
+        { name: "Gatsby", description: "Large sandwich with various fillings" },
+        { name: "Boerewors Roll", description: "Sausage served in a roll" },
+      ],
+      Snack: [
+        { name: "Biltong", description: "Dried cured meat" },
+        { name: "Droëwors", description: "Dried sausage" },
+        { name: "Koeksisters", description: "Syrup-coated twisted doughnuts" },
+        { name: "Samosas", description: "Triangular pastry with savory filling" },
+        { name: "Smagwinya", description: "Deep-fried dough balls" },
+      ],
+      Dinner: [
+        { name: "Braai", description: "Barbecued meat" },
+        { name: "Potjiekos", description: "Stew cooked in a cast-iron pot" },
+        { name: "Sosaties", description: "Kebabs" },
+        { name: "Waterblommetjiebredie", description: "Lamb and water flower stew" },
+        { name: "Tomato Bredie", description: "Lamb and tomato stew" },
+      ],
+      Dessert: [
+        { name: "Malva Pudding", description: "Spongy cake with apricot jam" },
+        { name: "Milk Tart", description: "Custard tart with cinnamon" },
+        { name: "Koeksister", description: "Plaited doughnut dipped in syrup" },
+        { name: "Amarula Don Pedro", description: "Amarula liqueur dessert drink" },
+        { name: "Melktert", description: "Milk tart" },
+      ],
+    },
+    Egyptian: {
+      Breakfast: [
+        { name: "Ful Medames", description: "Fava bean stew" },
+        { name: "Ta'meya", description: "Egyptian falafel" },
+        { name: "Shakshuka", description: "Eggs poached in tomato sauce" },
+        { name: "Gibna Domiati", description: "White cheese" },
+        { name: "Beid Bel Basterma", description: "Eggs with cured beef" },
+      ],
+      Lunch: [
+        { name: "Kushari", description: "Lentils, rice, and pasta dish" },
+        { name: "Molokhia", description: "Jute leaf stew" },
+        { name: "Mahshi", description: "Stuffed vegetables" },
+        { name: "Fatta", description: "Rice and bread with tomato sauce" },
+        { name: "Shawarma", description: "Shaved meat in pita bread" },
+      ],
+      Snack: [
+        { name: "Besara", description: "Fava bean dip" },
+        { name: "Baladi Bread", description: "Egyptian flatbread" },
+        { name: "Termis", description: "Lupin beans" },
+        { name: "Dukkah", description: "Nut and spice blend" },
+        { name: "Sambousak", description: "Savory pastries" },
+      ],
+      Dinner: [
+        { name: "Hamam Mahshi", description: "Stuffed pigeon" },
+        { name: "Feteer Meshaltet", description: "Layered pastry" },
+        { name: "Sayadeya", description: "Fish with rice" },
+        { name: "Bamya", description: "Okra stew" },
+        { name: "Kebab and Kofta", description: "Grilled meat skewers" },
+      ],
+      Dessert: [
+        { name: "Umm Ali", description: "Bread pudding" },
+        { name: "Basbousa", description: "Semolina cake" },
+        { name: "Konafa", description: "Shredded phyllo pastry dessert" },
+        { name: "Zalabya", description: "Egyptian doughnuts" },
+        { name: "Roz Bel Laban", description: "Rice pudding" },
+      ],
+    },
+    Australian: {
+      Breakfast: [
+        { name: "Vegemite on Toast", description: "Yeast extract spread on toast" },
+        { name: "Avocado Toast", description: "Mashed avocado on toast" },
+        { name: "Weet-Bix", description: "Whole grain wheat breakfast cereal" },
+        { name: "Bacon and Egg Roll", description: "Bacon and fried egg in a roll" },
+        { name: "Bircher Muesli", description: "Overnight oats with fruits and nuts" },
+      ],
+      Lunch: [
+        { name: "Meat Pie", description: "Savory pie filled with minced meat and gravy" },
+        { name: "Sausage Sizzle", description: "Barbecued sausage in bread" },
+        { name: "Chicken Parmigiana", description: "Breaded chicken with tomato sauce and cheese" },
+        { name: "Fish and Chips", description: "Battered fish with french fries" },
+        { name: "Salad Sandwich", description: "Sandwich with lettuce, tomato, and beetroot" },
+      ],
+      Snack: [
+        { name: "Tim Tams", description: "Chocolate-covered biscuit" },
+        { name: "Fairy Bread", description: "Buttered bread with sprinkles" },
+        { name: "Anzac Biscuits", description: "Oat and coconut cookies" },
+        { name: "Lamingtons", description: "Sponge cake coated in chocolate and coconut" },
+        { name: "Cheese and Crackers", description: "Various cheeses with crackers" },
+      ],
+      Dinner: [
+        { name: "Barramundi", description: "Grilled or fried Australian fish" },
+        { name: "Kangaroo Steak", description: "Grilled kangaroo meat" },
+        { name: "Roast Lamb", description: "Roasted lamb with vegetables" },
+        { name: "Barbecue", description: "Various meats cooked on the barbecue" },
+        { name: "Beef Stew", description: "Slow-cooked beef with vegetables" },
+      ],
+      Dessert: [
+        { name: "Pavlova", description: "Meringue-based dessert with fruit" },
+        { name: "Golden Gaytime", description: "Toffee and vanilla ice cream" },
+        { name: "Lamington", description: "Sponge cake coated in chocolate and coconut" },
+        { name: "Vanilla Slice", description: "Custard slice with icing" },
+        { name: "Anzac Biscuits", description: "Oat and coconut cookies" },
+      ],
+    },
   }
-
-  if (dishes[cuisine] && dishes[cuisine][mealType]) {
-    const randomDish = dishes[cuisine][mealType][Math.floor(Math.random() * dishes[cuisine][mealType].length)]
-    return { cuisine, dish: randomDish.name, description: randomDish.description }
-  } else {
-    // Fallback to generic dishes if the specific cuisine or meal type is not found
-    const randomDish = genericDishes[mealType][Math.floor(Math.random() * genericDishes[mealType].length)]
-    return { cuisine: "Generic", dish: randomDish.name, description: randomDish.description }
-  }
-}
-
-export default function CuisineSelector() {
-  const [selected, setSelected] = useState<string[]>([])
-  const [mealPlan, setMealPlan] = useState<DailyMealPlan[]>([])
-
-  const toggleCuisine = useCallback((cuisine: string) => {
-    setSelected((prev) => (prev.includes(cuisine) ? prev.filter((c) => c !== cuisine) : [...prev, cuisine]))
-  }, [])
-
-  const handleGetRecommendation = useCallback(() => {
-    const recommendation = getRecommendation(selected)
-    toast.success(recommendation)
-  }, [selected])
-
-  const handleGenerateMealPlan = useCallback(() => {
-    if (selected.length === 0) {
-      toast.error("Please select at least one cuisine to generate a meal plan.")
-      return
-    }
-    const newMealPlan = generateMealPlan(selected)
-    setMealPlan(newMealPlan)
-  }, [selected])
-
-  return (
-    <div className="min-h-screen bg-black p-6 pt-40">
-      <h1 className="text-white text-3xl font-semibold mb-12 text-center">What are your favorite cuisines?</h1>
-      <div className="max-w-[570px] mx-auto">
-        <motion.div
-          className="flex flex-wrap gap-3 overflow-visible mb-8"
-          layout
-          transition={{
-            type: "spring",
-            stiffness: 500,
-            damping: 30,
-            mass: 0.5,
-          }}
-        >
-          {cuisines.map((cuisine) => {
-            const isSelected = selected.includes(cuisine)
-            return (
-              <motion.button
-                key={cuisine}
-                onClick={() => toggleCuisine(cuisine)}
-                layout
-                initial={false}
-                animate={{
-                  backgroundColor: isSelected ? "#2a1711" : "rgba(39, 39, 42, 0.5)",
-                }}
-                whileHover={{
-                  backgroundColor: isSelected ? "#2a1711" : "rgba(39, 39, 42, 0.8)",
-                }}
-                whileTap={{
-                  backgroundColor: isSelected ? "#1f1209" : "rgba(39, 39, 42, 0.9)",
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 500,
-                  damping: 30,
-                  mass: 0.5,
-                  backgroundColor: { duration: 0.1 },
-                }}
-                className={`
-                  inline-flex items-center px-4 py-2 rounded-full text-base font-medium
-                  whitespace-nowrap overflow-hidden ring-1 ring-inset
-                  ${
-                    isSelected
-                      ? "text-[#ff9066] ring-[hsla(0,0%,100%,0.12)]"
-                      : "text-zinc-400 ring-[hsla(0,0%,100%,0.06)]"
-                  }
-                `}
-              >
-                <motion.div
-                  className="relative flex items-center"
-                  animate={{
-                    width: isSelected ? "auto" : "100%",
-                    paddingRight: isSelected ? "1.5rem" : "0",
-                  }}
-                  transition={{
-                    ease: [0.175, 0.885, 0.32, 1.275],
-                    duration: 0.3,
-                  }}
-                >
-                  <span>{cuisine}</span>
-                  <AnimatePresence>
-                    {isSelected && (
-                      <motion.span
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0, opacity: 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 30,
-                          mass: 0.5,
-                        }}
-                        className="absolute right-0"
-                      >
-                        <div className="w-4 h-4 rounded-full bg-[#ff9066] flex items-center justify-center">
-                          <Check className="w-3 h-3 text-[#2a1711]" strokeWidth={1.5} />
-                        </div>
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </motion.button>
-            )
-          })}
-        </motion.div>
-        <div className="flex justify-center mt-8 space-x-4">
-          <Button onClick={handleGetRecommendation} className="bg-[#ff9066] text-[#2a1711] hover:bg-[#ff7c4d]">
-            Get Recommendation
-          </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button onClick={handleGenerateMealPlan} className="bg-[#ff9066] text-[#2a1711] hover:bg-[#ff7c4d]">
-                Generate Meal Plan
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-[#2a1711] text-[#ff9066] max-w-3xl max-h-[80vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Your Weekly Meal Plan</DialogTitle>
-              </DialogHeader>
-              <div className="mt-4">
-                {mealPlan.map((day, index) => (
-                  <div key={index} className="mb-6">
-                    <h3 className="text-xl font-bold mb-2">{day.day}</h3>
-                    {day.meals.map((meal, mealIndex) => (
-                      <div key={mealIndex} className="mb-2">
-                        <strong>
-                          {meal.time} - {meal.type}:
-                        </strong>{" "}
-                        {meal.dish} ({meal.cuisine})<p className="text-sm text-gray-400">{meal.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-    </div>
-  )
-}
-
