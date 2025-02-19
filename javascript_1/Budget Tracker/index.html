@@ -16,36 +16,29 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <section>
             <h2>Add an Expense</h2>
             <div class="expense-form">
                 <label for="budget">Set Budget Limit:</label>
                 <input type="number" id="budget" placeholder="Enter budget limit" onchange="setBudgetLimit()">
-                
                 <label for="description">Description:</label>
                 <input type="text" id="description" placeholder="Enter expense description" required>
-
                 <label for="amount">Amount:</label>
                 <input type="number" id="amount" placeholder="Enter amount" required>
-
                 <button onclick="addExpense()">Add Expense</button>
             </div>
-
             <h3>Expenses:</h3>
             <ul id="expenseList"></ul>
-            
             <div id="budgetWarning" class="warning-message" style="display:none;">
                 <p>Your total expenses have exceeded the budget limit!</p>
             </div>
+            <div id="totalExpenses">$0.00</div>
         </section>
     </main>
-
     <footer>
         <p>&copy; 2025 Simple Budget Tracker</p>
     </footer>
-
     <script src="script.js"></script>
 </body>
 </html>
