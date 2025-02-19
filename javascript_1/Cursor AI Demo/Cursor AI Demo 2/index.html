@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics AI MCQ Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .chat-container {
+            height: calc(100vh - 200px);
+        }
+        .message {
+            max-width: 80%;
+            margin: 8px;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .user-message {
+            background-color: #e2e8f0;
+            margin-left: auto;
+        }
+        .ai-message {
+            background-color: #93c5fd;
+            margin-right: auto;
+        }
+        .answer-btn {
+            width: 100%;
+            text-align: left;
+            padding: 8px;
+            margin: 4px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .answer-btn:hover {
+            background-color: #e2e8f0;
+        }
+        .correct-answer {
+            background-color: #86efac !important;
+        }
+        .wrong-answer {
+            background-color: #fca5a5 !important;
+        }
+        .score-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #1e40af;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="score-display">
+        Points: <span id="points-count">0</span> | Questions: <span id="correct-count">0</span>/<span id="total-count">0</span>
+    </div>
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-600">AP Physics 1 MCQ Generator</h1>
+            <p class="text-gray-600 mt-2">Your AI-powered study companion for AP Physics</p>
+        </header>
+
+        <main class="bg-white rounded-lg shadow-lg p-4">
+            <div class="mb-4 flex flex-wrap gap-2 justify-center">
+                <div class="w-full flex justify-center gap-2 mb-4">
+                    <button class="difficulty-btn px-4 py-2 bg-green-100 hover:bg-green-200 text-green-800 rounded-full transition-colors" data-level="easy">Easy</button>
+                    <button class="difficulty-btn px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded-full transition-colors" data-level="medium">Medium</button>
+                    <button class="difficulty-btn px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded-full transition-colors" data-level="hard">Hard</button>
+                </div>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Kinematics</button>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Forces</button>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Energy</button>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Momentum</button>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Circular Motion</button>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Rotational Motion</button>
+                <button class="topic-btn px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-full transition-colors">Simple Harmonic Motion</button>
+            </div>
+
+            <div id="chat-container" class="chat-container overflow-y-auto mb-4">
+                <div class="ai-message message">
+                    Hello! I'm your AP Physics 1 study assistant. I can help you practice with multiple-choice questions. What topic would you like to study today?
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <input type="text" 
+                       id="user-input" 
+                       class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                       placeholder="Type your message here...">
+                <button id="send-button" 
+                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                    Send
+                </button>
+            </div>
+        </main>
+
+        <div class="mt-4 text-center text-gray-600">
+            <p>Topics: Kinematics, Forces, Energy, Momentum, Rotational Motion, and more!</p>
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        let score = {
+            correct: 0,
+            total: 0,
+            points: 0
+        };
+        let currentQuestion = null;
+        let currentDifficulty = 'medium';
+
+        const DIFFICULTY_POINTS = {
+            'easy': 1,
+            'medium': 2,
+            'hard': 3
+        };
+
+        function updateScore() {
+            document.getElementById('correct-count').textContent = score.correct;
+            document.getElementById('total-count').textContent = score.total;
+            document.getElementById('points-count').textContent = score.points;
+        }
+
+        function createAnswerButtons(question, options, correctAnswer) {
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'answer-buttons mt-4';
+            
+            const letters = ['A', 'B', 'C', 'D'];
+            options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn hover:bg-gray-100';
+                button.textContent = `${letters[index]}) ${option}`;
+                
+                button.addEventListener('click', () => {
+                    // Disable all buttons after an answer is selected
+                    buttonsDiv.querySelectorAll('button').forEach(btn => {
+                        btn.disabled = true;
+                    });
+                    
+                    score.total++;
+                    if (letters[index] === correctAnswer) {
+                        score.correct++;
+                        score.points += DIFFICULTY_POINTS[currentDifficulty];
+                        button.classList.add('correct-answer');
+                        
+                        // Show points earned animation
+                        const pointsEarned = document.createElement('div');
+                        pointsEarned.className = 'fixed text-green-600 font-bold text-xl';
+                        pointsEarned.style.left = `${button.getBoundingClientRect().right + 20}px`;
+                        pointsEarned.style.top = `${button.getBoundingClientRect().top}px`;
+                        pointsEarned.textContent = `+${DIFFICULTY_POINTS[currentDifficulty]} points`;
+                        document.body.appendChild(pointsEarned);
+                        
+                        // Animate and remove
+                        pointsEarned.style.transition = 'all 1s ease-out';
+                        setTimeout(() => {
+                            pointsEarned.style.transform = 'translateY(-20px)';
+                            pointsEarned.style.opacity = '0';
+                        }, 50);
+                        setTimeout(() => {
+                            document.body.removeChild(pointsEarned);
+                        }, 1000);
+                    } else {
+                        button.classList.add('wrong-answer');
+                        // Highlight the correct answer
+                        buttonsDiv.querySelectorAll('button')[correctAnswer.charCodeAt(0) - 65]
+                            .classList.add('correct-answer');
+                    }
+                    updateScore();
+                    
+                    // Show explanation
+                    const explanationDiv = messageDiv.querySelector('.explanation');
+                    explanationDiv.classList.remove('hidden');
+                });
+                
+                buttonsDiv.appendChild(button);
+            });
+            
+            return buttonsDiv;
+        }
+
+        function parseQuestion(content) {
+            const lines = content.split('\n').map(line => line.trim()).filter(line => line);
+            let question = '';
+            let options = [];
+            let correctAnswer = '';
+            let explanation = '';
+            
+            let currentSection = '';
+            
+            for (let line of lines) {
+                if (line.startsWith('Question:')) {
+                    currentSection = 'question';
+                    question = line.replace('Question:', '').trim();
+                } else if (line.match(/^[A-D]\)/)) {
+                    options.push(line.substring(3).trim());
+                } else if (line.startsWith('Correct Answer:')) {
+                    correctAnswer = line.replace('Correct Answer:', '').trim();
+                } else if (line.startsWith('Explanation:')) {
+                    currentSection = 'explanation';
+                    explanation = line.replace('Explanation:', '').trim();
+                } else if (line.trim()) {
+                    if (currentSection === 'question') {
+                        question += ' ' + line.trim();
+                    } else if (currentSection === 'explanation') {
+                        explanation += ' ' + line.trim();
+                    }
+                }
+            }
+            
+            // Validate parsed content
+            if (!question || options.length !== 4 || !correctAnswer || !explanation) {
+                throw new Error('Failed to parse question properly');
+            }
+            
+            return { question, options, correctAnswer, explanation };
+        }
+
+        function updateDifficultyButtons() {
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                const level = btn.dataset.level;
+                if (level === currentDifficulty) {
+                    btn.classList.add('ring-2', 'ring-offset-2');
+                    switch(level) {
+                        case 'easy':
+                            btn.classList.add('ring-green-500');
+                            break;
+                        case 'medium':
+                            btn.classList.add('ring-yellow-500');
+                            break;
+                        case 'hard':
+                            btn.classList.add('ring-red-500');
+                            break;
+                    }
+                } else {
+                    btn.classList.remove('ring-2', 'ring-offset-2', 'ring-green-500', 'ring-yellow-500', 'ring-red-500');
+                }
+            });
+        }
+
+        function formatMessage(content, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+            
+            if (!isUser && content.includes('Question:')) {
+                const { question, options, correctAnswer, explanation } = parseQuestion(content);
+                
+                // Add difficulty indicator with points value
+                const difficultyClass = {
+                    'easy': 'text-green-600',
+                    'medium': 'text-yellow-600',
+                    'hard': 'text-red-600'
+                }[currentDifficulty];
+                
+                messageDiv.innerHTML = `
+                    <div class="mb-2 ${difficultyClass} font-bold">
+                        Difficulty: ${currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1)}
+                        <span class="ml-2">(${DIFFICULTY_POINTS[currentDifficulty]} points)</span>
+                    </div>
+                    <strong>Question:</strong> ${question}
+                `;
+                
+                // Add answer buttons
+                const buttonsDiv = createAnswerButtons(question, options, correctAnswer);
+                messageDiv.appendChild(buttonsDiv);
+                
+                // Add hidden explanation
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = 'explanation mt-4 hidden';
+                explanationDiv.innerHTML = `<strong>Explanation:</strong> ${explanation}`;
+                messageDiv.appendChild(explanationDiv);
+            } else {
+                const formattedContent = content.replace(/\n/g, '<br>');
+                messageDiv.innerHTML = formattedContent;
+            }
+            
+            return messageDiv;
+        }
+
+        async function callAPI(message) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer YOUR_API_KEY_HERE'
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        temperature: 0.7,
+                        messages: [{
+                            role: "system",
+                            content: `You are an AP Physics 1 expert and teacher. Generate exactly one ${currentDifficulty} multiple choice question following these rules:
+
+1. The question must be about ${message}
+2. Include exactly 4 options labeled A, B, C, and D
+3. One and only one answer should be correct
+4. For ${currentDifficulty} difficulty:
+   ${currentDifficulty === 'easy' ? '- Use basic concepts only\n- Simple calculations\n- Clear, straightforward language' :
+     currentDifficulty === 'medium' ? '- Combine 2-3 concepts\n- Moderate calculations\n- Typical AP exam complexity' :
+     '- Complex problem scenarios\n- Multiple concept integration\n- Challenging calculations'}
+
+5. STRICTLY use this format:
+Question: [The question text here]
+
+A) [First option]
+B) [Second option]
+C) [Third option]
+D) [Fourth option]
+
+Correct Answer: [Single letter A, B, C, or D]
+
+Explanation: [Clear explanation of why the answer is correct and why others are wrong]`
+                        }, {
+                            role: "user",
+                            content: `Generate one ${currentDifficulty} level AP Physics 1 multiple choice question about ${message}. Follow the format exactly.`
+                        }]
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+                const content = data.choices[0].message.content;
+
+                // Validate response format
+                if (!content.includes('Question:') || 
+                    !content.includes('A)') || 
+                    !content.includes('B)') || 
+                    !content.includes('C)') || 
+                    !content.includes('D)') || 
+                    !content.includes('Correct Answer:') || 
+                    !content.includes('Explanation:')) {
+                    throw new Error('Invalid question format received');
+                }
+
+                return content;
+            } catch (error) {
+                console.error('Error:', error);
+                return `Sorry, there was an error generating the question. Please try again. (Error: ${error.message})`;
+            }
+        }
+
+        async function handleUserInput() {
+            const message = userInput.value.trim();
+            if (message) {
+                // Add user message
+                chatContainer.appendChild(formatMessage(message, true));
+                userInput.value = '';
+                
+                // Show loading message
+                const loadingMessage = formatMessage("Generating your physics question...", false);
+                chatContainer.appendChild(loadingMessage);
+                
+                // Get AI response
+                const response = await callAPI(message);
+                
+                // Remove loading message
+                chatContainer.removeChild(loadingMessage);
+                
+                // Add AI response
+                chatContainer.appendChild(formatMessage(response, false));
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+
+        sendButton.addEventListener('click', handleUserInput);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleUserInput();
+            }
+        });
+
+        // Add topic button functionality
+        document.querySelectorAll('.topic-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const topic = button.textContent;
+                
+                // Show loading message
+                const loadingMessage = formatMessage(`Generating a question about ${topic}...`, false);
+                chatContainer.appendChild(loadingMessage);
+                
+                // Get AI response
+                const response = await callAPI(topic);
+                
+                // Remove loading message
+                chatContainer.removeChild(loadingMessage);
+                
+                // Add AI response
+                chatContainer.appendChild(formatMessage(response, false));
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            });
+        });
+
+        // Add difficulty button listeners
+        document.querySelectorAll('.difficulty-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                currentDifficulty = button.dataset.level;
+                updateDifficultyButtons();
+            });
+        });
+
+        // Initialize difficulty buttons
+        updateDifficultyButtons();
+    </script>
+</body>
+</html>
