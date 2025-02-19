@@ -1,21 +1,90 @@
+// Configuration object for API endpoints
+const apiConfig = {
+    baseUrl: 'https://api.example.com',
+    endpoints: {
+        items: '/items',
+        expenses: '/expenses'
+    }
+};
+
 // Initialize expenses array and budget from localStorage (if available)
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let budgetLimit = parseFloat(localStorage.getItem("budgetLimit")) || 0;
+
+// Function to handle API errors
+function handleApiError(error) {
+    console.error('API Error:', error);
+    const errorDiv = document.getElementById('apiError');
+    if (errorDiv) {
+        errorDiv.textContent = `Error: ${error.message}`;
+        errorDiv.style.display = 'block';
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 5000);
+    }
+}
+
+// Function to display API response in a formatted way
+function displayApiResponse(data, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Create a collapsible section
+    const section = document.createElement('div');
+    section.className = 'api-response-section';
+    
+    // Add timestamp
+    const timestamp = document.createElement('div');
+    timestamp.className = 'api-timestamp';
+    timestamp.textContent = `Last Updated: ${new Date().toLocaleString()}`;
+    
+    // Format the response data
+    const formattedData = document.createElement('pre');
+    formattedData.className = 'api-data';
+    formattedData.textContent = JSON.stringify(data, null, 2);
+    
+    // Assemble the section
+    section.appendChild(timestamp);
+    section.appendChild(formattedData);
+    
+    // Clear and update the container
+    container.innerHTML = '';
+    container.appendChild(section);
+}
+
+// Function to fetch data from API with options
+async function fetchApiData(endpoint, options = {}) {
+    try {
+        const response = await fetch(`${apiConfig.baseUrl}${endpoint}`, {
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+}
 
 // Function to set the budget limit
 function setBudgetLimit() {
     const budgetInput = document.getElementById('budget');
     budgetLimit = parseFloat(budgetInput.value);
-
-    // Save the budget limit to localStorage
     localStorage.setItem("budgetLimit", budgetLimit);
-
-    // Update the total expenses to check if we need to show the warning
     updateTotalExpenses();
 }
 
 // Function to add a new expense
-function addExpense() {
+async function addExpense() {
     const descriptionInput = document.getElementById('description');
     const amountInput = document.getElementById('amount');
     
@@ -25,6 +94,15 @@ function addExpense() {
     if (description && amount > 0) {
         const expense = { description, amount, date: new Date().toLocaleDateString() };
         expenses.push(expense);
+        
+        // Try to post to API
+        try {
+            await postExpense(expense);
+        } catch (error) {
+            console.error('Failed to post expense to API:', error);
+            // Continue with local storage even if API fails
+        }
+        
         displayExpense(expense);
         updateTotalExpenses();
         localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -52,10 +130,18 @@ function displayExpense(expense) {
 }
 
 // Function to delete an expense
-function deleteExpense(expense) {
+async function deleteExpense(expense) {
     expenses = expenses.filter(exp => exp !== expense);
     updateTotalExpenses();
     localStorage.setItem("expenses", JSON.stringify(expenses));
+    
+    // Try to sync with API after deletion
+    try {
+        await syncExpenses();
+    } catch (error) {
+        console.error('Failed to sync after deletion:', error);
+    }
+    
     renderExpenseList();
 }
 
@@ -93,9 +179,78 @@ function displayExpenseSummary() {
     });
 }
 
-// Event listener to initialize the page
+// Function to get all items from API
+async function getItems() {
+    try {
+        const data = await fetchApiData(apiConfig.endpoints.items);
+        displayApiResponse(data, 'apiResponseContainer');
+        return data;
+    } catch (error) {
+        console.error('Error getting items:', error);
+        return [];
+    }
+}
+
+// Function to post new expense to API
+async function postExpense(expense) {
+    try {
+        const data = await fetchApiData(apiConfig.endpoints.expenses, {
+            method: 'POST',
+            body: JSON.stringify(expense)
+        });
+        displayApiResponse(data, 'apiResponseContainer');
+        return data;
+    } catch (error) {
+        console.error('Error posting expense:', error);
+        return null;
+    }
+}
+
+// Function to sync local expenses with API
+async function syncExpenses() {
+    try {
+        const response = await fetchApiData(apiConfig.endpoints.expenses, {
+            method: 'PUT',
+            body: JSON.stringify(expenses)
+        });
+        displayApiResponse(response, 'apiResponseContainer');
+        
+        const syncStatus = document.getElementById('syncStatus');
+        if (syncStatus) {
+            syncStatus.textContent = 'Last synced: ' + new Date().toLocaleString();
+        }
+    } catch (error) {
+        console.error('Error syncing expenses:', error);
+    }
+}
+
+// Event listener for when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
     renderExpenseList();
     updateTotalExpenses();
     displayExpenseSummary();
+    
+    // Add sync button functionality if it exists
+    const syncButton = document.getElementById('syncButton');
+    if (syncButton) {
+        syncButton.addEventListener('click', syncExpenses);
+    }
+    
+    // Initial API data fetch
+    getItems().then(data => {
+        if (data && data.length > 0) {
+            displayApiResponse(data, 'apiResponseContainer');
+        }
+    });
+    
+    // Display an example user input below the table
+    const userExample = {
+        "Budget Limit": 10000,
+        "Description": "Apple iPhone 11, 64GB",
+        "price": 999
+    };
+    const exampleDetails = document.getElementById("exampleDetails");
+    if (exampleDetails) {
+        exampleDetails.innerHTML = `<h3>Example User Input:</h3><pre>${JSON.stringify(userExample, null, 2)}</pre>`;
+    }
 });
