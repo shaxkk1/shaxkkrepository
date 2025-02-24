@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camping Tips</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Tips for Camping</h1>
+    <h2>Highly recommended for an enjoyable trip!</h2>
+  </header>
+
+  <nav aria-label="Main Navigation">
+    <a href="index.html" class="hyper-link">Home</a> |
+    <a href="meal-plan.html" class="hyper-link">Plan your meals</a> |
+    <a href="pack-like-a-pro.html" class="hyper-link">Pack like a pro</a> |
+    <a href="leave-no-trace.html" class="hyper-link">Leave no trace</a> |
+    <a href="https://www.parks.vic.gov.au/where-to-stay/camping-for-beginners/top-tips-for-your-first-camping-trip" target="_blank" class="external-link">Learn More</a>
+  </nav>
+
+  <section>
+    <h3>Why Planning Matters</h3>
+    <p>
+      After my first camping trip, I learned these crucial tips the hard way. Based on my experiences, I compiled these must-follow tips for your next adventure.
+    </p>
+
+    <h3><a href="meal-plan.html" class="plan-your-meals">Plan your meals</a></h3>
+    <h3><a href="pack-like-a-pro.html" class="pack-the-appropriate-clothing">Pack like a pro</a></h3>
+    <h3><a href="leave-no-trace.html" class="leave-no-trace">Leave no trace</a></h3>
+  </section>
+
+  <section>
+    <h3>Quick Reference Guide</h3>
+    <!-- Remove border attribute and style table in CSS -->
+    <table>
+      <tr>
+        <th>Camping Tip</th>
+        <th colspan="2">Details</th>
+      </tr>
+      <tr>
+        <td rowspan="2">Meal Planning</td>
+        <td>Prepare meals ahead</td>
+        <td>Reduces hassle at the campsite</td>
+      </tr>
+      <tr>
+        <td>Pack essentials</td>
+        <td>Bring non-perishable snacks</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h3>Camping Resources</h3>
+    <p>
+      This website is licensed under a 
+      <a href="https://creativecommons.org/licenses/by/4.0/" class="creative-commons-license-4">
+        Creative Commons Attribution 4.0 International License
+      </a>.
+    </p>
+    <p>
+      For more details, visit <span class="citation">Parks Victoria</span> – a great resource for camping tips.
+    </p>
+  </section>
+
+  <section>
+    <h3>Share Your Experience</h3>
+    <form action="submit_feedback.html" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required /><br /><br />
+
+      <label for="experience">Camping Experience:</label>
+      <textarea id="experience" name="experience" rows="4" cols="50"></textarea><br /><br />
+
+      <label>
+        <input type="checkbox" name="subscribe" value="yes" /> Subscribe to camping tips newsletter
+      </label><br /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </section>
+
+  <section>
+    <h3>Watch &amp; Listen</h3>
+    <!-- Replace video element with an iframe for YouTube video -->
+    <iframe width="400" height="600" src="https://www.youtube.com/embed/3yVfZOH76e0" 
+            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+    <br /><br />
+    <audio controls>
+      <audio controls>
+        <source src="camping-stove-29253.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>      
+  </section>
+
+  <footer>
+    <p>
+      Background picture: <cite>Nikolettamuhari</cite>, Adobe Stock (Public Domain, Adobe Stock License)
+    </p>
+    <p>
+      For more details, visit <span class="citation">Parks Victoria</span>: 
+      <a href="https://www.parks.vic.gov.au" target="_blank">parks.vic.gov.au</a>
+    </p>
+    <p>
+      Example of code formatting: <code>&lt;section&gt;...&lt;/section&gt;</code>
+    </p>
+  </footer>
+</body>
+</html>
