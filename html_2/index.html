@@ -18,7 +18,8 @@
     <a href="meal-plan.html" class="hyper-link">Plan your meals</a> |
     <a href="pack-like-a-pro.html" class="hyper-link">Pack like a pro</a> |
     <a href="leave-no-trace.html" class="hyper-link">Leave no trace</a> |
-    <a href="https://www.parks.vic.gov.au/where-to-stay/camping-for-beginners/top-tips-for-your-first-camping-trip" target="_blank" class="external-link">Learn More</a>
+    <a href="https://www.parks.vic.gov.au/where-to-stay/camping-for-beginners/top-tips-for-your-first-camping-trip" target="_blank" class="external-link">Learn More</a> |
+    <a href="reviews.html" class="hyper-link">Reviews</a>
   </nav>
 
   <section>
@@ -67,18 +68,16 @@
 
   <section>
     <h3>Share Your Experience</h3>
-    <form action="submit_feedback.html" method="post">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required /><br /><br />
-
-      <label for="experience">Camping Experience:</label>
-      <textarea id="experience" name="experience" rows="4" cols="50"></textarea><br /><br />
-
-      <label>
-        <input type="checkbox" name="subscribe" value="yes" /> Subscribe to camping tips newsletter
-      </label><br /><br />
-
-      <input type="submit" value="Submit" />
+    <form id="reviewForm">
+      <label for="rating">Rating (1-5 stars):</label>
+      <input type="number" id="rating" name="rating" min="1" max="5" step="0.1" required>
+      <label for="experience">Your camping experience:</label>
+      <textarea id="experience" name="experience" required></textarea>
+      <div class="checkbox-container">
+        <input type="checkbox" id="recommend" name="recommend">
+        <label for="recommend">I would recommend this camping experience</label>
+      </div>
+      <button type="submit">Submit Review</button>
     </form>
   </section>
 
@@ -87,13 +86,15 @@
     <!-- Replace video element with an iframe for YouTube video -->
     <iframe width="400" height="600" src="https://www.youtube.com/embed/3yVfZOH76e0" 
             title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen></iframe>
-    <br /><br />
+            allowfullscreen></iframe>  
+  </section>
+  <p>&nbsp;</p>
+  <section>
     <audio controls>
-      <audio controls>
-        <source src="camping-stove-29253.mp3" type="audio/mpeg" />
+        <source src="camping-stove-29253.mp3" type="audio/mpeg">
+        <source src="camping-stove-29253.ogg" type="audio/ogg">
         Your browser does not support the audio element.
-      </audio>      
+    </audio>      
   </section>
 
   <footer>
@@ -102,7 +103,7 @@
     </p>
     <p>
       For more details, visit <span class="citation">Parks Victoria</span>: 
-      <a href="https://www.parks.vic.gov.au" target="_blank">parks.vic.gov.au</a>
+      <a href="https://www.parks.vic.gov.au" class="external-link" target="_blank">parks.vic.gov.au</a>
     </p>
     <p>
       Example of code formatting: <code>&lt;section&gt;...&lt;/section&gt;</code>

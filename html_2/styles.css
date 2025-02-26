@@ -50,7 +50,11 @@ h6 {
   background: blue;
 }
 .hyper-link {
-  color: whitesmoke;
+  color: white;
+  font-family: inherit;
+}
+.external-link {
+  color: white;
   font-family: inherit;
 }
 img {
@@ -107,6 +111,7 @@ img {
 table {
   border-collapse: collapse;
   width: 100%;
+  background-color: white;
 }
 
 table, th, td {
@@ -116,4 +121,99 @@ table, th, td {
 
 th {
   background-color: #f2f2f2;
+}
+
+label {
+  color: white;
+  font-family: inherit;
+}
+
+input {
+  color: blue;
+  font-family: inherit;
+}
+
+textarea {
+  color: blue;
+  font-family: inherit;
+}
+
+select {
+  color: blue;
+  font-family: inherit;
+}
+
+option {
+  color: blue;
+  font-family: inherit;
+}
+
+button {
+  color: blue;
+  font-family: inherit;
+}
+
+audio {
+  color: white;
+  font-family: inherit;
+}
+
+video {
+  color: white;
+  font-family: inherit;
+}
+
+.reviews-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.review-card {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.review-card h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.review-card p {
+    color: white;
+    margin: 0.5rem 0;
+}
+
+.average-rating {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.average-rating h2 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.average-rating p {
+    color: white;
+    margin: 0;
+}
+
+.checkbox-container {
+    margin: 1rem 0;
+    color: white;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.checkbox-container label {
+    cursor: pointer;
 }
