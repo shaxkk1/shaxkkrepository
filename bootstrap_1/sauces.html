@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Sauces & Condiments - Asian Delights Market</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Asian Delights Market</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="fresh.html">Fresh Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="noodles.html">Noodles & Rice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="sauces.html">Sauces</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <label for="budget" class="text-white me-2">Budget:</label>
+                            <input type="number" id="budget" class="form-control form-control-sm d-inline-block" style="width: 100px;" placeholder="Set Budget">
+                        </div>
+                        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            Cart (<span id="cartCount">0</span>)
+                            <span class="ms-2">$<span id="cartTotal">0.00</span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <h1 class="mb-4">Sauces & Condiments</h1>
+
+        <!-- Products Grid -->
+        <div class="row g-4">
+            <!-- Soy Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://m.media-amazon.com/images/I/71zI-cIBeUS.jpg" class="card-img-top" alt="Premium Soy Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Premium Soy Sauce</h5>
+                        <p class="card-text">Traditional Japanese soy sauce</p>
+                        <p class="text-danger fw-bold">$3.99/500ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Premium Soy Sauce" data-price="3.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Light Soy Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://omnivorescookbook.com/wp-content/uploads/2016/03/230731_Light-Soy-Sauce_1.jpg" class="card-img-top" alt="Light Soy Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Light Soy Sauce</h5>
+                        <p class="card-text">Chinese light soy sauce</p>
+                        <p class="text-danger fw-bold">$2.99/500ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Light Soy Sauce" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dark Soy Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://themalamarket.com/cdn/shop/products/Zhongbadarksoysauce2021toned_2048x.jpg?v=1627417288" class="card-img-top" alt="Dark Soy Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Dark Soy Sauce</h5>
+                        <p class="card-text">Chinese dark soy sauce</p>
+                        <p class="text-danger fw-bold">$2.99/500ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Dark Soy Sauce" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sriracha -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://m.media-amazon.com/images/I/61zVOmtHZhL.jpg" class="card-img-top" alt="Sriracha Hot Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Sriracha Hot Sauce</h5>
+                        <p class="card-text">Thai-style hot sauce</p>
+                        <p class="text-danger fw-bold">$2.99/450ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Sriracha Hot Sauce" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oyster Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://m.media-amazon.com/images/I/71LYLrbJs-L.jpg" class="card-img-top" alt="Oyster Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Oyster Sauce</h5>
+                        <p class="card-text">Premium oyster flavored sauce</p>
+                        <p class="text-danger fw-bold">$3.49/500ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Oyster Sauce" data-price="3.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fish Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://ik.imagekit.io/webtactics/changs/images/Gallery/products/Changs-Fish-Sauce-280ml/Changs-Fish-Sauce-280ml-gallery-1.jpg" class="card-img-top" alt="Fish Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Fish Sauce</h5>
+                        <p class="card-text">Vietnamese fish sauce</p>
+                        <p class="text-danger fw-bold">$2.99/500ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Fish Sauce" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hoisin Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://cdn-akamai.lkk.com/-/media/hoisin---front-crop.png?h=1080&w=784&hash=AC290FEF9424E001718B6B71D14F8981" class="card-img-top" alt="Hoisin Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">Hoisin Sauce</h5>
+                        <p class="card-text">Sweet bean sauce</p>
+                        <p class="text-danger fw-bold">$3.49/450ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Hoisin Sauce" data-price="3.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chili Oil -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://theplantbasedwok.com/wp-content/uploads/2022/03/red-chili-oil-6009-scaled.jpg" class="card-img-top" alt="Chili Oil">
+                    <div class="card-body">
+                        <h5 class="card-title">Chili Oil</h5>
+                        <p class="card-text">Spicy Sichuan chili oil</p>
+                        <p class="text-danger fw-bold">$2.99/250ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Chili Oil" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Black Vinegar -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://assets.bonappetit.com/photos/57d6bfc4abffea600db60cb5/master/w_1600%2Cc_limit/chinese-black-vinegar.jpg" class="card-img-top" alt="Black Vinegar">
+                    <div class="card-body">
+                        <h5 class="card-title">Black Vinegar</h5>
+                        <p class="card-text">Chinkiang vinegar</p>
+                        <p class="text-danger fw-bold">$2.99/550ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Black Vinegar" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mirin -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://m.media-amazon.com/images/I/718wEp-JjOL.jpg" class="card-img-top" alt="Mirin">
+                    <div class="card-body">
+                        <h5 class="card-title">Mirin</h5>
+                        <p class="card-text">Sweet Japanese cooking wine</p>
+                        <p class="text-danger fw-bold">$3.49/400ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Mirin" data-price="3.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sesame Oil -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://m.media-amazon.com/images/I/71HANc-AJwL.jpg" class="card-img-top" alt="Sesame Oil">
+                    <div class="card-body">
+                        <h5 class="card-title">Sesame Oil</h5>
+                        <p class="card-text">Toasted sesame oil</p>
+                        <p class="text-danger fw-bold">$3.99/250ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Sesame Oil" data-price="3.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gochujang -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Korean_chili_pepper_paste_GOCHUJANG.jpg" class="card-img-top" alt="Gochujang">
+                    <div class="card-body">
+                        <h5 class="card-title">Gochujang</h5>
+                        <p class="card-text">Korean red chili paste</p>
+                        <p class="text-danger fw-bold">$4.99/500g</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Gochujang" data-price="4.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 50-Year Aged Soy Sauce -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://m.media-amazon.com/images/I/81cRo+cEi+L.jpg" 
+                         class="card-img-top" alt="50-Year Aged Soy Sauce">
+                    <div class="card-body">
+                        <h5 class="card-title">50-Year Aged Soy Sauce</h5>
+                        <p class="card-text">Ultra-premium traditionally fermented soy sauce aged for 50 years in ancient cedar barrels</p>
+                        <p class="text-danger fw-bold">$129.99/100ml</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="50-Year Aged Soy Sauce" data-price="129.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping Cart Offcanvas -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Shopping Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div id="cartItems" class="mb-3">
+                    <!-- Cart items will be inserted here -->
+                </div>
+                <div class="border-top pt-3">
+                    <p class="d-flex justify-content-between">
+                        <span>Subtotal:</span>
+                        <span>$<span id="subtotal">0.00</span></span>
+                    </p>
+                    <p class="d-flex justify-content-between">
+                        <span>Tax (8%):</span>
+                        <span>$<span id="tax">0.00</span></span>
+                    </p>
+                    <p class="d-flex justify-content-between fw-bold">
+                        <span>Total:</span>
+                        <span>$<span id="total">0.00</span></span>
+                    </p>
+                    <button class="btn btn-success w-100" id="checkoutBtn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

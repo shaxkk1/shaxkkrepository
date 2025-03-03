@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Fresh Products - Asian Delights Market</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Same navigation as index.html -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Asian Delights Market</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="fresh.html">Fresh Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="noodles.html">Noodles & Rice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sauces.html">Sauces</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <label for="budget" class="text-white me-2">Budget:</label>
+                            <input type="number" id="budget" class="form-control form-control-sm d-inline-block" style="width: 100px;" placeholder="Set Budget">
+                        </div>
+                        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            Cart (<span id="cartCount">0</span>)
+                            <span class="ms-2">$<span id="cartTotal">0.00</span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <h1 class="mb-4">Fresh Asian Produce</h1>
+
+        <div class="row g-4">
+            <!-- Bok Choy -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://cdn.sanity.io/images/2r0kdewr/production/feb60ef7ea8f2c81ad1a7287a17a818ca8e26e62-1500x1125.jpg" class="card-img-top" alt="Bok Choy">
+                    <div class="card-body">
+                        <h5 class="card-title">Bok Choy</h5>
+                        <p class="card-text">Fresh Chinese cabbage</p>
+                        <p class="text-danger fw-bold">$1.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Bok Choy" data-price="1.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chinese Eggplant -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.alphafoodie.com/wp-content/uploads/2022/11/Chinese-Eggplant-square.jpeg" class="card-img-top" alt="Chinese Eggplant">
+                    <div class="card-body">
+                        <h5 class="card-title">Chinese Eggplant</h5>
+                        <p class="card-text">Long purple eggplant</p>
+                        <p class="text-danger fw-bold">$2.49/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Chinese Eggplant" data-price="2.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daikon Radish -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.eatingwell.com/thmb/_yUgmXwN8pOPRxI2yXaneyJc2Ag=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/daikon-068c3678bbbc474ca14c22ad05695056.jpg" class="card-img-top" alt="Daikon Radish">
+                    <div class="card-body">
+                        <h5 class="card-title">Daikon Radish</h5>
+                        <p class="card-text">Japanese white radish</p>
+                        <p class="text-danger fw-bold">$1.79/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Daikon Radish" data-price="1.79">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thai Basil -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://whitneybond.com/wp-content/uploads/2023/04/thai-basil-7.jpeg" class="card-img-top" alt="Thai Basil">
+                    <div class="card-body">
+                        <h5 class="card-title">Thai Basil</h5>
+                        <p class="card-text">Fresh aromatic herb</p>
+                        <p class="text-danger fw-bold">$1.49/bunch</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Thai Basil" data-price="1.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chinese Chives -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.maangchi.com/wp-content/uploads/2008/02/buchu.jpg" class="card-img-top" alt="Chinese Chives">
+                    <div class="card-body">
+                        <h5 class="card-title">Chinese Chives</h5>
+                        <p class="card-text">Garlic chives</p>
+                        <p class="text-danger fw-bold">$1.99/bunch</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Chinese Chives" data-price="1.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bean Sprouts -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.organicfacts.net/wp-content/uploads/beansprout01.jpg" class="card-img-top" alt="Bean Sprouts">
+                    <div class="card-body">
+                        <h5 class="card-title">Bean Sprouts</h5>
+                        <p class="card-text">Fresh mung bean sprouts</p>
+                        <p class="text-danger fw-bold">$0.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Bean Sprouts" data-price="0.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lemongrass -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://thumbs.dreamstime.com/b/fresh-lemongrass-outdoor-market-hoi-vietnam-30290571.jpg" class="card-img-top" alt="Lemongrass">
+                    <div class="card-body">
+                        <h5 class="card-title">Lemongrass</h5>
+                        <p class="card-text">Fresh Thai herb</p>
+                        <p class="text-danger fw-bold">$1.49/bunch</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Lemongrass" data-price="1.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Water Spinach -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://ohsnapletseat.com/wp-content/uploads/2022/08/Stir-Fry-Water-Spinach-Recipe-5-540x720.jpeg" class="card-img-top" alt="Water Spinach">
+                    <div class="card-body">
+                        <h5 class="card-title">Water Spinach</h5>
+                        <p class="card-text">Morning glory/Kangkong</p>
+                        <p class="text-danger fw-bold">$1.99/bunch</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Water Spinach" data-price="1.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add after existing fresh products -->
+        <h2 class="mb-4 mt-5">Premium Meats</h2>
+        <div class="row g-4">
+            <!-- Wagyu Beef -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://grandwesternsteaks.com/media/catalog/product/cache/c4a8b97347133f8bf6df5ac55676bb3c/m/i/miyazaki_a5_wagyu_ribeye2.jpg" 
+                         class="card-img-top" alt="A5 Wagyu Beef">
+                    <div class="card-body">
+                        <h5 class="card-title">A5 Wagyu Beef</h5>
+                        <p class="card-text">Premium Japanese A5 grade wagyu beef, highly marbled</p>
+                        <p class="text-danger fw-bold">$199.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="A5 Wagyu Beef" data-price="199.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Black Silkie Chicken -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://gofflepoultry.com/wp-content/uploads/2019/05/Silkie.jpg" 
+                         class="card-img-top" alt="Black Silkie Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Black Silkie Chicken</h5>
+                        <p class="card-text">Premium black-skinned silkie chicken, perfect for soups</p>
+                        <p class="text-danger fw-bold">$89.99/whole</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Black Silkie Chicken" data-price="89.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Iberico Pork -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.gourmetfoodstore.com/images/product/large/iberico-pork-roast-recipe-114559-1S-14559.jpg" 
+                         class="card-img-top" alt="Iberico Pork Belly">
+                    <div class="card-body">
+                        <h5 class="card-title">Iberico Pork Belly</h5>
+                        <p class="card-text">Premium Spanish black pig belly, perfect for braising</p>
+                        <p class="text-danger fw-bold">$149.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Iberico Pork Belly" data-price="149.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Peking Duck -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://cravinghomecooked.com/wp-content/uploads/2024/02/peking-duck-1-19.jpg" 
+                         class="card-img-top" alt="Whole Peking Duck">
+                    <div class="card-body">
+                        <h5 class="card-title">Whole Peking Duck</h5>
+                        <p class="card-text">Premium prepared Peking duck with crispy skin</p>
+                        <p class="text-danger fw-bold">$129.99/whole</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Whole Peking Duck" data-price="129.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kobe Beef -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://i2r9g7q9.delivery.rocketcdn.me/wp-content/uploads/2018/02/kobe-sliced-1000x666.jpg" 
+                         class="card-img-top" alt="Kobe Beef">
+                    <div class="card-body">
+                        <h5 class="card-title">Authentic Kobe Beef</h5>
+                        <p class="card-text">Ultra-premium certified Kobe beef from Japan</p>
+                        <p class="text-danger fw-bold">$299.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Kobe Beef" data-price="299.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Kurobuta Pork -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://wagyushop.com/cdn/shop/products/KurobutaDoubleChop2_600x.png?v=1601918441" 
+                         class="card-img-top" alt="Kurobuta Pork">
+                    <div class="card-body">
+                        <h5 class="card-title">Kurobuta Pork Chops</h5>
+                        <p class="card-text">Japanese black berkshire pork, known for its marbling</p>
+                        <p class="text-danger fw-bold">$89.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Kurobuta Pork Chops" data-price="89.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jidori Chicken -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://wpcdn.us-midwest-1.vip.tn-cloud.net/www.honolulumagazine.com/content/uploads/data-import/18a41890/jidorichicken.jpg" 
+                         class="card-img-top" alt="Jidori Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Premium Jidori Chicken</h5>
+                        <p class="card-text">Free-range Japanese heritage chicken</p>
+                        <p class="text-danger fw-bold">$69.99/whole</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Jidori Chicken" data-price="69.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matsuzaka Beef -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://res.cloudinary.com/hz3gmuqw6/image/upload/c_fill,q_auto,w_750/f_auto/matsusaka-beef-phprPd1X3" 
+                         class="card-img-top" alt="Matsuzaka Beef">
+                    <div class="card-body">
+                        <h5 class="card-title">Matsuzaka Beef</h5>
+                        <p class="card-text">Ultra-premium Japanese beef, rival to Kobe</p>
+                        <p class="text-danger fw-bold">$259.99/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Matsuzaka Beef" data-price="259.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Same cart offcanvas as index.html -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartItems" class="mb-3">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="border-top pt-3">
+                <p class="d-flex justify-content-between">
+                    <span>Subtotal:</span>
+                    <span>$<span id="subtotal">0.00</span></span>
+                </p>
+                <p class="d-flex justify-content-between">
+                    <span>Tax (8%):</span>
+                    <span>$<span id="tax">0.00</span></span>
+                </p>
+                <p class="d-flex justify-content-between fw-bold">
+                    <span>Total:</span>
+                    <span>$<span id="total">0.00</span></span>
+                </p>
+                <button class="btn btn-success w-100" id="checkoutBtn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

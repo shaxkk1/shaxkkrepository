@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Noodles & Rice - Asian Delights Market</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Asian Delights Market</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="fresh.html">Fresh Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="noodles.html">Noodles & Rice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sauces.html">Sauces</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <label for="budget" class="text-white me-2">Budget:</label>
+                            <input type="number" id="budget" class="form-control form-control-sm d-inline-block" style="width: 100px;" placeholder="Set Budget">
+                        </div>
+                        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            Cart (<span id="cartCount">0</span>)
+                            <span class="ms-2">$<span id="cartTotal">0.00</span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <h1 class="mb-4">Noodles & Rice Products</h1>
+
+        <!-- Products Grid -->
+        <div class="row g-4">
+            <!-- Japanese Ramen -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://sudachirecipes.com/wp-content/uploads/2022/09/shoyu-ramen-sq.jpg" class="card-img-top" alt="Japanese Ramen">
+                    <div class="card-body">
+                        <h5 class="card-title">Japanese Ramen</h5>
+                        <p class="card-text">Fresh wheat noodles</p>
+                        <p class="text-danger fw-bold">$3.99/pack</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Japanese Ramen" data-price="3.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Udon Noodles -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://sudachirecipes.com/wp-content/uploads/2025/02/beef-niku-udon-thumb.png" class="card-img-top" alt="Udon Noodles">
+                    <div class="card-body">
+                        <h5 class="card-title">Udon Noodles</h5>
+                        <p class="card-text">Thick Japanese wheat noodles</p>
+                        <p class="text-danger fw-bold">$4.99/pack</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Udon Noodles" data-price="4.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Soba Noodles -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://tiffycooks.com/wp-content/uploads/2020/11/FullSizeRender-258-scaled.jpg" class="card-img-top" alt="Soba Noodles">
+                    <div class="card-body">
+                        <h5 class="card-title">Soba Noodles</h5>
+                        <p class="card-text">Buckwheat noodles</p>
+                        <p class="text-danger fw-bold">$4.99/pack</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Soba Noodles" data-price="4.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rice Noodles -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://ingoodflavor.com/wp-content/uploads/2023/03/SlowCookerChickenVermicelliSoup-IMG_6286Feat.jpg" class="card-img-top" alt="Rice Noodles">
+                    <div class="card-body">
+                        <h5 class="card-title">Rice Noodles</h5>
+                        <p class="card-text">Thin Vietnamese pho noodles</p>
+                        <p class="text-danger fw-bold">$3.49/pack</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Rice Noodles" data-price="3.49">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jasmine Rice -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.elmundoeats.com/wp-content/uploads/2023/05/Cooked-rice-in-a-plate.jpg" class="card-img-top" alt="Jasmine Rice">
+                    <div class="card-body">
+                        <h5 class="card-title">Jasmine Rice</h5>
+                        <p class="card-text">Premium Thai jasmine rice</p>
+                        <p class="text-danger fw-bold">$6.99/5lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Jasmine Rice" data-price="6.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sushi Rice -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.allrecipes.com/thmb/9oOq-hiLx0dkcLNKQDJDZMrXy1w=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/5421868-2c5f5ae9fd744db7baf6ad5482692295.jpg" class="card-img-top" alt="Sushi Rice">
+                    <div class="card-body">
+                        <h5 class="card-title">Sushi Rice</h5>
+                        <p class="card-text">Japanese short-grain rice</p>
+                        <p class="text-danger fw-bold">$7.99/5lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Sushi Rice" data-price="7.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glass Noodles -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://recipes.net/wp-content/uploads/portal_files/recipes_net_posts/2021-10/glass-noodle-stir-fry-recipe-1024x546.jpg" class="card-img-top" alt="Glass Noodles">
+                    <div class="card-body">
+                        <h5 class="card-title">Glass Noodles</h5>
+                        <p class="card-text">Korean sweet potato noodles</p>
+                        <p class="text-danger fw-bold">$3.99/pack</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Glass Noodles" data-price="3.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brown Rice -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://allvegconsidered.com/wp-content/uploads/2023/11/how-to-cook-brown-rice-13-500x500.jpg" class="card-img-top" alt="Brown Rice">
+                    <div class="card-body">
+                        <h5 class="card-title">Brown Rice</h5>
+                        <p class="card-text">Organic whole grain rice</p>
+                        <p class="text-danger fw-bold">$7.99/5lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Brown Rice" data-price="7.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Egg Noodles -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://www.thecountrycook.net/wp-content/uploads/2022/11/thumbnail-Cafeteria-Noodles-scaled.jpg" class="card-img-top" alt="Egg Noodles">
+                    <div class="card-body">
+                        <h5 class="card-title">Egg Noodles</h5>
+                        <p class="card-text">Chinese style egg noodles</p>
+                        <p class="text-danger fw-bold">$2.99/pack</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Egg Noodles" data-price="2.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Rice -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://vitaclaychef.com/cdn/shop/articles/206218714_4453288884716446_8248087545229856584_n_1600x.jpg?v=1625017506" class="card-img-top" alt="Sticky Rice">
+                    <div class="card-body">
+                        <h5 class="card-title">Sticky Rice</h5>
+                        <p class="card-text">Thai glutinous rice</p>
+                        <p class="text-danger fw-bold">$6.99/3lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="Sticky Rice" data-price="6.99">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping Cart Offcanvas -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Shopping Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div id="cartItems" class="mb-3">
+                    <!-- Cart items will be inserted here -->
+                </div>
+                <div class="border-top pt-3">
+                    <p class="d-flex justify-content-between">
+                        <span>Subtotal:</span>
+                        <span>$<span id="subtotal">0.00</span></span>
+                    </p>
+                    <p class="d-flex justify-content-between">
+                        <span>Tax (8%):</span>
+                        <span>$<span id="tax">0.00</span></span>
+                    </p>
+                    <p class="d-flex justify-content-between fw-bold">
+                        <span>Total:</span>
+                        <span>$<span id="total">0.00</span></span>
+                    </p>
+                    <button class="btn btn-success w-100" id="checkoutBtn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
