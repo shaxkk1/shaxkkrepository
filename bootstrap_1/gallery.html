@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Product Gallery - Asian Delights Market</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .gallery-img {
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+        .modal-img {
+            max-height: 80vh;
+            width: auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Asian Delights Market</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="fresh.html">Fresh Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="noodles.html">Noodles & Rice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sauces.html">Sauces</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="snacks.html">Snacks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="desserts.html">Desserts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pickup.html">Pickup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="gallery.html">Gallery</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <label for="budget" class="text-white me-2">Budget:</label>
+                            <input type="number" id="budget" class="form-control form-control-sm d-inline-block" style="width: 100px;" placeholder="Set Budget">
+                        </div>
+                        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Gallery Header -->
+        <h2 class="mb-4">Product Gallery</h2>
+
+        <!-- Gallery Filter -->
+        <div class="mb-4">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-danger active" data-filter="all">All</button>
+                <button type="button" class="btn btn-danger" data-filter="fresh">Fresh Products</button>
+                <button type="button" class="btn btn-danger" data-filter="noodles">Noodles & Rice</button>
+                <button type="button" class="btn btn-danger" data-filter="sauces">Sauces</button>
+                <button type="button" class="btn btn-danger" data-filter="snacks">Snacks</button>
+                <button type="button" class="btn btn-danger" data-filter="desserts">Desserts</button>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="row g-4" id="gallery">
+            <!-- Images will be dynamically loaded here -->
+        </div>
+
+        <!-- Image Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="" class="modal-img" alt="">
+                        <p class="mt-3 product-price"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping Cart Offcanvas -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Shopping Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div id="cartItems" class="mb-3">
+                    <!-- Cart items will be inserted here -->
+                </div>
+                <div class="border-top pt-3">
+                    <p class="d-flex justify-content-between">
+                        <span>Subtotal:</span>
+                        <span>$<span id="subtotal">0.00</span></span>
+                    </p>
+                    <p class="d-flex justify-content-between">
+                        <span>Tax (8%):</span>
+                        <span>$<span id="tax">0.00</span></span>
+                    </p>
+                    <p class="d-flex justify-content-between fw-bold">
+                        <span>Total:</span>
+                        <span>$<span id="total">0.00</span></span>
+                    </p>
+                    <button class="btn btn-success w-100" id="checkoutBtn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-danger text-white text-center py-3 mt-5">
+            <div class="container">
+                <small>&copy; 2025 Sean Dao Productions</small>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Gallery functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const gallery = document.getElementById('gallery');
+            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+            
+            // Create gallery items for Fresh Products
+            const freshProducts = [
+                { name: 'Ground Pork', price: 4.99, image: 'https://www.olgainthekitchen.com/wp-content/uploads/2017/06/DSC_0896.jpg' },
+                { name: 'Chicken Thighs', price: 3.99, image: 'https://theyumyumclub.com/wp-content/uploads/2019/02/CCT-1.jpg' },
+                { name: 'Pork Belly', price: 6.99, image: 'https://kwokspots.com/wp-content/uploads/2024/08/crispy-pork-bellyl-2.png' },
+                { name: 'Beef Chuck', price: 7.99, image: 'https://bakeitwithlove.com/wp-content/uploads/2023/01/What-Is-Chuck-Steak-sq.jpg' },
+                { name: 'Chicken Wings', price: 3.49, image: 'https://www.loveandotherspices.com/wp-content/uploads/2023/06/air-fryer-bbq-chicken-wings-featured.jpg' }
+            ];
+
+            // Create gallery items for Noodles
+            const noodleProducts = [
+                { name: 'Udon Noodles', price: 2.99, image: 'https://sudachirecipes.com/wp-content/uploads/2025/02/beef-niku-udon-thumb.png' },
+                { name: 'Rice Noodles', price: 1.99, image: 'https://ingoodflavor.com/wp-content/uploads/2023/03/SlowCookerChickenVermicelliSoup-IMG_6286Feat.jpg' },
+                { name: 'Ramen Noodles', price: 2.49, image: 'https://sudachirecipes.com/wp-content/uploads/2022/09/shoyu-ramen-sq.jpg' },
+                { name: 'Soba Noodles', price: 3.49, image: 'https://tiffycooks.com/wp-content/uploads/2020/11/FullSizeRender-258-scaled.jpg' }
+            ];
+
+            // Create gallery items for Sauces
+            const sauceProducts = [
+                { name: 'Soy Sauce', price: 3.99, image: 'https://m.media-amazon.com/images/I/71zI-cIBeUS.jpg' },
+                { name: 'Oyster Sauce', price: 4.99, image: 'https://m.media-amazon.com/images/I/71LYLrbJs-L.jpg' },
+                { name: 'Hoisin Sauce', price: 3.99, image: 'https://cdn-akamai.lkk.com/-/media/hoisin---front-crop.png?h=1080&w=784&hash=AC290FEF9424E001718B6B71D14F8981' },
+                { name: 'Sriracha Sauce', price: 2.99, image: 'https://m.media-amazon.com/images/I/61zVOmtHZhL.jpg' }
+            ];
+
+            // Create gallery items for Snacks
+            const snackProducts = [
+                { name: 'Hi-Chew Candy', price: 2.49, image: 'https://www.hi-chew.com/cdn/shop/files/FantasyMixPage4.png?v=1722349047&width=1445' },
+                { name: 'Yan Yan', price: 1.99, image: 'https://m.media-amazon.com/images/I/510sSFk4SUL._AC_UF1000,1000_QL80_.jpg' },
+                { name: 'Japanese Mochi', price: 4.99, image: 'https://www.wandercooks.com/wp-content/uploads/2022/10/daifuku-mochi-recipe-ft-1.jpg' },
+                { name: 'Want Want Rice Crackers', price: 2.99, image: 'https://i.ebayimg.com/images/g/5dgAAOSwU8hY7cRo/s-l400.jpg' },
+                { name: 'Haw Flakes', price: 1.49, image: 'https://www.snackhawaii.com/cdn/shop/products/Haw_Flakes_b1676630-1ba7-4cfa-a456-39dda9c43d37_934x700.JPG?v=1570222767' },
+                { name: 'Lotte Pepero', price: 2.49, image: 'https://m.media-amazon.com/images/I/51vJUSs6pIL.jpg' }
+            ];
+
+            // Create gallery items for Desserts
+            const dessertProducts = [
+                { name: 'Matcha Ice Cream', price: 5.99, image: 'https://whatgreatgrandmaate.com/wp-content/uploads/2023/07/matcha-ice-cream-sq.jpg' },
+                { name: 'Red Bean Buns', price: 3.99, image: 'https://thewoksoflife.com/wp-content/uploads/2020/11/red-bean-buns-13.jpg' },
+                { name: 'Egg Custard Tarts', price: 4.99, image: 'https://omnivorescookbook.com/wp-content/uploads/2021/04/200918_Hong-Kong-Egg-Tart_550.jpg' },
+                { name: 'Mango Pudding', price: 3.49, image: 'https://tiffycooks.com/wp-content/uploads/2021/07/Screen-Shot-2021-07-26-at-12.37.36-AM.png' },
+                { name: 'Sesame Balls', price: 4.49, image: 'https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_auto,w_1500,ar_3:2/k%2FPhoto%2FRecipe%20Ramp%20Up%2F2021-12-Sesame-Balls%2Fimage' },
+                { name: 'Mochi Ice Cream Variety Pack', price: 8.99, image: 'https://www.mashed.com/img/gallery/these-mochi-ice-cream-boxes-have-costco-shoppers-divided/l-intro-1631713480.jpg' },
+                { name: 'Red Bean Mochi Ice Cream', price: 7.99, image: 'https://www.mikawayamochi.com/wp-content/uploads/2020/06/042820-Mika-RedBean-3D-350x455-1.png' },
+                { name: 'Black Sesame Mochi Ice Cream', price: 7.99, image: 'https://www.mikawayamochi.com/wp-content/uploads/2020/06/042820-Mika-BlackSesame-3D-350x455-1.png' },
+                { name: 'Traditional Lotus Mooncake', price: 6.99, image: 'https://images.squarespace-cdn.com/content/v1/62bf67c4d370c33d137d8f5c/58dad562-61aa-4ad0-9920-20a00e6029d6/Classic+lotus+seed+paste+filling+mooncakes.jpg' },
+                { name: 'Red Bean Mooncake', price: 5.99, image: 'https://thewoksoflife.com/wp-content/uploads/2022/09/classic-mooncakes-red-bean-24.jpg' },
+                { name: 'Premium Mooncake Gift Box', price: 29.99, image: 'https://i0.wp.com/mooncakemarketplace.com/wp-content/uploads/2024/08/Premium-Box-Promotion.jpg?fit=575%2C370&ssl=1' },
+                { name: 'Snow Skin Mooncake', price: 7.99, image: 'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2023/7/17/fnk_SNOW_SKIN_MOONCAKES_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1689609653320.webp' }
+            ];
+
+            // Function to add products to gallery
+            function addToGallery(products, category) {
+                products.forEach(product => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3';
+                    col.dataset.category = category;
+                    
+                    col.innerHTML = `
+                        <div class="card h-100">
+                            <img src="${product.image}" 
+                                 class="card-img-top gallery-img" 
+                                 alt="${product.name}"
+                                 data-name="${product.name}"
+                                 data-price="${product.price}"
+                                 data-category="${category}">
+                            <div class="card-body">
+                                <h6 class="card-title">${product.name}</h6>
+                                <p class="card-text text-danger">$${product.price.toFixed(2)}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    gallery.appendChild(col);
+                });
+            }
+
+            // Add all products to gallery
+            addToGallery(freshProducts, 'fresh');
+            addToGallery(noodleProducts, 'noodles');
+            addToGallery(sauceProducts, 'sauces');
+            addToGallery(snackProducts, 'snacks');
+            addToGallery(dessertProducts, 'desserts');
+
+            // Filter functionality
+            document.querySelectorAll('[data-filter]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    // Update active button
+                    document.querySelectorAll('[data-filter]').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Filter gallery items
+                    document.querySelectorAll('#gallery > div').forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Modal functionality
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function() {
+                    const modalImg = document.querySelector('.modal-img');
+                    const modalTitle = document.querySelector('.modal-title');
+                    const modalPrice = document.querySelector('.product-price');
+                    
+                    modalImg.src = this.src;
+                    modalTitle.textContent = this.dataset.name;
+                    modalPrice.textContent = `Price: $${parseFloat(this.dataset.price).toFixed(2)}`;
+                    
+                    modal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

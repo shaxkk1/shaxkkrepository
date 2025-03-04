@@ -196,4 +196,16 @@ h2:after {
 
 .card-body > .d-flex {
     margin-top: auto;
+}
+
+/* More specific selector for active link */
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #ffd700 !important;  /* Bright gold color */
+    font-weight: bold;
+    text-shadow: 0 0 1px rgba(255,255,255,0.5);
+}
+
+/* Hover effect for non-active links */
+.navbar-dark .navbar-nav .nav-link:not(.active):hover {
+    color: rgba(255,255,255,0.9) !important;
 } 
