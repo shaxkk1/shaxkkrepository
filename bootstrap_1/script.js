@@ -21,18 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Create cart icon in navbar if it doesn't exist
-    const navbar = document.querySelector('.navbar-nav');
-    const cartElement = document.createElement('li');
-    cartElement.className = 'nav-item';
-    cartElement.innerHTML = `
-        <a class="nav-link" href="#" id="cartCounter">
-            Cart (0)
-            <span class="badge bg-warning text-dark rounded-pill ms-1">0</span>
-        </a>
-    `;
-    navbar.appendChild(cartElement);
-
     // Add to cart functionality
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('add-to-cart')) {
@@ -341,7 +329,8 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: 'Chicken Thighs', price: 3.99, image: 'https://theyumyumclub.com/wp-content/uploads/2019/02/CCT-1.jpg' },
             { name: 'Pork Belly', price: 6.99, image: 'https://kwokspots.com/wp-content/uploads/2024/08/crispy-pork-bellyl-2.png' },
             { name: 'Beef Chuck', price: 7.99, image: 'https://bakeitwithlove.com/wp-content/uploads/2023/01/What-Is-Chuck-Steak-sq.jpg' },
-            { name: 'Chicken Wings', price: 3.49, image: 'https://www.loveandotherspices.com/wp-content/uploads/2023/06/air-fryer-bbq-chicken-wings-featured.jpg' }
+            { name: 'Chicken Wings', price: 3.49, image: 'https://www.loveandotherspices.com/wp-content/uploads/2023/06/air-fryer-bbq-chicken-wings-featured.jpg' },
+            { name: '70-Day Dry Aged Beef', price: 70000.00, image: 'images/dry-aged-beef.jpg' }
         ],
         noodles: [
             { name: 'Udon Noodles', price: 2.99, image: 'https://sudachirecipes.com/wp-content/uploads/2025/02/beef-niku-udon-thumb.png' },
@@ -456,12 +445,27 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateOrderSummary() {
         const orderSummary = document.getElementById('orderSummary');
         const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-        const cartTotal = parseFloat(localStorage.getItem('cartTotal') || '0');
+        let cartTotal = parseFloat(localStorage.getItem('cartTotal') || '0');
+        
+        // Calculate priority pickup fee if selected
+        const priorityPickup = document.getElementById('priorityPickup');
+        let priorityFee = 0;
+        if (priorityPickup && priorityPickup.checked) {
+            // Assume 1 item = 1 lb for simplicity
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            priorityFee = totalItems * 6.00;
+            cartTotal += priorityFee;
+        }
 
         let summaryHTML = '<ul class="list-unstyled">';
         cartItems.forEach(item => {
             summaryHTML += `<li>${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</li>`;
         });
+        
+        if (priorityFee > 0) {
+            summaryHTML += `<li class="text-danger">Priority Pickup Fee - $${priorityFee.toFixed(2)}</li>`;
+        }
+        
         summaryHTML += `</ul><hr><strong>Total: $${cartTotal.toFixed(2)}</strong>`;
         orderSummary.innerHTML = summaryHTML;
         
@@ -551,11 +555,67 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add Gallery link to navbar
-    const galleryLink = document.createElement('li');
-    galleryLink.className = 'nav-item';
-    galleryLink.innerHTML = `
-        <a class="nav-link" href="gallery.html">Gallery</a>
-    `;
-    navbar.appendChild(galleryLink);
+    // Add event listener for priority pickup checkbox
+    if (document.getElementById('priorityPickup')) {
+        document.getElementById('priorityPickup').addEventListener('change', function() {
+            updateOrderSummary();
+        });
+    }
 }); 
+
+// Add this to your existing document.addEventListener('click') function
+document.addEventListener('click', function(e) {
+    // Keep your existing code
+    if (e.target.classList.contains('add-to-cart')) {
+        // ... existing code ...
+    }
+    
+    // Add this new condition for deal buttons
+    if (e.target.classList.contains('deal-button')) {
+        const dealName = e.target.dataset.name;
+        const dealPrice = parseFloat(e.target.dataset.price);
+        const dealQuantity = parseInt(e.target.dataset.quantity || 1);
+        
+        addToCart(dealName, dealPrice, dealQuantity);
+    }
+});
+
+// Add this helper function for direct deal clicks
+window.addDealToCart = function(name, price, quantity = 1) {
+    addToCart(name, price, quantity);
+};
+
+// Deal Claim Functionality
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        const name = this.dataset.name;
+        const price = parseFloat(this.dataset.price);
+        const quantityInput = this.previousElementSibling;
+        const quantity = parseInt(quantityInput.value);
+        
+        // Add item to cart
+        addToCart(name, price, quantity);
+        
+        // Display message
+        alert(`Added ${quantity} of ${name} to cart!`);
+    });
+});
+
+// Function to add item to cart
+function addToCart(name, price, quantity) {
+    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItem = cartItems.find(item => item.name === name);
+    
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cartItems.push({
+            name: name,
+            price: price,
+            quantity: quantity
+        });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    updateCart();
+}

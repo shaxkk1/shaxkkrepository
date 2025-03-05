@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Same navigation as index.html -->
+        <!-- Replace the existing navigation section -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-4">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.html">Asian Delights Market</a>
@@ -41,6 +41,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="gallery.html">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="advertisement.html">Deals</a>
                         </li>
                     </ul>
                     <div class="d-flex align-items-center">
@@ -359,7 +362,23 @@
                     </div>
                 </div>
             </div>
-
+            <!-- Add this product card to the fresh products section -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100">
+                    <img src="https://thomasjosephbutchery.co.uk/cdn/shop/products/70-day-dry-aged-uk-wagyu-bone-in-sirloin-897166_720x.jpg?v=1643791154" class="card-img-top" alt="70-Day Dry Aged Beef">
+                    <div class="card-body">
+                        <h5 class="card-title">70-Day Dry Aged Beef</h5>
+                        <p class="card-text">Premium dry-aged ribeye with intense flavor and exceptional tenderness. Aged in controlled conditions for 70 days.</p>
+                        <p class="text-danger fw-bold">$70,000.00/lb</p>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control me-2" value="1" min="1" style="width: 70px;">
+                            <button class="btn btn-danger add-to-cart" data-name="70-Day Dry Aged Beef" data-price="70000.00">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <h2 class="mb-4 mt-5">Regular Meats</h2>
             <div class="row g-4"></div>
             <!-- Ground Pork -->

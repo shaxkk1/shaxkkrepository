@@ -58,6 +58,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="gallery.html">Gallery</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="advertisement.html">Deals</a>
+                        </li>
                     </ul>
                     <div class="d-flex align-items-center">
                         <div class="me-3">
@@ -65,7 +68,8 @@
                             <input type="number" id="budget" class="form-control form-control-sm d-inline-block" style="width: 100px;" placeholder="Set Budget">
                         </div>
                         <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                            Cart
+                            Cart (<span id="cartCount">0</span>)
+                            <span class="ms-2">$<span id="cartTotal">0.00</span></span>
                         </button>
                     </div>
                 </div>

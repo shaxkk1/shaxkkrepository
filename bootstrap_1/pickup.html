@@ -39,6 +39,12 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="pickup.html">Pickup</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="gallery.html">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="advertisement.html">Deals</a>
+                        </li>
                     </ul>
                     <div class="d-flex align-items-center">
                         <div class="me-3">
@@ -46,7 +52,8 @@
                             <input type="number" id="budget" class="form-control form-control-sm d-inline-block" style="width: 100px;" placeholder="Set Budget">
                         </div>
                         <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                            Cart
+                            Cart (<span id="cartCount">0</span>)
+                            <span class="ms-2">$<span id="cartTotal">0.00</span></span>
                         </button>
                     </div>
                 </div>
@@ -127,6 +134,12 @@
                                 <div id="orderSummary" class="border p-3 rounded">
                                     <!-- Order items will be displayed here -->
                                 </div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="priorityPickup">
+                                <label class="form-check-label" for="priorityPickup">
+                                    Priority Pickup (+$6.00/lb) - Skip the line!
+                                </label>
                             </div>
                             <button type="submit" class="btn btn-danger">Confirm Pickup</button>
                         </form>
