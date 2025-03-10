@@ -1,13 +1,39 @@
+/* Centralized CSS Management with External Stylesheets */
+
+
+/* Enhance typography for better readability */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 /* Reset some default styles */
 body, h1, h2, h3, h4, h5, h6, p, ul, li {
     margin: 0;
     padding: 0;
 }
 
+/* General styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    /* font-family: Arial, sans-serif; */
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4; /* Enhance visual appeal for user engagement */
     color: #333;
+    line-height: 1.6;
+}
+
+/* Enhance visual appeal for user engagement */
+.hero-section {
+    background-image: url('https://via.placeholder.com/150'); /* Add background-image */
+    background-size: cover;
+    background-position: center;
+    text-align: center; /* Center text */
+    padding: 100px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+h1, h2, h3 {
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .container {
@@ -17,8 +43,10 @@ body {
     padding: 0 15px;
 }
 
+
 /* Navigation Bar */
 .navbar {
+    /* Target specific elements for precise styling */
     background-color: #dc3545; /* Red, similar to Bootstrap danger */
     padding: 1rem 0;
 }
@@ -51,12 +79,11 @@ body {
 .hero-section {
     margin-bottom: 3rem;
     border-radius: 10px;
-    overflow: hidden;
-    position: relative;
 }
 
 .hero-section img {
     width: 100%;
+    /* Structure layout effectively for readability */
     height: 400px;
     object-fit: cover;
 }
@@ -70,13 +97,16 @@ body {
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.5);
+    /* Structure layout effectively for readability */
     color: white;
     padding: 20px;
 }
 
 .hero-section h1 {
+    /* Enhance typography for better readability */
     font-weight: bold;
 }
+
 
 /* Featured Section */
 .featured-section {
@@ -113,15 +143,59 @@ body {
     margin-top: 3rem;
 }
 
+/* Enhance visual appeal for user engagement */
+.military-branches ul {
+    background-color: #fff; /* Example background color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    list-style-type: none; /* Removes the default bullets */
+}
+
+/* Enhance visual appeal for user engagement */
+.military-branches li {
+    margin-bottom: 10px;
+}
+
+/* Structure layout effectively for readability */
+#searchSection {
+    margin-top: 20px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* Structure layout effectively for readability */
+#veteranSection {
+    margin: 10px;
+    padding: 10px;
+}
+
 /* Responsive adjustments */
+/* Optimize for all devices for universal access */
 @media (max-width: 768px) {
+    /* Mobile styles */
+    .hero-section img {
+        height: 200px; /* Smaller hero image height */
+    }
     .navbar-nav {
         text-align: center;
     }
     .navbar-nav .nav-link {
         margin: 10px 0;
     }
+}
+
+/* Optimize for all devices for universal access */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Tablet styles */
     .hero-section img {
-        height: 300px;
+        height: 300px; /* Tablet hero image height */
+    }
+}
+/* Optimize for all devices for universal access */
+@media (min-width: 1025px) {
+    /* Desktop styles */
+    body {
+      background-color: #e0e0e0; 
     }
 }

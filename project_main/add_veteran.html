@@ -8,6 +8,20 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Veteran Management</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="add_veteran.html">Add Veteran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="view_veterans.html">View Veterans</a></li>
+                    <li class="nav-item"><a class="nav-link" href="update_veteran.html">Update Veteran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="delete_veteran.html">Delete Veteran</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container mt-5">
         <div class="card">
             <div class="card-header bg-primary text-white">
@@ -36,12 +50,12 @@
                         <input type="text" class="form-control" id="rank" required>
                     </div>
                     <div class="mb-3">
-                        <label for="enlistmentDate" class="form-label">Date of Enlistment</label>
-                        <input type="date" class="form-control" id="enlistmentDate" required>
+                        <label for="birthDate" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="birthDate" required>
                     </div>
                     <div class="mb-3">
-                        <label for="separationDate" class="form-label">Date of Separation</label>
-                        <input type="date" class="form-control" id="separationDate">
+                        <label for="deathDate" class="form-label">Date of Death</label>
+                        <input type="date" class="form-control" id="deathDate">
                     </div>
                     <div class="mb-3">
                         <label for="awards" class="form-label">Awards</label>
@@ -58,11 +72,12 @@
                             <option value="Retired">Retired</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Veteran</button>
+                    <button type="submit" class="btn btn-primary" id="addButton">Add Veteran</button>
                 </form>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
