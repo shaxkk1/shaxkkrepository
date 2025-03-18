@@ -3,61 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Veteran</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta name="description" content="Update veteran information in the Bethel Cemetery Database">
+    <meta name="keywords" content="veterans, military, database, cemetery, memorial, update">
+    <title>Update Veteran - Bethel Cemetery Database</title>
+    <main>
+        <img src="data:image/jpeg;base64,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" alt="Update Veteran" class="img-fluid">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>    
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Veterans</a>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-flag-fill me-2"></i>
+                Bethel Cemetery Veteran Database
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="add_veteran.html">Add Veteran</a></li>
-                    <li class="nav-item"><a class="nav-link" href="view_veterans.html">View Veterans</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="update_veteran.html">Update Veteran</a></li>
-                    <li class="nav-item"><a class="nav-link" href="delete_veteran.html">Delete Veteran</a></li>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add_veteran.html"><i class="bi bi-person-plus"></i> Add Veteran</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view_veterans.html"><i class="bi bi-table"></i> View Veterans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="update_veteran.html"><i class="bi bi-pencil"></i> Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="delete_veteran.html"><i class="bi bi-trash"></i> Delete</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    
-    <div class="container mt-5">
-        <h2 class="mb-4">Update Veteran Information</h2>
-        <form>
-            <div class="mb-3">
-                <label for="veteranName" class="form-label">Veteran's Name</label>
-                <input type="text" class="form-control" id="veteranName" placeholder="Enter Veteran's Name">
-            </div>
-            <div class="mb-3">
-                <label for="branch" class="form-label">Branch</label>
-                <input type="text" class="form-control" id="branch" placeholder="Enter Branch">
-            </div>
-            <div class="mb-3">
-                <label for="rank" class="form-label">Rank</label>
-                <input type="text" class="form-control" id="rank" placeholder="Enter Rank">
-            </div>
-            <div class="mb-3">
-                <label for="enlistmentDate" class="form-label">Date of Enlistment</label>
-                <input type="date" class="form-control" id="enlistmentDate">
-            </div>
-            <div class="mb-3">
-                <label for="separationDate" class="form-label">Date of Separation</label>
-                <input type="date" class="form-control" id="separationDate">
-            </div>
-            <div class="mb-3">
-                <label for="awards" class="form-label">Awards</label>
-                <textarea class="form-control" id="awards" rows="3" placeholder="Enter Awards"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="currentStatus" class="form-label">Current Status</label>
-                <input type="text" class="form-control" id="currentStatus" placeholder="Enter Current Status">
-            </div>
-            <button type="submit" class="btn btn-primary">Update Veteran</button>
-        </form>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Header Section -->
+    <header class="bg-light py-4">
+    </main>
+        <div class="container">
+            <h1 class="text-center mb-4">Update Veteran Information</h1>
+            <p class="text-center text-muted">Modify existing veteran records</p>
+        </div>
+    </header>
+
+    <!-- Update Form Section -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form id="updateVeteranForm">
+                                <!-- Personal Information -->
+                                <h3 class="h5 mb-4">Update Information</h3>
+                                <div class="mb-3">
+                                    <label for="oldVeteranName" class="form-label">Current Veteran Name</label>
+                                    <input type="text" class="form-control" id="oldVeteranName" placeholder="Current Veteran Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newVeteranName" class="form-label">New Veteran Name</label>
+                                    <input type="text" class="form-control" id="newVeteranName" placeholder="New Veteran Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newVeteranDOB" class="form-label">New Date of Birth</label>
+                                    <input type="date" class="form-control" id="newVeteranDOB" placeholder="New Date of Birth" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newVeteranDOD" class="form-label">New Date of Death</label>
+                                    <input type="date" class="form-control" id="newVeteranDOD" placeholder="New Date of Death">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newVeteranRank" class="form-label">New Rank</label>
+                                    <input type="text" class="form-control" id="newVeteranRank" placeholder="New Rank" required>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-save me-2"></i>Update Veteran
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Bethel Cemetery Veteran Database</h5>
+                    <p class="mb-0">Preserving the memory of those who served</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        <small>&copy; 2024 Dao Productions. All rights reserved.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('updateVeteranForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const oldName = document.getElementById('oldVeteranName').value;
+            const newName = document.getElementById('newVeteranName').value;
+            const newDOB = document.getElementById('newVeteranDOB').value;
+            const newDOD = document.getElementById('newVeteranDOD').value;
+            const newRank = document.getElementById('newVeteranRank').value;
+            let veterans = JSON.parse(localStorage.getItem('veterans')) || [];
+            const index = veterans.findIndex(veteran => veteran.name === oldName);
+            if (index !== -1) {
+                veterans[index] = { name: newName, dob: newDOB, dod: newDOD, rank: newRank };
+                localStorage.setItem('veterans', JSON.stringify(veterans));
+                alert('Veteran updated successfully!');
+            } else {
+                alert('Veteran not found!');
+            }
+        });
+    </script>
 </body>
 </html>

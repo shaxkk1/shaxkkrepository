@@ -3,199 +3,180 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bethel Cemetery Veteran Database</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="description" content="Bethel Cemetery Veteran Database - Honoring and preserving the legacy of our veterans">
+    <meta name="keywords" content="veterans, military, database, cemetery, memorial">
+    <title>Bethel Cemetery Veterans Database</title>
+    <main>
+        <img src="data:image/jpeg;base64,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" alt="Veterans Memorial" class="img-fluid">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
   </head>
-  <script src="script.js"></script>
+  
   <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div class="container">
-        <a class="navbar-brand" href="index.html" title="Go to the main page">Bethel Cemetery Veteran Database</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          title="Toggle navigation menu"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <i class="bi bi-flag-fill me-2"></i>
+          Bethel Cemetery Veteran Database
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" href="index.html"><i class="bi bi-house-door"></i> Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="add_veteran.html">Add Veteran</a>
+              <a class="nav-link" href="add_veteran.html"><i class="bi bi-person-plus"></i> Add Veteran</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="view_veterans.html" target="_blank">View Veterans</a>
+              <a class="nav-link" href="view_veterans.html"><i class="bi bi-table"></i> View Veterans</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="update_veteran.html" title="Update Veteran's information">Update Veteran</a>
+              <a class="nav-link" href="update_veteran.html"><i class="bi bi-pencil"></i> Update</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="delete_veteran.html" title="Delete a veteran">Delete Veteran</a>
+              <a class="nav-link" href="delete_veteran.html"><i class="bi bi-trash"></i> Delete</a>
             </li>
           </ul>
         </div>
       </div>
-      <div>
-        <audio controls src="audio.mp3" title="Play audio">
-          Your browser does not support the audio element.
-        </audio>
     </nav>
-    
-    <header class="bg-light text-center py-5">
+
+    <!-- Hero Section -->
+    <header class="hero-section text-center py-5">
+        <video controls>
+            <source src="https://www.youtube.com/watch?v=wcnQJd_XRQQ" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <audio controls>
+            <source src="mixkit-war-field-explosion-1702.wav" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
       <div class="container">
-        <h1 class="display-4">Welcome to the Veteran Database</h1>
-        <p class="lead">Honoring those who served</p>
-        <img
-          src="https://media.istockphoto.com/id/1398848398/photo/usa-army-soldiers-saluting-on-a-background-of-usa-flag-greeting-card-for-veterans-day.jpg?s=612x612&w=0&k=20&c=IBGcvTLEoTZ4nqBNFTTdy5MgONUryPGLKkSFVh9vajw="
-          alt="Placeholder Image"
-          class="img-fluid rounded mx-auto d-block"
-          style="max-width: 500px;"
-          width="500"
-          height="300"
-        />
-      </div>
-    </header>
-    <section>
-      <h3>Watch &amp; Listen</h3>
-      <!-- Replace video element with an iframe for YouTube video -->
-      <iframe width="400" height="600" src="https://www.youtube.com/embed/Z8JsWCYEKI8" 
-              title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>  
-    </section>
-    <p>&nbsp;</p>
-    <section>
-      <audio controls>
-          <source src="mixkit-war-field-explosion-1702.wav" type="audio/mpeg">
-          <source src="mixkit-war-field-explosion-1702.ogg" type="audio/ogg">
-          Your browser does not support the audio element.
-      </audio>      
-      </div>
-    </header>
-
-
-    <div id="clock" class="text-center mt-4"></div>
-    
-    <div id="veteranCount"></div>
-    <div id="result"></div>
-
-    <section class="py-5">
-        <div class="container" id="WhyUseDatabase">
-            <h2 class="text-center mb-4">Why Use the Veteran Database?</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Easy Access</h5>
-                            <p class="card-text">Quickly find the information you need.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Detailed Records</h5>
-                            <p class="card-text">Comprehensive data on each veteran.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">User-Friendly</h5>
-                            <p class="card-text">Designed for simple navigation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <form>
-              <div class="mb-3">
-                <label for="veteranName" class="form-label">Veteran Name:</label>
-                <input type="text" class="form-control" id="veteranName" name="veteranName" placeholder="Enter veteran's full name" required>
-              </div>
-            
-              <div class="mb-3">
-                <label for="biography" class="form-label">Biography:</label>
-                <textarea class="form-control" id="biography" name="biography" rows="3" placeholder="Enter a brief biography for the veteran"></textarea>
-              </div>
-            
-              <div class="mb-3">
-                <input type="checkbox" class="form-check-input" id="privacyAgreement" name="privacyAgreement">
-                <label class="form-check-label" for="privacyAgreement">I agree to the privacy terms.</label>
-              </div>
-            
-              <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-            </form>
-
+        <h1 class="display-4 mb-4">Welcome to the Veteran Database</h1>
+        <p class="lead mb-4">Honoring Those Who Served Our Nation</p>
+        <div class="hero-buttons">
+          <a href="add_veteran.html" class="btn btn-primary btn-lg me-3">
+            <i class="bi bi-person-plus"></i> Add Veteran
+          </a>
+          <a href="view_veterans.html" class="btn btn-secondary btn-lg">
+            <i class="bi bi-search"></i> Search Records
+          </a>
         </div>
-        
-        <div id="databaseStatus"></div>
+      </div>
+    </header>
 
+    <!-- Features Section -->
+    <section class="features py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5">Database Features</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-search display-4 text-primary mb-3"></i>
+                <h3 class="card-title h5">Easy Search</h3>
+                <p class="card-text">Quickly find veteran records with our advanced search system.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-shield-check display-4 text-primary mb-3"></i>
+                <h3 class="card-title h5">Secure Data</h3>
+                <p class="card-text">Your veterans' information is protected with modern security.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-clock-history display-4 text-primary mb-3"></i>
+                <h3 class="card-title h5">Historical Records</h3>
+                <p class="card-text">Preserve and honor the legacy of our veterans.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <table class="table table-bordered">
-      <tr>
-        <td rowspan="2">Test</td>
-        <td>Test</td>
-      </tr>
-      <tr><td>Test</td></tr>
-    </table>
+    <!-- Search Section -->
+    <section class="search-section py-5">
+      <div class="container">
+        <h2 class="text-center mb-4">Search for a Veteran</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="searchInput" placeholder="Enter veteran's name">
+              <button class="btn btn-primary" type="button" id="searchButton">
+                <i class="bi bi-search"></i> Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="searchResults" class="mt-4"></div>
+      </div>
+    </section>
 
-    <section class="bg-light py-5" id="searchSection">
-        <div class="container">
-          <h2 class="text-center mb-4">Search for a Veteran</h2>
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="searchBox"
-              data-type="search-box"
-              placeholder="Enter veteran's name"
-              aria-label="Veteran's Name"
-            />
-            <button class="btn btn-primary" type="button" id="searchButton">
-              Search
-            </button>
+    <!-- Statistics Section -->
+    <section class="stats py-5 bg-dark text-white">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="stat-item">
+              <i class="bi bi-people display-4 mb-3"></i>
+              <h3 id="veteranCount">0</h3>
+              <p>Veterans Honored</p>
+            </div>
           </div>
-          <div id="militaryBranches">
-            <h3>Military Branches</h3>
-            <ul id="branchesList"><p>Code:</p><code id="code1">document.getElementById("branchesList")</code></ul>
+          <div class="col-md-4">
+            <div class="stat-item">
+              <i class="bi bi-flag display-4 mb-3"></i>
+              <h3 id="branchCount">5</h3>
+              <p>Military Branches</p>
+            </div>
           </div>
-          <div id="addVeteranSection">
-            <h3>Add More Veterans</h3>
-            <p>
-              <cite>
-                This is a cite tag.
-              </cite>
+          <div class="col-md-4">
+            <div class="stat-item">
+              <i class="bi bi-calendar-event display-4 mb-3"></i>
+              <h3 id="updateCount">0</h3>
+              <p>Recent Updates</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Bethel Cemetery Veteran Database</h5>
+            <p class="mb-0">Preserving the memory of those who served</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="mb-0">
+              <small>&copy; 2025 Dao Productions. All rights reserved.</small>
             </p>
-              
-            <button type="button" class="btn btn-success" id="addVeteranButton">
-              Add Veteran
-            </button>
-            </div>
+          </div>
         </div>
-    </section>
-
-    <footer class="bg-dark text-light py-4">
-        <div class="container text-center" title="Copyright information">
-            <p>&copy; 2025 Dao Productions - Bethel Cemetery Veteran Database</p>
-        </div>
+      </div>
     </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

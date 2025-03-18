@@ -3,81 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add new veterans to the Bethel Cemetery Database">
+    <meta name="keywords" content="veterans, military, database, cemetery, memorial, add veteran">
     <title>Add Veteran</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <main>
+        <img src="https://media.istockphoto.com/id/1048160600/vector/blue-overlap-pixel-speed-abstract-background.jpg?s=612x612&w=0&k=20&c=5uAtFm-pEmVMapJeb8v-EcRBfIt3eFbfdmBPSB8kdL8=" alt="Add Veteran" class="img-fluid">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Veteran Management</a>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-flag-fill me-2"></i>
+                Bethel Cemetery Veteran Database
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="add_veteran.html">Add Veteran</a></li>
-                    <li class="nav-item"><a class="nav-link" href="view_veterans.html">View Veterans</a></li>
-                    <li class="nav-item"><a class="nav-link" href="update_veteran.html">Update Veteran</a></li>
-                    <li class="nav-item"><a class="nav-link" href="delete_veteran.html">Delete Veteran</a></li>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="add_veteran.html"><i class="bi bi-person-plus"></i> Add Veteran</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view_veterans.html"><i class="bi bi-table"></i> View Veterans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="update_veteran.html"><i class="bi bi-pencil"></i> Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="delete_veteran.html"><i class="bi bi-trash"></i> Delete</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                Add New Veteran
-            </div>
-            <div class="card-body">
-                <form id="addVeteranForm">
-                    <div class="mb-3">
-                        <label for="veteranName" class="form-label">Veteran's Name</label>
-                        <input type="text" class="form-control" id="veteranName" required>
+
+    <!-- Header Section -->
+    <header class="bg-light py-4">
+    </main>
+        <div class="container">
+            <h1 class="text-center mb-4">Add New Veteran</h1>
+            <p class="text-center text-muted">Enter the veteran's information below</p>
+        </div>
+    </header>
+
+    <!-- Add Veteran Form Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form id="addVeteranForm">
+                                <!-- Personal Information -->
+                                <h3 class="h5 mb-4">Personal Information</h3>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="veteranName" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="veteranName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="veteranBranch" class="form-label">Military Branch</label>
+                                            <select class="form-select" id="veteranBranch" required>
+                                                <option value="">Select Branch</option>
+                                                <option value="Army">Army</option>
+                                                <option value="Navy">Navy</option>
+                                                <option value="Air Force">Air Force</option>
+                                                <option value="Marines">Marines</option>
+                                                <option value="Coast Guard">Coast Guard</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Service Information -->
+                                <h3 class="h5 mb-4">Service Information</h3>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="veteranRank" class="form-label">Rank</label>
+                                            <input type="text" class="form-control" id="veteranRank" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="serviceNumber" class="form-label">Service Number</label>
+                                            <input type="text" class="form-control" id="serviceNumber">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dates -->
+                                <h3 class="h5 mb-4">Important Dates</h3>
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="veteranDOB" class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" id="veteranDOB" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="veteranDOD" class="form-label">Date of Death</label>
+                                            <input type="date" class="form-control" id="veteranDOD">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="serviceDate" class="form-label">Service Date</label>
+                                            <input type="date" class="form-control" id="serviceDate" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Additional Information -->
+                                <div class="mb-4">
+                                    <label for="additionalInfo" class="form-label">Additional Information</label>
+                                    <textarea class="form-control" id="additionalInfo" rows="3"></textarea>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-person-plus-fill me-2"></i>Add Veteran
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="branch" class="form-label">Branch</label>
-                        <select class="form-select" id="branch" required>
-                            <option value="">Select Branch</option>
-                            <option value="Army">Army</option>
-                            <option value="Navy">Navy</option>
-                            <option value="Air Force">Air Force</option>
-                            <option value="Marines">Marines</option>
-                            <option value="Coast Guard">Coast Guard</option>
-                            <option value="Space Force">Space Force</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rank" class="form-label">Rank</label>
-                        <input type="text" class="form-control" id="rank" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="birthDate" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" id="birthDate" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="deathDate" class="form-label">Date of Death</label>
-                        <input type="date" class="form-control" id="deathDate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="awards" class="form-label">Awards</label>
-                        <textarea class="form-control" id="awards" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="currentStatus" class="form-label">Current Status</label>
-                        <select class="form-select" id="currentStatus" required>
-                            <option value="">Select Status</option>
-                            <option value="Active Duty">Active Duty</option>
-                            <option value="Reserve">Reserve</option>
-                            <option value="National Guard">National Guard</option>
-                            <option value="Discharged">Discharged</option>
-                            <option value="Retired">Retired</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="addButton">Add Veteran</button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Bethel Cemetery Veteran Database</h5>
+                    <p class="mb-0">Preserving the memory of those who served</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        <small>&copy; 2024 Dao Productions. All rights reserved.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('addVeteranForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('veteranName').value;
+            const dob = document.getElementById('veteranDOB').value;
+            const dod = document.getElementById('veteranDOD').value;
+            const rank = document.getElementById('veteranRank').value;
+            let veterans = JSON.parse(localStorage.getItem('veterans')) || [];
+            veterans.push({ name, dob, dod, rank });
+            localStorage.setItem('veterans', JSON.stringify(veterans));
+            alert('Veteran added successfully!');
+        });
+    </script>
 </body>
 </html>

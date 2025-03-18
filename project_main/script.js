@@ -33,6 +33,8 @@ function initializePage() {
 
   //Interval
   updateInterval = setInterval(updateClock, 1000);
+  // Clear the interval after 10 seconds
+  setTimeout(() => clearInterval(updateInterval), 10000);
   displayVeterans();
 }
 
@@ -65,47 +67,65 @@ function calculateAverageAge(totalAge, numberOfVeterans) {
   return totalAge / numberOfVeterans;
 }
 
-function handleAddVeteran() {
-  const name = document.getElementById("veteranName").value;
-  const branch = document.getElementById("branch").value;
-  const rank = document.getElementById("rank").value;
-  const birthDate = document.getElementById("birthDate").value;
-  const deathDate = document.getElementById("deathDate").value;
-  const awards = document.getElementById("awards").value;
-  const currentStatus = document.getElementById("currentStatus").value;
-
+function handleAddVeteran(event) {
+  event.preventDefault();
+  
+  // Get form values
   const veteran = {
-    name,
-    branch,
-    rank,
-    birthDate,
-    deathDate,
-    awards,
-    currentStatus
+    rank: document.getElementById("rank").value,
+    name: document.getElementById("veteranName").value,
+    branch: document.getElementById("branch").value,
+    birthDate: document.getElementById("birthDate").value,
+    deathDate: document.getElementById("deathDate").value || "N/A",
+    awards: document.getElementById("awards").value || "N/A",
+    currentStatus: document.getElementById("currentStatus").value
   };
-  console.log("New veteran added:", veteran);
-  saveVeteranToLocalStorage(veteran);
-}
-function saveVeteranToLocalStorage(veteran) {
+
+  // Save to localStorage
   const veterans = JSON.parse(localStorage.getItem("veterans")) || [];
   veterans.push(veteran);
   localStorage.setItem("veterans", JSON.stringify(veterans));
+
+  // Clear form
+  document.getElementById("addVeteranForm").reset();
+
+  // Show success message
+  alert("Veteran added successfully!");
+
+  // Redirect to view page
+  window.location.href = "view_veterans.html";
 }
+
 function displayVeterans() {
   const tbody = document.querySelector("tbody");
-  tbody.innerHTML = "";
+  if (!tbody) {
+    console.error("Table body not found");
+    return;
+  }
 
   const veterans = JSON.parse(localStorage.getItem("veterans")) || [];
-  veterans.forEach((veteran) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${veteran.rank || ""}</td>
-                      <td>${veteran.name}</td>
-                      <td>${veteran.branch}</td>
-                      <td>${veteran.birthDate || ""}</td>
-                      <td>${veteran.deathDate || ""}</td>
-                      <td>${veteran.awards || ""}</td>
-                      <td>${veteran.currentStatus}</td>`;
+  console.log("Retrieved veterans:", veterans); // Debug log
 
+  tbody.innerHTML = ""; // Clear existing content
+
+  if (veterans.length === 0) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<td colspan="7" class="text-center">No veterans found</td>';
+    tbody.appendChild(tr);
+    return;
+  }
+
+  veterans.forEach((veteran, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${veteran.rank || "N/A"}</td>
+      <td>${veteran.name || "N/A"}</td>
+      <td>${veteran.branch || "N/A"}</td>
+      <td>${veteran.birthDate || "N/A"}</td>
+      <td>${veteran.deathDate || "N/A"}</td>
+      <td>${veteran.awards || "N/A"}</td>
+      <td>${veteran.currentStatus || "N/A"}</td>
+    `;
     tbody.appendChild(tr);
   });
 }
@@ -133,5 +153,94 @@ const numberOfVeterans = 5;
 const averageAge = calculateAverageAge(totalAge, numberOfVeterans);
 console.log(`Average age of veterans: ${averageAge}`);
 
-//Event on mouse click on the add button
-document.getElementById("addButton").addEventListener("click", handleAddVeteran);
+// Add this function to handle the search
+function searchVeterans(searchTerm) {
+  const veterans = JSON.parse(localStorage.getItem('veterans')) || [];
+  const searchResults = veterans.filter(veteran => 
+    veteran.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    veteran.rank.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    veteran.branch.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const searchResultsDiv = document.getElementById('searchResults');
+  searchResultsDiv.innerHTML = ''; // Clear previous results
+
+  if (searchResults.length === 0) {
+    searchResultsDiv.innerHTML = `
+      <div class="alert alert-info" role="alert">
+        No veterans found matching "${searchTerm}"
+      </div>
+    `;
+    return;
+  }
+
+  const resultsTable = document.createElement('table');
+  resultsTable.className = 'table table-striped table-hover';
+  resultsTable.innerHTML = `
+    <thead class="table-dark">
+      <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Branch</th>
+        <th>Birth Date</th>
+        <th>Death Date</th>
+        <th>Awards</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${searchResults.map(veteran => `
+        <tr>
+          <td>${veteran.rank || 'N/A'}</td>
+          <td>${veteran.name || 'N/A'}</td>
+          <td>${veteran.branch || 'N/A'}</td>
+          <td>${veteran.birthDate || 'N/A'}</td>
+          <td>${veteran.deathDate || 'N/A'}</td>
+          <td>${veteran.awards || 'N/A'}</td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+  searchResultsDiv.appendChild(resultsTable);
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM loaded"); // Debug log
+
+  // For add_veteran.html
+  const addForm = document.getElementById("addVeteranForm");
+  if (addForm) {
+    console.log("Add form found"); // Debug log
+    addForm.addEventListener("submit", handleAddVeteran);
+  }
+
+  // For view_veterans.html
+  if (window.location.pathname.includes('view_veterans.html')) {
+    console.log("On view veterans page"); // Debug log
+    displayVeterans();
+  }
+
+  // Add search button functionality
+  const searchButton = document.getElementById('searchButton');
+  const searchInput = document.getElementById('searchInput');
+
+  if (searchButton && searchInput) {
+    // Search on button click
+    searchButton.addEventListener('click', () => {
+      const searchTerm = searchInput.value.trim();
+      if (searchTerm) {
+        searchVeterans(searchTerm);
+      }
+    });
+
+    // Search on Enter key press
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+          searchVeterans(searchTerm);
+        }
+      }
+    });
+  }
+});
