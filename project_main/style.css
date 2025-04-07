@@ -1,0 +1,116 @@
+/* Enhanced styling */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('veterans-memorial.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+}
+
+.search-section {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Enhanced animations */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.stat-item {
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-10px);
+}
+
+/* Accessibility improvements */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 0;
+  }
+  
+  .features .card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+/* Decorative Stickers */
+.sticker {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.american-flag {
+    top: 20px;
+    right: 20px;
+    background: url('/assets/flag-sticker.png') no-repeat;
+    background-size: contain;
+    animation: wave 3s infinite ease-in-out;
+}
+
+.military-badge {
+    bottom: 20px;
+    left: 20px;
+    background: url('/assets/military-badge.png') no-repeat;
+    background-size: contain;
+    animation: rotate 10s infinite linear;
+}
+
+.memorial-ribbon {
+    top: 50%;
+    right: 30px;
+    background: url('/assets/memorial-ribbon.png') no-repeat;
+    background-size: contain;
+    animation: float 4s infinite ease-in-out;
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(-10px); }
+    50% { transform: translateY(10px); }
+}

@@ -287,3 +287,131 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// Search functionality
+document.getElementById('searchButton').addEventListener('click', function() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const resultsDiv = document.getElementById('searchResults');
+    
+    // Clear previous results
+    resultsDiv.innerHTML = '';
+    
+    // Fetch veterans data from your database/API
+    fetch('/api/veterans/search?term=' + searchTerm)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length === 0) {
+                resultsDiv.innerHTML = '<p class="text-center">No veterans found</p>';
+                return;
+            }
+            
+            const resultsHtml = data.map(veteran => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${veteran.name}</h5>
+                        <p class="card-text">
+                            Branch: ${veteran.branch}<br>
+                            Service Period: ${veteran.servicePeriod}
+                        </p>
+                        <a href="/veteran/${veteran.id}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            `).join('');
+            
+            resultsDiv.innerHTML = resultsHtml;
+        })
+        .catch(error => {
+            resultsDiv.innerHTML = '<p class="text-center text-danger">Error searching veterans</p>';
+            console.error('Search error:', error);
+        });
+});
+
+// Statistics counter
+// Real-time statistics updates
+function updateStatistics() {
+  const counters = document.querySelectorAll('.stat-item h3');
+  
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target'));
+    const count = parseInt(counter.innerText);
+    const increment = target / 200;
+    
+    if (count < target) {
+      counter.innerText = Math.ceil(count + increment);
+      setTimeout(updateStatistics, 1);
+    }
+  });
+}
+
+// Initialize statistics on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const stats = document.querySelectorAll('.stat-item h3');
+  stats.forEach(stat => {
+    stat.setAttribute('data-target', stat.innerText);
+    stat.innerText = '0';
+  });
+  updateStatistics();
+});
+
+// Add smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+
+// Update statistics every 5 minutes
+updateStatistics();
+setInterval(updateStatistics, 300000);
+
+// Make stickers draggable
+document.addEventListener('DOMContentLoaded', function() {
+    const stickers = document.querySelectorAll('.sticker');
+    
+    stickers.forEach(sticker => {
+        sticker.style.pointerEvents = 'auto';
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        sticker.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        function dragStart(e) {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            
+            if (e.target === sticker) {
+                isDragging = true;
+            }
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                xOffset = currentX;
+                yOffset = currentY;
+                
+                setTranslate(currentX, currentY, sticker);
+            }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+        }
+
+        function dragEnd() {
+            isDragging = false;
+        }
+    });
+});
