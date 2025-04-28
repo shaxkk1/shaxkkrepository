@@ -79,8 +79,19 @@
                                 
                                 // Load and display veterans
                                 function loadVeterans() {
-                                    currentVeterans = JSON.parse(localStorage.getItem('veterans')) || [];
-                                    displayVeterans(currentVeterans);
+                                    veteransCollection.orderBy('lastName').get()
+                                        .then((querySnapshot) => {
+                                            currentVeterans = [];
+                                            querySnapshot.forEach((doc) => {
+                                                const veteran = doc.data();
+                                                veteran.veteranID = doc.id; // Use Firestore document ID
+                                                currentVeterans.push(veteran);
+                                            });
+                                            displayVeterans(currentVeterans);
+                                        })
+                                        .catch((error) => {
+                                            console.error("Error getting veterans: ", error);
+                                        });
                                 }
                                 
                                 // Display veterans in table

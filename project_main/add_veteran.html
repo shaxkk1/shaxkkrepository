@@ -14,6 +14,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <!-- Add this before your other scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth-check.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -163,15 +170,8 @@
                 return;
             }
             
-            // Get existing veterans or initialize empty array
-            const veterans = JSON.parse(localStorage.getItem('veterans')) || [];
-            
-            // Generate a new ID (simple increment)
-            const newId = veterans.length > 0 ? Math.max(...veterans.map(v => v.veteranID)) + 1 : 1;
-            
             // Create new veteran object
             const newVeteran = {
-                veteranID: newId,
                 firstName: firstName,
                 middleName: middleName,
                 lastName: lastName,
@@ -181,21 +181,27 @@
                 branchId: branch,
                 serviceStartDate: serviceStartDate,
                 serviceEndDate: serviceEndDate,
-                conflictId: conflict
+                conflictId: conflict,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
             
-            // Add to array and save to localStorage
-            veterans.push(newVeteran);
-            localStorage.setItem('veterans', JSON.stringify(veterans));
-            
-            // Show success message
-            alert('Veteran added successfully!');
-            
-            // Reset form
-            addVeteranForm.reset();
-            
-            // Redirect to view page
-            window.location.href = 'view_veterans.html';
+            // Add to Firestore
+            veteransCollection.add(newVeteran)
+                .then((docRef) => {
+                    console.log("Veteran added with ID: ", docRef.id);
+                    // Show success message
+                    alert('Veteran added successfully!');
+                    
+                    // Reset form
+                    addVeteranForm.reset();
+                    
+                    // Redirect to view page
+                    window.location.href = 'view_veterans.html';
+                })
+                .catch((error) => {
+                    console.error("Error adding veteran: ", error);
+                    alert('Error adding veteran: ' + error.message);
+                });
         });
     });
 </body>
