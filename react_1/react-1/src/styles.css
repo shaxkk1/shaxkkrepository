@@ -1,0 +1,19 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.brand-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.brand-images img {
+  transition: transform 0.3s ease;
+}
+
+.brand-images img:hover {
+  transform: scale(1.1);
+}
