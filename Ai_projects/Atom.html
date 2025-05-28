@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalyst Power-up Design</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a2e, #16213e, #1a1a2e);
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #ff4444;
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ff4444;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #ffaa44;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .visual-demo {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .catalyst-atom {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6666, #ff4444, #cc2222, #991111);
+            position: relative;
+            animation: catalystPulse 2s infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 
+                0 0 20px rgba(255, 68, 68, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+        
+        .catalyst-atom:hover {
+            transform: scale(1.1);
+            animation-duration: 0.5s;
+        }
+        
+        .catalyst-atom::before {
+            content: 'C';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        .catalyst-atom::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 68, 68, 0.3);
+            animation: orbitRing 3s linear infinite;
+        }
+        
+        @keyframes catalystPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 68, 68, 0.6),
+                    inset 0 0 20px rgba(255, 255, 255, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 40px rgba(255, 68, 68, 0.8),
+                    0 0 60px rgba(255, 68, 68, 0.4),
+                    inset 0 0 20px rgba(255, 255, 255, 0.2);
+            }
+        }
+        
+        @keyframes orbitRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .energy-pulse {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffff44, #ffaa00);
+            animation: energyTravel 2s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 68, 0.8);
+        }
+        
+        @keyframes energyTravel {
+            0% {
+                left: -50px;
+                top: 50px;
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                left: 150px;
+                top: 50px;
+                opacity: 0;
+            }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(30, 30, 60, 0.6);
+            border: 1px solid #ff6666;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+        }
+        
+        .stat-card h3 {
+            color: #ff6666;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        
+        .ability-showcase {
+            background: rgba(20, 20, 40, 0.9);
+            border: 2px solid #ffaa44;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(255, 170, 68, 0.3);
+        }
+        
+        .activation-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .standard-atom {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #6666ff, #4444ff, #2222cc);
+            position: relative;
+            animation: standardGlow 3s infinite;
+        }
+        
+        .standard-atom::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        @keyframes standardGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(68, 68, 255, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(68, 68, 255, 0.6); }
+        }
+        
+        .explosion-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 68, 0.3), rgba(255, 68, 68, 0.2), transparent);
+            animation: explosionBlast 1.5s ease-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes explosionBlast {
+            0% {
+                transform: scale(0.1);
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(20, 20, 40, 0.8);
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff6666;
+            font-weight: bold;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: rgba(30, 30, 60, 0.3);
+        }
+        
+        .highlight {
+            color: #ffaa44;
+            font-weight: bold;
+        }
+        
+        .usage-tips {
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(255, 170, 68, 0.1));
+            border-left: 4px solid #ff6666;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .interactive-demo {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(40, 40, 80, 0.5);
+            border-radius: 10px;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #ff4444, #ff6666);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .demo-button:hover {
+            background: linear-gradient(45deg, #ff6666, #ff8888);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 68, 68, 0.4);
+        }
+        
+        .screen-shake {
+            animation: screenShake 0.5s ease-in-out;
+        }
+        
+        @keyframes screenShake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-5px); }
+            20% { transform: translateX(5px); }
+            30% { transform: translateX(-3px); }
+            40% { transform: translateX(3px); }
+            50% { transform: translateX(-2px); }
+            60% { transform: translateX(2px); }
+            70% { transform: translateX(-1px); }
+            80% { transform: translateX(1px); }
+            90% { transform: translateX(-0.5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CATALYST ATOM</h1>
+        <p class="subtitle">Power-up Design for Atomic Cascade</p>
+        
+        <div class="visual-demo">
+            <div class="catalyst-atom" onclick="triggerExplosion(this)">
+                <div class="explosion-effect" id="explosion" style="display: none;"></div>
+            </div>
+            <div class="energy-pulse"></div>
+        </div>
+        
+        <div class="interactive-demo">
+            <button class="demo-button" onclick="demonstrateEffect()">ACTIVATE CATALYST</button>
+            <p style="margin-top: 15px; color: #888;">Click to see the screen shake and explosion effect!</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>🚀 Speed Enhancement</h3>
+                <p><span class="highlight">+200% Reaction Speed</span></p>
+                <p>Energy pulses travel 3x faster when triggered by a Catalyst atom, creating rapid chain reactions perfect for time-based challenges.</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>💥 Explosion Effect</h3>
+                <p><span class="highlight">Screen Shake Intensity: High</span></p>
+                <p>Creates a powerful visual explosion with screen shake when activated, providing satisfying feedback for successful catalyst usage.</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>⚡ Energy Amplification</h3>
+                <p><span class="highlight">+50% Energy Output</span></p>
+                <p>Not only speeds up reactions but also increases the energy transferred to the next atom in the chain.</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🎯 Activation Range</h3>
+                <p><span class="highlight">Extended Radius: 1.5x</span></p>
+                <p>Can trigger atoms slightly further away than standard atoms, making placement more forgiving and strategic.</p>
+            </div>
+        </div>
+        
+        <div class="ability-showcase">
+            <h3 style="color: #ffaa44; text-align: center;">CATALYST ABILITIES</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Standard Atom</th>
+                        <th>Catalyst Atom</th>
+                        <th>Improvement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Reaction Speed</td>
+                        <td>1.0x Normal</td>
+                        <td class="highlight">3.0x Faster</td>
+                        <td>+200%</td>
+                    </tr>
+                    <tr>
+                        <td>Energy Output</td>
+                        <td>100 Base</td>
+                        <td class="highlight">150 Enhanced</td>
+                        <td>+50%</td>
+                    </tr>
+                    <tr>
+                        <td>Activation Range</td>
+                        <td>1.0 Unit</td>
+                        <td class="highlight">1.5 Units</td>
+                        <td>+50%</td>
+                    </tr>
+                    <tr>
+                        <td>Visual Effect</td>
+                        <td>Standard Glow</td>
+                        <td class="highlight">Explosion + Shake</td>
+                        <td>Enhanced</td>
+                    </tr>
+                    <tr>
+                        <td>Rarity</td>
+                        <td>Common</td>
+                        <td class="highlight">Rare</td>
+                        <td>Special</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="usage-tips">
+            <h3 style="color: #ff6666;">💡 Strategic Usage Tips</h3>
+            <ul>
+                <li><strong>Chain Starters:</strong> Place Catalysts at the beginning of chains to accelerate the entire reaction sequence</li>
+                <li><strong>Bottleneck Breaking:</strong> Use in narrow passages to ensure energy reaches the end quickly</li>
+                <li><strong>Time Challenges:</strong> Essential for speed-based levels where reaction time is critical</li>
+                <li><strong>Energy Boosting:</strong> Position before key splitting points to ensure maximum energy reaches all branches</li>
+                <li><strong>Emergency Activation:</strong> Can help salvage slow-starting chain reactions in complex puzzles</li>
+            </ul>
+        </div>
+        
+        <div class="activation-demo">
+            <div class="standard-atom"></div>
+            <span style="font-size: 2em; color: #ffaa44;">→</span>
+            <div class="catalyst-atom" style="width: 100px; height: 100px;">
+                <div class="explosion-effect"></div>
+            </div>
+            <span style="font-size: 2em; color: #ffaa44;">→</span>
+            <div class="standard-atom"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; color: #888;">
+            <p>Unlock Catalyst atoms by collecting 10+ energy fragments across all levels</p>
+            <p style="font-size: 0.9em;">Limited quantity per level - use strategically!</p>
+        </div>
+    </div>
+    
+    <script>
+        function triggerExplosion(element) {
+            const explosion = element.querySelector('.explosion-effect');
+            explosion.style.display = 'block';
+            explosion.style.animation = 'none';
+            setTimeout(() => {
+                explosion.style.animation = 'explosionBlast 0.8s ease-out';
+            }, 10);
+            
+            // Screen shake effect
+            document.body.classList.add('screen-shake');
+            setTimeout(() => {
+                document.body.classList.remove('screen-shake');
+            }, 500);
+            
+            setTimeout(() => {
+                explosion.style.display = 'none';
+            }, 800);
+        }
+        
+        function demonstrateEffect() {
+            // Trigger multiple effects
+            const catalysts = document.querySelectorAll('.catalyst-atom');
+            catalysts.forEach((catalyst, index) => {
+                setTimeout(() => {
+                    triggerExplosion(catalyst);
+                }, index * 200);
+            });
+            
+            // Add extra screen shake for demo
+            setTimeout(() => {
+                document.body.classList.add('screen-shake');
+                setTimeout(() => {
+                    document.body.classList.remove('screen-shake');
+                }, 500);
+            }, 100);
+        }
+        
+        // Auto-trigger demo every 10 seconds
+        setInterval(() => {
+            const catalysts = document.querySelectorAll('.catalyst-atom');
+            if (catalysts.length > 0) {
+                triggerExplosion(catalysts[0]);
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

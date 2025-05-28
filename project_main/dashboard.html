@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Saint John's Cemetery in Darien Veteran Database - Dashboard">
+    <title>Dashboard - Saint John's Cemetery in Darien</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Saint John's Cemetery in Darien</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="veteranstorage.html">Veterans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutBtn">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Statistics Cards -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Veterans</h5>
+                        <h2 class="card-text" id="totalVeterans">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Additions</h5>
+                        <h2 class="card-text" id="recentAdditions">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Last Updated</h5>
+                        <p class="card-text" id="lastUpdated">Never</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Quick Actions</h5>
+                        <div class="d-flex gap-2">
+                            <a href="veteranstorage.html" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> Add Veteran
+                            </a>
+                            <a href="veteranstorage.html" class="btn btn-secondary">
+                                <i class="bi bi-search"></i> Search Veterans
+                            </a>
+                            <a href="veteranstorage.html" class="btn btn-info">
+                                <i class="bi bi-list"></i> View All Veterans
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Activity</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activityTable">
+                                    <!-- Activity rows will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import { getAuth } from 'firebase/auth';
+        import { app } from './firebase.js';
+        import { getVeterans } from './crude.js';
+
+        const auth = getAuth(app);
+
+        // Check authentication
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await auth.signOut();
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        });
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const veterans = await getVeterans();
+                document.getElementById('totalVeterans').textContent = veterans.length;
+                
+                // Get recent additions (last 7 days)
+                const recentVeterans = veterans.filter(v => {
+                    const createdAt = new Date(v.createdAt);
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                    return createdAt >= sevenDaysAgo;
+                });
+                document.getElementById('recentAdditions').textContent = recentVeterans.length;
+
+                // Update last updated time
+                if (veterans.length > 0) {
+                    const lastUpdated = new Date(veterans[0].updatedAt);
+                    document.getElementById('lastUpdated').textContent = lastUpdated.toLocaleDateString();
+                }
+
+                // Populate activity table
+                const activityTable = document.getElementById('activityTable');
+                activityTable.innerHTML = veterans.slice(0, 5).map(veteran => `
+                    <tr>
+                        <td>${new Date(veteran.updatedAt).toLocaleDateString()}</td>
+                        <td>${veteran.createdAt === veteran.updatedAt ? 'Added' : 'Updated'}</td>
+                        <td>${veteran.name}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        loadDashboardData();
+    </script>
+</body>
+</html>

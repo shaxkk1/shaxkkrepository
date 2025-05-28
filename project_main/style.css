@@ -1,116 +1,113 @@
-/* Enhanced styling */
-.hero-section {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('veterans-memorial.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 100px 0;
-}
-
-.search-section {
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Enhanced animations */
-.hero-section {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.hero-section .container {
-  position: relative;
-  z-index: 2;
-}
-
-.stat-item {
-  transition: all 0.3s ease;
-}
-
-.stat-item:hover {
-  transform: translateY(-10px);
-}
-
-/* Accessibility improvements */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-/* Responsive improvements */
-@media (max-width: 768px) {
-  .hero-section {
-    padding: 3rem 0;
+/* src/styles.css */
+/* Base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   
-  .features .card {
-    margin-bottom: 1.5rem;
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
   }
-}
-
-
-/* Decorative Stickers */
-.sticker {
-    position: fixed;
-    width: 100px;
-    height: 100px;
-    z-index: 1000;
-    pointer-events: none;
-}
-
-.american-flag {
-    top: 20px;
-    right: 20px;
-    background: url('/assets/flag-sticker.png') no-repeat;
-    background-size: contain;
-    animation: wave 3s infinite ease-in-out;
-}
-
-.military-badge {
-    bottom: 20px;
-    left: 20px;
-    background: url('/assets/military-badge.png') no-repeat;
-    background-size: contain;
-    animation: rotate 10s infinite linear;
-}
-
-.memorial-ribbon {
-    top: 50%;
-    right: 30px;
-    background: url('/assets/memorial-ribbon.png') no-repeat;
-    background-size: contain;
-    animation: float 4s infinite ease-in-out;
-}
-
-@keyframes wave {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(-10px); }
-    50% { transform: translateY(10px); }
-}
+  
+  .App {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #444;
+  }
+  
+  /* Form styles */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #357ae8;
+  }
+  
+  /* Container styles */
+  .login-container,
+  .signup-container,
+  .profile-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* Link styles */
+  a {
+    color: #4285f4;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Error message */
+  .error-alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  /* Profile styles */
+  .user-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .logout-btn {
+    background-color: #dc3545;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c82333;
+  }
+  
