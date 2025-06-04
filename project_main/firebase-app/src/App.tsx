@@ -30,7 +30,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   // Tab state
-  const [activeTab, setActiveTab] = useState("comments");
+  const [activeTab, setActiveTab] = useState("about");
 
   // Comment states
   const [comment, setComment] = useState("");
@@ -58,6 +58,26 @@ export default function App() {
   // Collections references - using consistent db reference
   const commentsRef = collection(db, "comments");
   const veteransRef = collection(db, "veterans");
+
+  // Add these new state variables to your existing useState declarations:
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchFilters, setSearchFilters] = useState({
+    branch: "",
+    conflict: "",
+    rank: "",
+    dateRange: {
+      start: "",
+      end: "",
+    },
+  });
+  const [isSearching, setIsSearching] = useState(false);
+  const [sortBy, setSortBy] = useState("lastName"); // lastName, firstName, dateOfDeath, branch
+  const [sortOrder, setSortOrder] = useState("asc"); // asc, desc
+
+  const [reportType, setReportType] = useState("overview");
+  const [selectedTimeframe, setSelectedTimeframe] = useState("all");
+  const [reportData, setReportData] = useState(null);
 
   // Listen for auth state changes
   useEffect(() => {
@@ -364,6 +384,526 @@ export default function App() {
     }
   };
 
+  const resetSearchFilters = () => {
+    setSearchFilters({
+      branch: "",
+      conflict: "",
+      rank: "",
+      dateRange: {
+        start: "",
+        end: "",
+      },
+    });
+    setSearchTerm("");
+    setSearchResults([]);
+  };
+
+  const performSearch = () => {
+    setIsSearching(true);
+
+    let results = [...veterans];
+
+    // Text search across multiple fields
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      results = results.filter(
+        (veteran) =>
+          veteran.firstName?.toLowerCase().includes(term) ||
+          veteran.middleName?.toLowerCase().includes(term) ||
+          veteran.lastName?.toLowerCase().includes(term) ||
+          veteran.branch?.toLowerCase().includes(term) ||
+          veteran.rank?.toLowerCase().includes(term) ||
+          veteran.conflictWar?.toLowerCase().includes(term) ||
+          veteran.additionalInfo?.toLowerCase().includes(term)
+      );
+    }
+
+    // Filter by branch
+    if (searchFilters.branch) {
+      results = results.filter((veteran) =>
+        veteran.branch
+          ?.toLowerCase()
+          .includes(searchFilters.branch.toLowerCase())
+      );
+    }
+
+    // Filter by conflict/war
+    if (searchFilters.conflict) {
+      results = results.filter((veteran) =>
+        veteran.conflictWar
+          ?.toLowerCase()
+          .includes(searchFilters.conflict.toLowerCase())
+      );
+    }
+
+    // Filter by rank
+    if (searchFilters.rank) {
+      results = results.filter((veteran) =>
+        veteran.rank?.toLowerCase().includes(searchFilters.rank.toLowerCase())
+      );
+    }
+
+    // Filter by date range (using date of death)
+    if (searchFilters.dateRange.start || searchFilters.dateRange.end) {
+      results = results.filter((veteran) => {
+        if (!veteran.dateOfDeath) return false;
+
+        let veteranDate;
+        if (veteran.dateOfDeath.toDate) {
+          veteranDate = veteran.dateOfDeath.toDate();
+        } else {
+          veteranDate = new Date(veteran.dateOfDeath);
+        }
+
+        const startDate = searchFilters.dateRange.start
+          ? new Date(searchFilters.dateRange.start)
+          : null;
+        const endDate = searchFilters.dateRange.end
+          ? new Date(searchFilters.dateRange.end)
+          : null;
+
+        if (startDate && veteranDate < startDate) return false;
+        if (endDate && veteranDate > endDate) return false;
+
+        return true;
+      });
+    }
+
+    // Sort results
+    results.sort((a, b) => {
+      let aValue, bValue;
+
+      switch (sortBy) {
+        case "firstName":
+          aValue = a.firstName?.toLowerCase() || "";
+          bValue = b.firstName?.toLowerCase() || "";
+          break;
+        case "lastName":
+          aValue = a.lastName?.toLowerCase() || "";
+          bValue = b.lastName?.toLowerCase() || "";
+          break;
+        case "branch":
+          aValue = a.branch?.toLowerCase() || "";
+          bValue = b.branch?.toLowerCase() || "";
+          break;
+        case "dateOfDeath":
+          aValue = a.dateOfDeath
+            ? a.dateOfDeath.toDate
+              ? a.dateOfDeath.toDate()
+              : new Date(a.dateOfDeath)
+            : new Date(0);
+          bValue = b.dateOfDeath
+            ? b.dateOfDeath.toDate
+              ? b.dateOfDeath.toDate()
+              : new Date(b.dateOfDeath)
+            : new Date(0);
+          break;
+        default:
+          aValue = a.lastName?.toLowerCase() || "";
+          bValue = b.lastName?.toLowerCase() || "";
+      }
+
+      if (sortBy === "dateOfDeath") {
+        return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
+      } else {
+        if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+        if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+        return 0;
+      }
+    });
+
+    setSearchResults(results);
+    setIsSearching(false);
+  };
+
+  const handleSearchFilterChange = (field, value) => {
+    setSearchFilters((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleDateRangeChange = (field, value) => {
+    setSearchFilters((prev) => ({
+      ...prev,
+      dateRange: {
+        ...prev.dateRange,
+        [field]: value,
+      },
+    }));
+  };
+
+  // Get unique values for filter dropdowns
+  const getUniqueValues = (field) => {
+    const values = veterans
+      .map((veteran) => veteran[field])
+      .filter((value) => value && value.trim())
+      .map((value) => value.trim());
+    return [...new Set(values)].sort();
+  };
+
+  const generateStatistics = () => {
+    if (veterans.length === 0) {
+      return {
+        totalVeterans: 0,
+        branches: {},
+        conflicts: {},
+        ranks: {},
+        decades: {},
+        recentAdditions: 0,
+        averageAge: 0,
+      };
+    }
+
+    const stats = {
+      totalVeterans: veterans.length,
+      branches: {},
+      conflicts: {},
+      ranks: {},
+      decades: {},
+      recentAdditions: 0,
+      totalAge: 0,
+      veteransWithAge: 0,
+    };
+
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    veterans.forEach((veteran) => {
+      // Count branches
+      if (veteran.branch) {
+        const branch = veteran.branch.trim();
+        stats.branches[branch] = (stats.branches[branch] || 0) + 1;
+      }
+
+      // Count conflicts
+      if (veteran.conflictWar) {
+        const conflict = veteran.conflictWar.trim();
+        stats.conflicts[conflict] = (stats.conflicts[conflict] || 0) + 1;
+      }
+
+      // Count ranks
+      if (veteran.rank) {
+        const rank = veteran.rank.trim();
+        stats.ranks[rank] = (stats.ranks[rank] || 0) + 1;
+      }
+
+      // Count by death decade
+      if (veteran.dateOfDeath) {
+        let deathDate;
+        if (veteran.dateOfDeath.toDate) {
+          deathDate = veteran.dateOfDeath.toDate();
+        } else {
+          deathDate = new Date(veteran.dateOfDeath);
+        }
+
+        if (!isNaN(deathDate.getFullYear())) {
+          const decade = Math.floor(deathDate.getFullYear() / 10) * 10;
+          const decadeLabel = `${decade}s`;
+          stats.decades[decadeLabel] = (stats.decades[decadeLabel] || 0) + 1;
+        }
+      }
+
+      // Count recent additions
+      if (veteran.createdAt) {
+        let createdDate;
+        if (veteran.createdAt.toDate) {
+          createdDate = veteran.createdAt.toDate();
+        } else {
+          createdDate = new Date(veteran.createdAt);
+        }
+
+        if (createdDate > oneMonthAgo) {
+          stats.recentAdditions++;
+        }
+      }
+
+      // Calculate age at death
+      if (veteran.dateOfBirth && veteran.dateOfDeath) {
+        let birthDate, deathDate;
+
+        if (veteran.dateOfBirth.toDate) {
+          birthDate = veteran.dateOfBirth.toDate();
+        } else {
+          birthDate = new Date(veteran.dateOfBirth);
+        }
+
+        if (veteran.dateOfDeath.toDate) {
+          deathDate = veteran.dateOfDeath.toDate();
+        } else {
+          deathDate = new Date(veteran.dateOfDeath);
+        }
+
+        if (
+          !isNaN(birthDate.getFullYear()) &&
+          !isNaN(deathDate.getFullYear())
+        ) {
+          const age = deathDate.getFullYear() - birthDate.getFullYear();
+          if (age > 0 && age < 120) {
+            // Reasonable age range
+            stats.totalAge += age;
+            stats.veteransWithAge++;
+          }
+        }
+      }
+    });
+
+    stats.averageAge =
+      stats.veteransWithAge > 0
+        ? Math.round(stats.totalAge / stats.veteransWithAge)
+        : 0;
+
+    return stats;
+  };
+
+  const generateReport = () => {
+    const stats = generateStatistics();
+
+    const report = {
+      overview: {
+        totalVeterans: stats.totalVeterans,
+        recentAdditions: stats.recentAdditions,
+        averageAge: stats.averageAge,
+        topBranch:
+          Object.keys(stats.branches).length > 0
+            ? Object.keys(stats.branches).reduce((a, b) =>
+                stats.branches[a] > stats.branches[b] ? a : b
+              )
+            : "N/A",
+        topConflict:
+          Object.keys(stats.conflicts).length > 0
+            ? Object.keys(stats.conflicts).reduce((a, b) =>
+                stats.conflicts[a] > stats.conflicts[b] ? a : b
+              )
+            : "N/A",
+      },
+      branches: Object.keys(stats.branches)
+        .map((branch) => ({ name: branch, count: stats.branches[branch] }))
+        .sort((a, b) => b.count - a.count),
+      conflicts: Object.keys(stats.conflicts)
+        .map((conflict) => ({
+          name: conflict,
+          count: stats.conflicts[conflict],
+        }))
+        .sort((a, b) => b.count - a.count),
+      ranks: Object.keys(stats.ranks)
+        .map((rank) => ({ name: rank, count: stats.ranks[rank] }))
+        .sort((a, b) => b.count - a.count),
+      decades: Object.keys(stats.decades)
+        .map((decade) => ({ name: decade, count: stats.decades[decade] }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    };
+
+    setReportData(report);
+  };
+
+  const exportReport = () => {
+    if (!reportData) {
+      generateReport();
+      return;
+    }
+
+    const reportContent = `
+  Veterans Cemetery Database Report
+  Generated: ${new Date().toLocaleDateString()}
+  
+  OVERVIEW STATISTICS
+  ===================
+  Total Veterans: ${reportData.overview.totalVeterans}
+  Recent Additions (Last 30 days): ${reportData.overview.recentAdditions}
+  Average Age at Death: ${
+    reportData.overview.averageAge > 0
+      ? reportData.overview.averageAge + " years"
+      : "Not available"
+  }
+  Most Common Branch: ${reportData.overview.topBranch}
+  Most Common Conflict: ${reportData.overview.topConflict}
+  
+  VETERANS BY BRANCH
+  ==================
+  ${reportData.branches
+    .map(
+      (item) =>
+        `${item.name}: ${item.count} (${(
+          (item.count / reportData.overview.totalVeterans) *
+          100
+        ).toFixed(1)}%)`
+    )
+    .join("\n")}
+  
+  VETERANS BY CONFLICT/WAR
+  ========================
+  ${reportData.conflicts
+    .map(
+      (item) =>
+        `${item.name}: ${item.count} (${(
+          (item.count / reportData.overview.totalVeterans) *
+          100
+        ).toFixed(1)}%)`
+    )
+    .join("\n")}
+  
+  VETERANS BY RANK
+  ================
+  ${reportData.ranks
+    .map(
+      (item) =>
+        `${item.name}: ${item.count} (${(
+          (item.count / reportData.overview.totalVeterans) *
+          100
+        ).toFixed(1)}%)`
+    )
+    .join("\n")}
+  
+  VETERANS BY DEATH DECADE
+  ========================
+  ${reportData.decades
+    .map(
+      (item) =>
+        `${item.name}: ${item.count} (${(
+          (item.count / reportData.overview.totalVeterans) *
+          100
+        ).toFixed(1)}%)`
+    )
+    .join("\n")}
+  
+  ---
+  Report generated by Veterans Cemetery Database
+  `;
+
+    const blob = new Blob([reportContent], { type: "text/plain" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `veterans_report_${
+      new Date().toISOString().split("T")[0]
+    }.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const printReport = () => {
+    if (!reportData) {
+      generateReport();
+      return;
+    }
+
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Veterans Cemetery Database Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h1 { color: #1e40af; border-bottom: 2px solid #1e40af; }
+            h2 { color: #374151; margin-top: 30px; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { background-color: #f3f4f6; }
+            .overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 20px 0; }
+            .stat-card { border: 1px solid #ddd; padding: 15px; border-radius: 5px; }
+            .stat-number { font-size: 24px; font-weight: bold; color: #1e40af; }
+            @media print { .no-print { display: none; } }
+          </style>
+        </head>
+        <body>
+          <h1>Veterans Cemetery Database Report</h1>
+          <p><strong>Generated:</strong> ${new Date().toLocaleDateString()}</p>
+          
+          <h2>Overview Statistics</h2>
+          <div class="overview-grid">
+            <div class="stat-card">
+              <div>Total Veterans</div>
+              <div class="stat-number">${
+                reportData.overview.totalVeterans
+              }</div>
+            </div>
+            <div class="stat-card">
+              <div>Recent Additions</div>
+              <div class="stat-number">${
+                reportData.overview.recentAdditions
+              }</div>
+            </div>
+            <div class="stat-card">
+              <div>Average Age at Death</div>
+              <div class="stat-number">${
+                reportData.overview.averageAge > 0
+                  ? reportData.overview.averageAge
+                  : "N/A"
+              }</div>
+            </div>
+          </div>
+  
+          <h2>Veterans by Branch</h2>
+          <table>
+            <tr><th>Branch</th><th>Count</th><th>Percentage</th></tr>
+            ${reportData.branches
+              .map(
+                (item) =>
+                  `<tr><td>${item.name}</td><td>${item.count}</td><td>${(
+                    (item.count / reportData.overview.totalVeterans) *
+                    100
+                  ).toFixed(1)}%</td></tr>`
+              )
+              .join("")}
+          </table>
+  
+          <h2>Veterans by Conflict/War</h2>
+          <table>
+            <tr><th>Conflict/War</th><th>Count</th><th>Percentage</th></tr>
+            ${reportData.conflicts
+              .map(
+                (item) =>
+                  `<tr><td>${item.name}</td><td>${item.count}</td><td>${(
+                    (item.count / reportData.overview.totalVeterans) *
+                    100
+                  ).toFixed(1)}%</td></tr>`
+              )
+              .join("")}
+          </table>
+  
+          <h2>Veterans by Rank</h2>
+          <table>
+            <tr><th>Rank</th><th>Count</th><th>Percentage</th></tr>
+            ${reportData.ranks
+              .map(
+                (item) =>
+                  `<tr><td>${item.name}</td><td>${item.count}</td><td>${(
+                    (item.count / reportData.overview.totalVeterans) *
+                    100
+                  ).toFixed(1)}%</td></tr>`
+              )
+              .join("")}
+          </table>
+  
+          <h2>Veterans by Death Decade</h2>
+          <table>
+            <tr><th>Decade</th><th>Count</th><th>Percentage</th></tr>
+            ${reportData.decades
+              .map(
+                (item) =>
+                  `<tr><td>${item.name}</td><td>${item.count}</td><td>${(
+                    (item.count / reportData.overview.totalVeterans) *
+                    100
+                  ).toFixed(1)}%</td></tr>`
+              )
+              .join("")}
+          </table>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  };
+
+  // Auto-generate report when tab is accessed
+  const handleStatsTabClick = () => {
+    setActiveTab("statistics");
+    generateReport();
+  };
+
   const formatDateTime = (date) => {
     if (!date) return "Not specified";
 
@@ -395,7 +935,7 @@ export default function App() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-2xl font-bold text-center mb-6">
-            Firebase Auth & Veterans Management
+            Veterans Cemetery Database
           </h1>
 
           <div className="flex mb-6">
@@ -495,9 +1035,8 @@ export default function App() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto p-6">
         <h1 className="text-3xl font-bold text-center mb-6">
-          Firebase Auth & Veterans Management
+          Veterans Cemetery Database
         </h1>
-
         {/* User Info */}
         <div className="bg-white rounded-lg shadow-md p-4 mb-6 flex justify-between items-center">
           <div>
@@ -513,9 +1052,18 @@ export default function App() {
             Logout
           </button>
         </div>
-
         {/* Tab Navigation */}
         <div className="flex mb-6">
+          <button
+            className={`flex-1 py-3 px-6 rounded-l-lg ${
+              activeTab === "about"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => setActiveTab("about")}
+          >
+            About
+          </button>
           <button
             className={`flex-1 py-3 px-6 rounded-l-lg ${
               activeTab === "comments"
@@ -536,7 +1084,720 @@ export default function App() {
           >
             Veterans Management
           </button>
+          <button
+            className={`flex-1 py-3 px-6 rounded-l-lg ${
+              activeTab === "about"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => setActiveTab("search")}
+          >
+            Search
+          </button>
+          {/* Add this button to your existing tab navigation section */}
+          <button
+            className={`flex-1 py-3 px-6 ${
+              activeTab === "statistics"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={handleStatsTabClick}
+          >
+            Statistics & Reports
+          </button>
         </div>
+        {/* Statistics & Reports Tab */}
+        {activeTab === "statistics" && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold">Statistics & Reports</h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={generateReport}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Refresh Data
+                </button>
+                <button
+                  onClick={exportReport}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                >
+                  Export Report
+                </button>
+                <button
+                  onClick={printReport}
+                  className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors"
+                >
+                  Print Report
+                </button>
+              </div>
+            </div>
+
+            {!reportData ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500 text-lg mb-4">
+                  Generating report...
+                </div>
+                <button
+                  onClick={generateReport}
+                  className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Generate Statistics
+                </button>
+              </div>
+            ) : (
+              <div>
+                {/* Overview Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {reportData.overview.totalVeterans}
+                    </div>
+                    <div className="text-sm text-blue-800">Total Veterans</div>
+                  </div>
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-green-600">
+                      {reportData.overview.recentAdditions}
+                    </div>
+                    <div className="text-sm text-green-800">
+                      Added This Month
+                    </div>
+                  </div>
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-purple-600">
+                      {reportData.overview.averageAge > 0
+                        ? reportData.overview.averageAge
+                        : "N/A"}
+                    </div>
+                    <div className="text-sm text-purple-800">
+                      Avg Age at Death
+                    </div>
+                  </div>
+                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 text-center">
+                    <div className="text-lg font-bold text-orange-600">
+                      {reportData.overview.topBranch}
+                    </div>
+                    <div className="text-sm text-orange-800">Top Branch</div>
+                  </div>
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                    <div className="text-lg font-bold text-red-600">
+                      {reportData.overview.topConflict}
+                    </div>
+                    <div className="text-sm text-red-800">Top Conflict</div>
+                  </div>
+                </div>
+
+                {/* Report Sections */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Veterans by Branch */}
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                      Veterans by Branch
+                    </h3>
+                    {reportData.branches.length > 0 ? (
+                      <div className="space-y-2">
+                        {reportData.branches.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center py-2 border-b border-gray-200"
+                          >
+                            <span className="font-medium">{item.name}</span>
+                            <div className="text-right">
+                              <span className="font-bold text-blue-600">
+                                {item.count}
+                              </span>
+                              <span className="text-sm text-gray-500 ml-2">
+                                (
+                                {(
+                                  (item.count /
+                                    reportData.overview.totalVeterans) *
+                                  100
+                                ).toFixed(1)}
+                                %)
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">No branch data available</p>
+                    )}
+                  </div>
+
+                  {/* Veterans by Conflict */}
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                      Veterans by Conflict/War
+                    </h3>
+                    {reportData.conflicts.length > 0 ? (
+                      <div className="space-y-2">
+                        {reportData.conflicts.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center py-2 border-b border-gray-200"
+                          >
+                            <span className="font-medium">{item.name}</span>
+                            <div className="text-right">
+                              <span className="font-bold text-green-600">
+                                {item.count}
+                              </span>
+                              <span className="text-sm text-gray-500 ml-2">
+                                (
+                                {(
+                                  (item.count /
+                                    reportData.overview.totalVeterans) *
+                                  100
+                                ).toFixed(1)}
+                                %)
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">
+                        No conflict data available
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Veterans by Rank */}
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                      Veterans by Rank
+                    </h3>
+                    {reportData.ranks.length > 0 ? (
+                      <div className="space-y-2">
+                        {reportData.ranks.slice(0, 10).map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center py-2 border-b border-gray-200"
+                          >
+                            <span className="font-medium">{item.name}</span>
+                            <div className="text-right">
+                              <span className="font-bold text-purple-600">
+                                {item.count}
+                              </span>
+                              <span className="text-sm text-gray-500 ml-2">
+                                (
+                                {(
+                                  (item.count /
+                                    reportData.overview.totalVeterans) *
+                                  100
+                                ).toFixed(1)}
+                                %)
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                        {reportData.ranks.length > 10 && (
+                          <div className="text-sm text-gray-500 pt-2">
+                            ... and {reportData.ranks.length - 10} more ranks
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">No rank data available</p>
+                    )}
+                  </div>
+
+                  {/* Veterans by Death Decade */}
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                      Veterans by Death Decade
+                    </h3>
+                    {reportData.decades.length > 0 ? (
+                      <div className="space-y-2">
+                        {reportData.decades.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center py-2 border-b border-gray-200"
+                          >
+                            <span className="font-medium">{item.name}</span>
+                            <div className="text-right">
+                              <span className="font-bold text-orange-600">
+                                {item.count}
+                              </span>
+                              <span className="text-sm text-gray-500 ml-2">
+                                (
+                                {(
+                                  (item.count /
+                                    reportData.overview.totalVeterans) *
+                                  100
+                                ).toFixed(1)}
+                                %)
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">
+                        No death date data available
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Report Footer */}
+                <div className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-600">
+                  <p className="text-sm">
+                    Report generated on {new Date().toLocaleDateString()} at{" "}
+                    {new Date().toLocaleTimeString()}
+                  </p>
+                  <p className="text-xs mt-1">
+                    Data includes {reportData.overview.totalVeterans} veteran
+                    records from the Veterans Cemetery Database
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* About Tab */}
+        {activeTab === "about" && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-3xl font-bold text-center mb-8 text-blue-800">
+              About Veterans Cemetery Database
+            </h2>
+
+            <div className="prose prose-lg max-w-none">
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">
+                  Our Mission
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  The Veterans Cemetery Database is a comprehensive digital
+                  platform dedicated to preserving and honoring the memory of
+                  our nation's heroes. This database serves as a centralized
+                  repository for veteran records across various cemeteries,
+                  ensuring that the service and sacrifice of our military
+                  personnel are never forgotten.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                    🏛️ Purpose & Vision
+                  </h3>
+                  <ul className="space-y-2 text-gray-700">
+                    <li>
+                      Preserve military service records for future generations
+                    </li>
+                    <li>
+                      Provide families with accessible veteran information
+                    </li>
+                    <li> Support genealogical and historical research</li>
+                    <li> Honor the memory of those who served</li>
+                    <li> Create a lasting digital memorial</li>
+                  </ul>
+                </div>
+
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                    📊 Database Features
+                  </h3>
+                  <ul className="space-y-2 text-gray-700">
+                    <li> Comprehensive veteran profiles</li>
+                    <li> Service branch and rank information</li>
+                    <li> Conflict and war participation records</li>
+                    <li> Burial and cemetery location data</li>
+                    <li> Secure, cloud-based storage</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-8">
+                <h3 className="text-xl font-semibold text-green-800 mb-3">
+                  How It Works
+                </h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  Our platform allows authorized users to contribute veteran
+                  information from cemeteries across the country. Each record
+                  includes essential details such as:
+                </p>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div className="bg-white p-3 rounded">
+                    <strong>Personal Information:</strong>
+                    <br />
+                    Names, birth/death dates, service periods
+                  </div>
+                  <div className="bg-white p-3 rounded">
+                    <strong>Military Service:</strong>
+                    <br />
+                    Branch, rank, conflicts served, unit information
+                  </div>
+                  <div className="bg-white p-3 rounded">
+                    <strong>Memorial Details:</strong>
+                    <br />
+                    Cemetery location, burial information, additional notes
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-8">
+                <h3 className="text-xl font-semibold text-red-800 mb-3">
+                  Honoring All Who Served
+                </h3>
+                <p className="text-gray-700 leading-relaxed">
+                  From the Revolutionary War to modern conflicts, this database
+                  encompasses veterans from all eras of American military
+                  service. Whether they served in the Army, Navy, Air Force,
+                  Marines, Coast Guard, or Space Force, every veteran's story
+                  deserves to be preserved and honored.
+                </p>
+              </div>
+
+              <div className="text-center bg-gray-100 p-8 rounded-lg">
+                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                  Contributing to the Database
+                </h3>
+                <p className="text-gray-700 mb-6 max-w-3xl mx-auto">
+                  We welcome contributions from cemetery administrators,
+                  genealogists, historians, and family members who wish to
+                  ensure their loved ones' service is properly documented.
+                  Together, we can build a comprehensive memorial that honors
+                  all who answered the call to serve.
+                </p>
+                <div className="flex justify-center space-x-4">
+                  <button
+                    onClick={() => setActiveTab("veterans")}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                  >
+                    Add Veteran Record
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("comments")}
+                    className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                  >
+                    Leave a Comment
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-8 text-center text-gray-600">
+                <p className="italic">
+                  "A nation that does not honor its heroes will not long
+                  endure."
+                </p>
+                <p className="text-sm mt-2">
+                  Thank you for helping us preserve the legacy of America's
+                  veterans.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Search & Browse Tab */}
+        {activeTab === "search" && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-3xl font-bold text-center mb-8 text-blue-800">
+              Search & Browse Veterans
+            </h2>
+
+            {/* Search Controls */}
+            <div className="bg-gray-50 p-6 rounded-lg mb-6">
+              {/* Main Search Bar */}
+              <div className="flex gap-2 mb-4">
+                <input
+                  type="text"
+                  placeholder="Search veterans by name, branch, rank, conflict, or any keyword..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      performSearch();
+                    }
+                  }}
+                />
+                <button
+                  onClick={performSearch}
+                  disabled={isSearching}
+                  className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:bg-blue-300"
+                >
+                  {isSearching ? "Searching..." : "Search"}
+                </button>
+              </div>
+
+              {/* Advanced Filters */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Branch
+                  </label>
+                  <select
+                    value={searchFilters.branch}
+                    onChange={(e) =>
+                      handleSearchFilterChange("branch", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">All Branches</option>
+                    {getUniqueValues("branch").map((branch) => (
+                      <option key={branch} value={branch}>
+                        {branch}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Conflict/War
+                  </label>
+                  <select
+                    value={searchFilters.conflict}
+                    onChange={(e) =>
+                      handleSearchFilterChange("conflict", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">All Conflicts</option>
+                    {getUniqueValues("conflictWar").map((conflict) => (
+                      <option key={conflict} value={conflict}>
+                        {conflict}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Rank
+                  </label>
+                  <select
+                    value={searchFilters.rank}
+                    onChange={(e) =>
+                      handleSearchFilterChange("rank", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">All Ranks</option>
+                    {getUniqueValues("rank").map((rank) => (
+                      <option key={rank} value={rank}>
+                        {rank}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Sort By
+                  </label>
+                  <select
+                    value={`${sortBy}-${sortOrder}`}
+                    onChange={(e) => {
+                      const [field, order] = e.target.value.split("-");
+                      setSortBy(field);
+                      setSortOrder(order);
+                    }}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="lastName-asc">Last Name (A-Z)</option>
+                    <option value="lastName-desc">Last Name (Z-A)</option>
+                    <option value="firstName-asc">First Name (A-Z)</option>
+                    <option value="firstName-desc">First Name (Z-A)</option>
+                    <option value="branch-asc">Branch (A-Z)</option>
+                    <option value="dateOfDeath-desc">
+                      Date of Death (Newest)
+                    </option>
+                    <option value="dateOfDeath-asc">
+                      Date of Death (Oldest)
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Date Range Filter */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Death Date From
+                  </label>
+                  <input
+                    type="date"
+                    value={searchFilters.dateRange.start}
+                    onChange={(e) =>
+                      handleDateRangeChange("start", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Death Date To
+                  </label>
+                  <input
+                    type="date"
+                    value={searchFilters.dateRange.end}
+                    onChange={(e) =>
+                      handleDateRangeChange("end", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={performSearch}
+                  disabled={isSearching}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors disabled:bg-green-300"
+                >
+                  Apply Filters
+                </button>
+                <button
+                  onClick={resetSearchFilters}
+                  className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  Clear All
+                </button>
+                <button
+                  onClick={() => {
+                    setSearchResults([...veterans]);
+                    performSearch();
+                  }}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Browse All ({veterans.length})
+                </button>
+              </div>
+            </div>
+
+            {/* Search Results */}
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold">
+                  {searchResults.length > 0
+                    ? `Search Results (${searchResults.length})`
+                    : searchTerm ||
+                      Object.values(searchFilters).some(
+                        (f) =>
+                          f &&
+                          (typeof f === "string"
+                            ? f
+                            : Object.values(f).some((v) => v))
+                      )
+                    ? "No Results Found"
+                    : `All Veterans (${veterans.length})`}
+                </h3>
+                {searchResults.length > 0 && (
+                  <div className="text-sm text-gray-600">
+                    Showing {searchResults.length} of {veterans.length} veterans
+                  </div>
+                )}
+              </div>
+
+              {/* Results Display */}
+              {searchResults.length === 0 &&
+              (searchTerm ||
+                Object.values(searchFilters).some(
+                  (f) =>
+                    f &&
+                    (typeof f === "string"
+                      ? f
+                      : Object.values(f).some((v) => v))
+                )) ? (
+                <div className="text-center py-8">
+                  <div className="text-gray-500 text-lg mb-2">
+                    No veterans found matching your search criteria
+                  </div>
+                  <p className="text-gray-400">
+                    Try adjusting your search terms or filters
+                  </p>
+                </div>
+              ) : searchResults.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="text-gray-500 text-lg mb-2">
+                    Use the search above to find veterans
+                  </div>
+                  <p className="text-gray-400">
+                    Search by name, branch, conflict, or use the filters
+                  </p>
+                </div>
+              ) : (
+                <div className="grid gap-4">
+                  {searchResults.map((veteran) => (
+                    <div
+                      key={veteran.id}
+                      className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <h4 className="text-lg font-semibold text-blue-600">
+                          {veteran.firstName} {veteran.middleName}{" "}
+                          {veteran.lastName}
+                        </h4>
+                        <div className="text-sm text-gray-500 text-right">
+                          <div>Added by: {veteran.userEmail}</div>
+                          <div>ID: {veteran.id}</div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                        <div>
+                          <span className="font-medium text-gray-700">
+                            Branch:
+                          </span>
+                          <div className="text-gray-600">
+                            {veteran.branch || "Not specified"}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-700">
+                            Rank:
+                          </span>
+                          <div className="text-gray-600">
+                            {veteran.rank || "Not specified"}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-700">
+                            Conflict:
+                          </span>
+                          <div className="text-gray-600">
+                            {veteran.conflictWar || "Not specified"}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-700">
+                            Date of Death:
+                          </span>
+                          <div className="text-gray-600">
+                            {formatDateTime(veteran.dateOfDeath)}
+                          </div>
+                        </div>
+                      </div>
+
+                      {veteran.additionalInfo && (
+                        <div className="mt-3 pt-3 border-t border-gray-100">
+                          <span className="font-medium text-gray-700">
+                            Additional Info:
+                          </span>
+                          <p className="text-gray-600 text-sm mt-1">
+                            {veteran.additionalInfo}
+                          </p>
+                        </div>
+                      )}
+
+                      {veteran.userId === user.uid && (
+                        <div className="mt-3 pt-3 border-t border-gray-100">
+                          <span className="text-xs text-green-600 font-medium">
+                            ● Your Record
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Comments Tab */}
         {activeTab === "comments" && (
@@ -648,7 +1909,6 @@ export default function App() {
             )}
           </div>
         )}
-
         {/* Veterans Tab */}
         {activeTab === "veterans" && (
           <div className="bg-white rounded-lg shadow-md p-6">
