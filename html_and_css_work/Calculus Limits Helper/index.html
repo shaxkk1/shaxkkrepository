@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AP Calculus BC Limits Cheat Sheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <h1>Limits</h1>
+        <h2>The most basic concept of Calculus</h2>
+        <nav>
+            <ul>
+                <li><a href="#definition">Definition</a></li>
+                <li><a href="#properties">Properties</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Main Title (H1) -->
+        <h1 class="main-title">Understanding Limits in AP Calculus BC</h1>
+
+        <!-- Content Section with Image -->
+        <section class="content-section" id="definition">
+            <h3>What is a Limit?</h3>
+            
+            <!-- Main Paragraph -->
+            <p class="main-paragraph">
+                A limit describes the behavior of a function as the input approaches a particular value. In AP Calculus BC, limits form the foundation for understanding derivatives, integrals, and continuity. The limit of f(x) as x approaches c is the value that f(x) gets arbitrarily close to as x gets arbitrarily close to c, regardless of what happens at x = c itself. This concept allows us to analyze function behavior at points where the function might not even be defined, making it a powerful tool for mathematical analysis.
+            </p>
+
+            <!-- Image -->
+            <img class="index" src="data:image/png;base64,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" alt="an outline of a meal plan" width="400" height="200"> 
+            <h4> Image on https://tutorial.math.lamar.edu/problems/calci/onesidedlimits.aspx CC BY-SA 2.0 </h4>
+
+            <!-- Formula Box -->
+            <div class="formula-box">
+                lim[x→c] f(x) = L
+                <br><br>
+                "The limit of f(x) as x approaches c equals L"
+            </div>
+        </section>
+
+        <section class="content-section" id="properties">
+            <h3>Essential Limit Properties</h3>
+            <p class="main-paragraph">
+                Mastering limit properties is crucial for success in AP Calculus BC. These properties allow you to break down complex limits into simpler components. The sum rule states that the limit of a sum equals the sum of the limits. The product rule tells us that the limit of a product equals the product of the limits. Understanding these fundamental properties will help you tackle even the most challenging limit problems on the AP exam.
+            </p>
+            
+            <div class="formula-box">
+                lim[x→c] [f(x) + g(x)] = lim[x→c] f(x) + lim[x→c] g(x)
+                <br><br>
+                lim[x→c] [f(x) · g(x)] = lim[x→c] f(x) · lim[x→c] g(x)
+            </div>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h3>Practice Links & Resources</h3>
+            <p class="main-paragraph">
+                Ready to test your understanding? Practice is essential for mastering limits. Below you'll find carefully curated resources to help you excel in AP Calculus BC.
+            </p>
+            
+            <!-- Custom styled link -->
+            <a href="https://www.interactive.onlinemathlearning.com/share/cb/ap/CalcAB-BC-Unit-1-PracticeVid.pdf" class="study-link">🚀 Start Practice Problems</a>
+            
+            <p class="main-paragraph">
+                For additional help, check out 
+                <a href="https://www.khanacademy.org/math/ap-calculus-bc" class="external-link" target="_blank">Khan Academy's AP Calculus BC course</a> 
+                which offers comprehensive video tutorials and practice exercises specifically designed for AP exam preparation.
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About This Resource</h4>
+                <p>This comprehensive AP Calculus BC limits cheat sheet is designed to help students master one of the most fundamental concepts in calculus. Perfect for exam preparation and quick reference.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="#definition">Limit Definition</a></p>
+                <p><a href="#properties">Limit Properties</a></p>
+                <p><a href="#examples">Practice Examples</a></p>
+                <p><a href="https://apstudents.collegeboard.org/courses/ap-calculus-bc">Official AP Calculus BC</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Study Tips</h4>
+                <p>Practice daily with different types of limit problems</p>
+                <p>Understand the graphical interpretation of limits</p>
+                <p>Master L'Hôpital's rule for indeterminate forms</p>
+                <p>Review continuity and differentiability connections</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AP Calculus BC Study Resource. Built for academic success. Sean Dao</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MoodGamer — pick a game by mood</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container" role="main">
+    <div class="header">
+      <div class="logo">MG</div>
+      <div>
+        <h1>MoodGamer</h1>
+        <p class="lead">Choose how you're feeling and get a quick game pick tailored to your mood — HTML &amp; CSS only.</p>
+      </div>
+    </div>
+
+    <form id="survey" class="survey" aria-label="Game survey">
+      <!-- Question 1 -->
+      <fieldset>
+        <legend>1) What play style do you prefer?</legend>
+        <div class="moods">
+          <label class="mood" data-q="q1" data-val="creative"><input type="radio" name="q1" value="creative"> 🧩 Creative / Building</label>
+          <label class="mood" data-q="q1" data-val="competitive"><input type="radio" name="q1" value="competitive"> ⚔️ Competitive</label>
+          <label class="mood" data-q="q1" data-val="story"><input type="radio" name="q1" value="story"> 📚 Story-driven</label>
+        </div>
+      </fieldset>
+
+      <!-- Question 2 -->
+      <fieldset>
+        <legend>2) How much time do you want to spend?</legend>
+        <div class="moods">
+          <label class="mood" data-q="q2" data-val="short"><input type="radio" name="q2" value="short"> 🕒 Short sessions</label>
+          <label class="mood" data-q="q2" data-val="long"><input type="radio" name="q2" value="long"> ⌛ Long sessions</label>
+          <label class="mood" data-q="q2" data-val="anytime"><input type="radio" name="q2" value="anytime"> 🌐 Anytime / Flexible</label>
+        </div>
+      </fieldset>
+
+      <!-- Question 3 -->
+      <fieldset>
+        <legend>3) Play alone or with others?</legend>
+        <div class="moods">
+          <label class="mood" data-q="q3" data-val="solo"><input type="radio" name="q3" value="solo"> 👤 Solo</label>
+          <label class="mood" data-q="q3" data-val="co-op"><input type="radio" name="q3" value="co-op"> 🤝 Co-op / Chill with friends</label>
+          <label class="mood" data-q="q3" data-val="massive"><input type="radio" name="q3" value="massive"> 🌍 Multiplayer / Massive</label>
+        </div>
+      </fieldset>
+
+      <!-- Question 4 -->
+      <fieldset>
+        <legend>4) What genre interests you most?</legend>
+        <div class="moods">
+          <label class="mood" data-q="q4" data-val="action"><input type="radio" name="q4" value="action"> 💥 Action</label>
+          <label class="mood" data-q="q4" data-val="rpg"><input type="radio" name="q4" value="rpg"> 🗡️ RPG</label>
+          <label class="mood" data-q="q4" data-val="strategy"><input type="radio" name="q4" value="strategy"> 🧠 Strategy</label>
+          <label class="mood" data-q="q4" data-val="simulation"><input type="radio" name="q4" value="simulation"> 🏠 Simulation</label>
+          <label class="mood" data-q="q4" data-val="adventure"><input type="radio" name="q4" value="adventure"> 🧭 Adventure</label>
+          <label class="mood" data-q="q4" data-val="sports"><input type="radio" name="q4" value="sports"> ⚽ Sports</label>
+          <label class="mood" data-q="q4" data-val="puzzle"><input type="radio" name="q4" value="puzzle"> 🧩 Puzzle</label>
+          <label class="mood" data-q="q4" data-val="horror"><input type="radio" name="q4" value="horror"> 👻 Horror</label>
+        </div>
+      </fieldset>
+
+      <div style="margin-top:1rem;display:flex;gap:0.75rem;align-items:center">
+        <button type="button" id="pickBtn" class="mood" style="padding:0.6rem 1rem;">Get my game</button>
+        <button type="button" id="resetBtn" class="mood" style="padding:0.6rem 1rem;background:transparent;border:1px dashed rgba(255,255,255,0.06)">Reset</button>
+        <div id="action-indicator" style="color:var(--muted);font-size:0.95rem;margin-left:0.5rem">No action yet</div>
+      </div>
+
+      <section id="result" class="recommendation" aria-live="polite" hidden>
+        <div id="result-card" class="game" aria-hidden="false">
+          <div class="thumb" id="result-thumb">?</div>
+          <div class="meta">
+            <div id="result-title" class="title">—</div>
+            <div id="result-desc" class="desc">Answer the questions above and press Get my game.</div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="All candidate games" style="margin-top:1rem">
+        <h3 style="margin:0 0 0.5rem">Games we recommend</h3>
+        <div class="rec-grid" id="all-games">
+          <!-- Games list populated from the JS mapping; kept static here for quick reference -->
+          <div class="game" data-key="minecraft"><div class="thumb">MC</div><div class="meta"><div class="title">Minecraft</div><div class="desc">Create, build, and explore — sandbox freedom for any session length.</div></div></div>
+          <div class="game" data-key="roblox"><div class="thumb">RB</div><div class="meta"><div class="title">Roblox</div><div class="desc">User-created experiences across many genres — social and creative.</div></div></div>
+          <div class="game" data-key="stardew"><div class="thumb">SV</div><div class="meta"><div class="title">Stardew Valley</div><div class="desc">Cozy farming sim with community and light progression.</div></div></div>
+          <div class="game" data-key="valorant"><div class="thumb">V</div><div class="meta"><div class="title">Valorant</div><div class="desc">Tactical shooter with precise, team-based gameplay.</div></div></div>
+          <div class="game" data-key="zelda"><div class="thumb">Z</div><div class="meta"><div class="title">Zelda: Breath of the Wild</div><div class="desc">Open-world exploration that rewards curiosity.</div></div></div>
+          <div class="game" data-key="lifeis"><div class="thumb">LI</div><div class="meta"><div class="title">Life Is Strange</div><div class="desc">Emotional, narrative-focused adventure.</div></div></div>
+          <div class="game" data-key="fortnite"><div class="thumb">FN</div><div class="meta"><div class="title">Fortnite</div><div class="desc">Fast-paced building & battle royale with seasonal content.</div></div></div>
+          <div class="game" data-key="cod"><div class="thumb">COD</div><div class="meta"><div class="title">Call of Duty</div><div class="desc">High-octane, cinematic shooter experiences and competitive modes.</div></div></div>
+          <div class="game" data-key="fifa"><div class="thumb">F2</div><div class="meta"><div class="title">FIFA (2k)</div><div class="desc">Realistic football/soccer simulation — great for competitive play.</div></div></div>
+          <div class="game" data-key="gta"><div class="thumb">GT</div><div class="meta"><div class="title">GTA</div><div class="desc">Open-world action and narrative-driven sandbox gameplay.</div></div></div>
+          <div class="game" data-key="gow"><div class="thumb">GW</div><div class="meta"><div class="title">God of War</div><div class="desc">Cinematic single-player action with deep combat and story.</div></div></div>
+          <div class="game" data-key="uncharted"><div class="thumb">UN</div><div class="meta"><div class="title">Uncharted</div><div class="desc">Action-adventure with cinematic set pieces and strong narrative.</div></div></div>
+          <div class="game" data-key="apex"><div class="thumb">AL</div><div class="meta"><div class="title">Apex Legends</div><div class="desc">Fast-paced battle royale with squad-based gameplay.</div></div></div>
+          <div class="game" data-key="civ"><div class="thumb">C6</div><div class="meta"><div class="title">Civilization VI</div><div class="desc">Turn-based strategy game focused on empire building.</div></div></div>
+          <div class="game" data-key="sims"><div class="thumb">S4</div><div class="meta"><div class="title">The Sims 4</div><div class="desc">Life simulation game with deep customization.</div></div></div>
+          <div class="game" data-key="overwatch"><div class="thumb">OW</div><div class="meta"><div class="title">Overwatch</div><div class="desc">Team-based shooter with unique heroes and abilities.</div></div></div>
+          <div class="game" data-key="mario"><div class="thumb">SMO</div><div class="meta"><div class="title">Super Mario Odyssey</div><div class="desc">3D platformer with creative levels and exploration.</div></div></div>
+          <div class="game" data-key="fifa23"><div class="thumb">F23</div><div class="meta"><div class="title">FIFA 23</div><div class="desc">Latest soccer simulation with updated teams and gameplay.</div></div></div>
+          <div class="game" data-key="portal"><div class="thumb">P2</div><div class="meta"><div class="title">Portal 2</div><div class="desc">Puzzle-platformer with innovative mechanics and humor.</div></div></div>
+          <div class="game" data-key="halo"><div class="thumb">HI</div><div class="meta"><div class="title">Halo Infinite</div><div class="desc">Sci-fi shooter with expansive multiplayer and campaign.</div></div></div>
+          <div class="game" data-key="fnaf"><div class="thumb">FNAF</div><div class="meta"><div class="title">Five Nights at Freddy's</div><div class="desc">Horror survival game with animatronic enemies.</div></div></div>
+        </div>
+      </section>
+    </form>
+    
+    <script>
+      (function(){
+  const pickBtn = document.getElementById('pickBtn')
+  const resetBtn = document.getElementById('resetBtn')
+  const result = document.getElementById('result')
+  const title = document.getElementById('result-title')
+  const desc = document.getElementById('result-desc')
+  const thumb = document.getElementById('result-thumb')
+  const actionIndicator = document.getElementById('action-indicator')
+  const allGames = document.getElementById('all-games')
+
+        // Simple games database — add or modify entries here
+        const games = {
+          minecraft: {title:'Minecraft', desc:'Create, build, and explore. Great solo or with friends of all ages.', thumb:'MC'},
+          roblox: {title:'Roblox', desc:'User-created experiences across many genres. Social and creative.', thumb:'RB'},
+          stardew: {title:'Stardew Valley', desc:'Cozy farming and community-focused gameplay.', thumb:'SV'},
+          valorant: {title:'Valorant', desc:'Tactical competitive shooter — high-skill team play.', thumb:'V'},
+          zelda: {title:"Zelda: Breath of the Wild", desc:'Open-world exploration and discovery.', thumb:'Z'},
+          lifeis: {title:'Life Is Strange', desc:'Narrative-driven game with emotional storytelling.', thumb:'LI'},
+          fortnite: {title:'Fortnite', desc:'Fast-paced building + competitive survival; social and seasonal.', thumb:'FN'},
+          cod: {title:'Call of Duty', desc:'High-octane shooter series — competitive and cinematic.', thumb:'COD'},
+          fifa: {title:'FIFA (2k)', desc:'Competitive sports gameplay focused on soccer/football.', thumb:'F2'},
+          gta: {title:'GTA (Grand Theft Auto)', desc:'Open-world action, story, and sandbox freedom.', thumb:'GT'},
+          gow: {title:'God of War', desc:'Cinematic single-player action with deep story and combat.', thumb:'GW'},
+          uncharted: {title:'Uncharted', desc:'Action-adventure with cinematic set pieces and story.', thumb:'UN'},
+          apex: {title:'Apex Legends', desc:'Fast-paced battle royale with squad-based gameplay.', thumb:'AL'},
+          civ: {title:'Civilization VI', desc:'Turn-based strategy game focused on empire building.', thumb:'C6'},
+          sims: {title:'The Sims 4', desc:'Life simulation game with deep customization.', thumb:'S4'},
+          overwatch: {title:'Overwatch', desc:'Team-based shooter with unique heroes and abilities.', thumb:'OW'},
+          mario: {title:'Super Mario Odyssey', desc:'3D platformer with creative levels and exploration.', thumb:'SMO'},
+          fifa23: {title:'FIFA 23', desc:'Latest soccer simulation with updated teams and gameplay.', thumb:'F23'},
+          portal: {title:'Portal 2', desc:'Puzzle-platformer with innovative mechanics and humor.', thumb:'P2'},
+          halo: {title:'Halo Infinite', desc:'Sci-fi shooter with expansive multiplayer and campaign.', thumb:'HI'},
+          fnaf: {title:"Five Nights at Freddy's", desc:'Horror survival game with animatronic enemies.', thumb:'FNAF'}
+        }
+
+        function readAnswers(){
+          const q1 = document.querySelector('input[name="q1"]:checked')?.value || null
+          const q2 = document.querySelector('input[name="q2"]:checked')?.value || null
+          const q3 = document.querySelector('input[name="q3"]:checked')?.value || null
+          const q4 = document.querySelector('input[name="q4"]:checked')?.value || null
+          return {q1,q2,q3,q4}
+        }
+
+        function pickGame({q1,q2,q3,q4}){
+          // Genre-based picks first
+          if(q4==='action') return games.apex
+          if(q4==='rpg') return games.sims
+          if(q4==='strategy') return games.civ
+          if(q4==='simulation') return games.sims
+          if(q4==='adventure') return games.mario
+          if(q4==='sports') return games.fifa23
+          if(q4==='puzzle') return games.portal
+          if(q4==='horror') return games.fnaf
+
+          // More detailed rule-based selection that includes the new titles
+          if(q1==='creative'){
+            if(q3==='massive') return games.roblox
+            if(q3==='co-op') return games.minecraft
+            return games.minecraft
+          }
+
+          if(q1==='competitive'){
+            // competitive + multiplayer -> Fortnite or COD depending on time
+            if(q3==='massive') return (q2==='short') ? games.fortnite : games.cod
+            // solo competitive -> Valorant or FIFA depending on theme
+            return (q2==='short') ? games.valorant : games.fifa
+          }
+
+          if(q1==='story'){
+            // story + long sessions -> God of War / Uncharted / GTA
+            if(q2==='long') return games.gow
+            if(q3==='solo') return games.lifeis
+            return games.uncharted
+          }
+
+          // fallback
+          return games.minecraft
+        }
+
+        function markSelections(){
+          // remove previous markings
+          document.querySelectorAll('label.mood.selected').forEach(l=>l.classList.remove('selected'))
+          // for each question, find checked and mark its label
+          ['q1','q2','q3','q4'].forEach(q=>{
+            const v = document.querySelector('input[name="'+q+'"]:checked')?.value
+            if(v){
+              const lab = document.querySelector('label.mood[data-q="'+q+'"][data-val="'+v+'"]')
+              if(lab) lab.classList.add('selected')
+            }
+          })
+        }
+
+        pickBtn.addEventListener('click', ()=>{
+          const answers = readAnswers()
+          // basic validation
+          if(!answers.q1 || !answers.q2 || !answers.q3 || !answers.q4){
+            title.textContent = 'Please answer all 4 questions.'
+            desc.textContent = 'Select an option for each question to get a recommendation.'
+            thumb.textContent = '?'
+            result.hidden = false
+            markSelections()
+            // indicate user pressed the button
+            actionIndicator.textContent = 'Button pressed: Get my game (incomplete answers)'
+            pickBtn.classList.add('pressed')
+            resetBtn.classList.remove('pressed')
+            return
+          }
+
+          const g = pickGame(answers)
+          title.textContent = g.title
+          desc.textContent = g.desc
+          thumb.textContent = g.thumb
+          result.hidden = false
+          markSelections()
+          // indicate user pressed the button and highlight chosen game in list
+          actionIndicator.textContent = 'Button pressed: Get my game'
+          pickBtn.classList.add('pressed')
+          resetBtn.classList.remove('pressed')
+          // highlight chosen in all-games
+          document.querySelectorAll('#all-games .game').forEach(el=>el.classList.remove('highlight'))
+          const key = Object.keys(games).find(k=>games[k].title === g.title)
+          if(key){
+            const el = document.querySelector('#all-games .game[data-key="'+key+'"]')
+            if(el) el.classList.add('highlight')
+          }
+        })
+
+        resetBtn.addEventListener('click', ()=>{
+          document.getElementById('survey').reset()
+          result.hidden = true
+          document.querySelectorAll('label.mood.selected').forEach(l=>l.classList.remove('selected'))
+          actionIndicator.textContent = 'No action yet'
+          // reset button color
+          pickBtn.classList.remove('pressed')
+          resetBtn.classList.add('pressed')
+          // clear pressed from mood labels
+          document.querySelectorAll('label.mood').forEach(l => l.classList.remove('pressed'))
+          // clear highlights in the all-games list
+          document.querySelectorAll('#all-games .game.highlight').forEach(el=>el.classList.remove('highlight'))
+        })
+
+        // Add pressed class on click for mood labels
+        document.querySelectorAll('label.mood').forEach(label => {
+          label.addEventListener('click', () => {
+            label.classList.add('pressed');
+          });
+        });
+      })()
+    </script>
+
+    <footer style="margin-top:1.2rem;color:var(--muted);font-size:0.9rem">Tip: this version uses only HTML &amp; CSS. For persistence, filtering, or images we can add lightweight JavaScript.</footer>
+  </main>
+</body>
+</html>
