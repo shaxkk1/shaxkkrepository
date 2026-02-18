@@ -1,0 +1,241 @@
+/* ============================================================
+   Task Dashboard — Styles
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --bg:        #0d0f14;
+  --surface:   #161921;
+  --border:    #2a2e3d;
+  --accent:    #e8ff47;
+  --accent2:   #ff6b6b;
+  --text:      #e8eaf0;
+  --muted:     #7a7f99;
+  --low:       #4caf7d;
+  --medium:    #f5a623;
+  --high:      #ff5c5c;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- HEADER ---- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--accent);
+}
+
+#subtitle {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+#clock-display {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  background: var(--bg);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+/* ---- MAIN ---- */
+main {
+  flex: 1;
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ---- ADD TASK ---- */
+#add-task-section {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#task-input, #priority-select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#task-input { flex: 1; min-width: 200px; }
+#task-input:focus, #priority-select:focus { border-color: var(--accent); }
+
+#priority-select option { background: var(--surface); }
+
+#add-btn {
+  background: var(--accent);
+  color: #0d0f14;
+  border: none;
+  padding: 0.7rem 1.6rem;
+  border-radius: 6px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,255,71,0.3); }
+#add-btn:active { transform: translateY(0); }
+
+/* ---- STATS ---- */
+#stats-bar {
+  display: flex;
+  gap: 1rem;
+}
+
+.stat-box {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+#stat-done { color: var(--low); }
+
+/* ---- TASK LIST ---- */
+#task-list-section h2,
+#tips-section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+#empty-message {
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 1rem 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  transition: border-color 0.2s, transform 0.15s;
+  cursor: default;
+}
+
+.task-item:hover { border-color: var(--accent); transform: translateX(4px); }
+.task-item.done { opacity: 0.5; }
+.task-item.done .task-name { text-decoration: line-through; }
+
+.priority-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.priority-dot.low    { background: var(--low); }
+.priority-dot.medium { background: var(--medium); }
+.priority-dot.high   { background: var(--high); }
+
+.task-name { flex: 1; font-size: 0.9rem; }
+
+.task-priority {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.complete-btn, .remove-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.complete-btn:hover { background: var(--low); border-color: var(--low); color: #000; }
+.remove-btn:hover   { background: var(--high); border-color: var(--high); color: #fff; }
+
+/* ---- TIPS ---- */
+#tips-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.tip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.tip-card:hover { border-color: var(--accent); color: var(--text); }
+
+/* ---- FOOTER ---- */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  border-top: 1px solid var(--border);
+}

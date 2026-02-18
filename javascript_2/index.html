@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body onload="handleLoad()">
+
+  <header>
+    <div id="header-title">
+      <h1>Task Dashboard</h1>
+      <p id="subtitle">Organize. Focus. Deliver.</p>
+    </div>
+    <div id="clock-display">--:--:--</div>
+  </header>
+
+  <main>
+    <section id="add-task-section">
+      <input type="text" id="task-input" placeholder="New task name..." />
+      <select id="priority-select">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button id="add-btn" onclick="addTask()">Add Task</button>
+    </section>
+
+    <section id="stats-bar">
+      <span class="stat-box" id="stat-total">Total: 0</span>
+      <span class="stat-box" id="stat-done">Done: 0</span>
+      <span class="stat-box" id="stat-pending">Pending: 0</span>
+    </section>
+
+    <section id="task-list-section">
+      <h2>Your Tasks</h2>
+      <ul id="task-list"></ul>
+      <p id="empty-message">No tasks yet. Add one above!</p>
+    </section>
+
+    <section id="tips-section">
+      <h2>Productivity Tips</h2>
+      <div id="tips-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Task Dashboard &copy; 2025</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
