@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logic Checks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- BLOCK 1 -->
+  <div class="terminal">
+    <div class="terminal-header">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="title-bar">block_1 — AND (&&)</span>
+    </div>
+    <div class="code-block">
+      <pre><span class="kw">let</span> isloggedin = <span class="val" id="b1-loginVal">true</span>;
+<span class="kw">let</span> level = <span class="val" id="b1-levelVal">5</span>;
+
+<span class="kw">if</span>(isloggedin <span class="op">&&</span> level <span class="op">>=</span> <span class="num">5</span>) {
+    console.log(<span class="str">"User can play level 5 or more."</span>)
+} <span class="kw">else</span> {
+    console.log(<span class="str">"User cannot play level 5 or more"</span>)
+}</pre>
+    </div>
+    <div class="controls">
+      <div class="control-row">
+        <label>isloggedin</label>
+        <button class="toggle active" id="b1-toggleLogin" onclick="b1_toggleLogin()">true</button>
+      </div>
+      <div class="control-row">
+        <label>level</label>
+        <div class="slider-wrap">
+          <input type="range" min="1" max="10" value="5" oninput="b1_updateLevel(this.value)"/>
+          <span class="slider-val" id="b1-sliderDisplay">5</span>
+        </div>
+      </div>
+    </div>
+    <div class="console">
+      <span class="console-label">▶ console</span>
+      <div class="console-output">
+        <span class="out-text success" id="b1-output">User can play level 5 or more.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCK 2 -->
+  <div class="terminal">
+    <div class="terminal-header">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="title-bar">block_2 — OR (||)</span>
+    </div>
+    <div class="code-block">
+      <pre><span class="kw">let</span> ispremiumuser = <span class="val" id="b2-premiumVal">true</span>;
+<span class="kw">let</span> coins = <span class="val" id="b2-coinsVal">10000</span>;
+
+<span class="kw">if</span>(ispremiumuser <span class="op">||</span> coins <span class="op">>=</span> <span class="num">10000</span>) {
+    console.log(<span class="str">"User can play all the premium levels"</span>)
+} <span class="kw">else</span> {
+    console.log(<span class="str">"User is not allowed to play premium levels"</span>)
+}</pre>
+    </div>
+    <div class="controls">
+      <div class="control-row">
+        <label>ispremiumuser</label>
+        <button class="toggle active" id="b2-togglePremium" onclick="b2_togglePremium()">true</button>
+      </div>
+      <div class="control-row">
+        <label>coins</label>
+        <div class="slider-wrap">
+          <input type="range" min="0" max="20000" step="500" value="10000" oninput="b2_updateCoins(this.value)"/>
+          <span class="slider-val" id="b2-coinsDisplay">10000</span>
+        </div>
+      </div>
+    </div>
+    <div class="console">
+      <span class="console-label">▶ console</span>
+      <div class="console-output">
+        <span class="out-text success" id="b2-output">User can play all the premium levels</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCK 3 -->
+  <div class="terminal">
+    <div class="terminal-header">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="title-bar">block_3 — NOT (!)</span>
+    </div>
+    <div class="code-block">
+      <pre><span class="kw">let</span> isbanned = <span class="val" id="b3-bannedVal">false</span>;
+<span class="kw">let</span> isloggedin = <span class="val" id="b3-loginVal">true</span>;
+
+<span class="kw">if</span>(<span class="op">!</span>isbanned <span class="op">&&</span> isloggedin) {
+    console.log(<span class="str">"The user is logged in"</span>)
+} <span class="kw">else</span> {
+    console.log(<span class="str">"The user cannot log in"</span>)
+}</pre>
+    </div>
+    <div class="controls">
+      <div class="control-row">
+        <label>isbanned</label>
+        <button class="toggle" id="b3-toggleBanned" onclick="b3_toggleBanned()">false</button>
+      </div>
+      <div class="control-row">
+        <label>isloggedin</label>
+        <button class="toggle active" id="b3-toggleLogin" onclick="b3_toggleLogin()">true</button>
+      </div>
+    </div>
+    <div class="console">
+      <span class="console-label">▶ console</span>
+      <div class="console-output">
+        <span class="out-text success" id="b3-output">The user is logged in</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Block 1 ---
+    let b1 = { login: true, level: 5 };
+    function b1_eval() {
+      const out = document.getElementById('b1-output');
+      document.getElementById('b1-loginVal').textContent = b1.login;
+      document.getElementById('b1-loginVal').className = 'val ' + b1.login;
+      document.getElementById('b1-levelVal').textContent = b1.level;
+      if (b1.login && b1.level >= 5) {
+        out.textContent = 'User can play level 5 or more.';
+        out.className = 'out-text success';
+      } else {
+        out.textContent = 'User cannot play level 5 or more';
+        out.className = 'out-text fail';
+      }
+    }
+    function b1_toggleLogin() {
+      b1.login = !b1.login;
+      const btn = document.getElementById('b1-toggleLogin');
+      btn.textContent = b1.login; btn.className = 'toggle ' + (b1.login ? 'active' : '');
+      b1_eval();
+    }
+    function b1_updateLevel(v) {
+      b1.level = +v;
+      document.getElementById('b1-sliderDisplay').textContent = v;
+      b1_eval();
+    }
+
+    // --- Block 2 ---
+    let b2 = { premium: true, coins: 10000 };
+    function b2_eval() {
+      const out = document.getElementById('b2-output');
+      document.getElementById('b2-premiumVal').textContent = b2.premium;
+      document.getElementById('b2-premiumVal').className = 'val ' + b2.premium;
+      document.getElementById('b2-coinsVal').textContent = b2.coins;
+      if (b2.premium || b2.coins >= 10000) {
+        out.textContent = 'User can play all the premium levels';
+        out.className = 'out-text success';
+      } else {
+        out.textContent = 'User is not allowed to play premium levels';
+        out.className = 'out-text fail';
+      }
+    }
+    function b2_togglePremium() {
+      b2.premium = !b2.premium;
+      const btn = document.getElementById('b2-togglePremium');
+      btn.textContent = b2.premium; btn.className = 'toggle ' + (b2.premium ? 'active' : '');
+      b2_eval();
+    }
+    function b2_updateCoins(v) {
+      b2.coins = +v;
+      document.getElementById('b2-coinsDisplay').textContent = v;
+      b2_eval();
+    }
+
+    // --- Block 3 ---
+    let b3 = { banned: false, login: true };
+    function b3_eval() {
+      const out = document.getElementById('b3-output');
+      document.getElementById('b3-bannedVal').textContent = b3.banned;
+      document.getElementById('b3-bannedVal').className = 'val ' + b3.banned;
+      document.getElementById('b3-loginVal').textContent = b3.login;
+      document.getElementById('b3-loginVal').className = 'val ' + b3.login;
+      if (!b3.banned && b3.login) {
+        out.textContent = 'The user is logged in';
+        out.className = 'out-text success';
+      } else {
+        out.textContent = 'The user cannot log in';
+        out.className = 'out-text fail';
+      }
+    }
+    function b3_toggleBanned() {
+      b3.banned = !b3.banned;
+      const btn = document.getElementById('b3-toggleBanned');
+      btn.textContent = b3.banned; btn.className = 'toggle ' + (b3.banned ? 'active' : '');
+      b3_eval();
+    }
+    function b3_toggleLogin() {
+      b3.login = !b3.login;
+      const btn = document.getElementById('b3-toggleLogin');
+      btn.textContent = b3.login; btn.className = 'toggle ' + (b3.login ? 'active' : '');
+      b3_eval();
+    }
+  </script>
+</body>
+</html>
