@@ -1,0 +1,128 @@
+
+<style>
+  .mem-root { font-family: var(--font-sans); color: var(--color-text-primary); max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem; }
+  .hero { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 2rem 1.5rem; display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem; }
+  .avatar { width: 80px; height: 80px; border-radius: 50%; background: #B5D4F4; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 500; color: #0C447C; flex-shrink: 0; }
+  .hero-info { flex: 1; }
+  .hero-name { font-size: 22px; font-weight: 500; margin: 0 0 4px; }
+  .hero-dates { font-size: 14px; color: var(--color-text-secondary); margin: 0 0 8px; }
+  .badge { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: var(--border-radius-md); background: #E6F1FB; color: #0C447C; margin-right: 6px; margin-bottom: 4px; border: 0.5px solid #B5D4F4; }
+  .badge-green { background: #EAF3DE; color: #3B6D11; border-color: #C0DD97; }
+  .section-card { background: var(--color-background-primary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .detail-item label { font-size: 12px; color: var(--color-text-tertiary); display: block; margin-bottom: 2px; }
+  .detail-item span { font-size: 14px; color: var(--color-text-primary); }
+  .timeline-item { display: flex; gap: 12px; margin-bottom: 14px; }
+  .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: #378ADD; flex-shrink: 0; margin-top: 5px; }
+  .timeline-line { width: 0.5px; background: var(--color-border-tertiary); margin-left: 4px; }
+  .timeline-text { font-size: 14px; }
+  .timeline-year { font-size: 12px; color: var(--color-text-secondary); }
+  .tribute { border-left: 3px solid var(--color-border-tertiary); padding-left: 12px; margin-bottom: 14px; border-radius: 0; }
+  .tribute-text { font-size: 14px; color: var(--color-text-primary); margin: 0 0 4px; line-height: 1.6; }
+  .tribute-author { font-size: 12px; color: var(--color-text-secondary); }
+  .add-tribute-btn { display: block; width: 100%; padding: 10px; border: 0.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-secondary); font-size: 14px; cursor: pointer; text-align: center; }
+  .add-tribute-btn:hover { background: var(--color-background-secondary); }
+  .medals { display: flex; flex-wrap: wrap; gap: 8px; }
+  .medal { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 6px 12px; font-size: 13px; }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .photo-placeholder { aspect-ratio: 1; background: var(--color-background-secondary); border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--color-text-tertiary); cursor: pointer; }
+  .photo-placeholder:hover { background: var(--color-background-tertiary); }
+</style>
+
+<div class="mem-root">
+
+  <div class="hero">
+    <div class="avatar">JT</div>
+    <div class="hero-info">
+      <p class="hero-name">Sgt. James R. Tillman</p>
+      <p class="hero-dates">March 4, 1942 — November 18, 2003 &nbsp;·&nbsp; Age 61</p>
+      <span class="badge">U.S. Army</span>
+      <span class="badge">Vietnam Veteran</span>
+      <span class="badge-green badge">Verified Record</span>
+      <p style="font-size:13px;color:var(--color-text-secondary);margin:8px 0 0;">Interred at: <span style="color:var(--color-text-primary);">Arlington National Cemetery, Section 60, Plot 8412</span></p>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <p class="section-title">Service details</p>
+    <div class="detail-grid">
+      <div class="detail-item"><label>Branch</label><span>United States Army</span></div>
+      <div class="detail-item"><label>Rank</label><span>Sergeant (E-5)</span></div>
+      <div class="detail-item"><label>Service period</label><span>1963 – 1969</span></div>
+      <div class="detail-item"><label>Unit</label><span>1st Infantry Division, 2nd Battalion</span></div>
+      <div class="detail-item"><label>MOS</label><span>11B Infantryman</span></div>
+      <div class="detail-item"><label>Theater</label><span>Vietnam (1966–1968)</span></div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <p class="section-title">Service timeline</p>
+    <div class="timeline-item">
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="timeline-dot"></div>
+        <div style="flex:1;width:0.5px;background:var(--color-border-tertiary);margin-top:4px;"></div>
+      </div>
+      <div><div class="timeline-year">1963</div><div class="timeline-text">Enlisted in the U.S. Army, Fort Benning, GA</div></div>
+    </div>
+    <div class="timeline-item">
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="timeline-dot"></div>
+        <div style="flex:1;width:0.5px;background:var(--color-border-tertiary);margin-top:4px;"></div>
+      </div>
+      <div><div class="timeline-year">1966</div><div class="timeline-text">Deployed to Vietnam with 1st Infantry Division</div></div>
+    </div>
+    <div class="timeline-item">
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="timeline-dot"></div>
+        <div style="flex:1;width:0.5px;background:var(--color-border-tertiary);margin-top:4px;"></div>
+      </div>
+      <div><div class="timeline-year">1967</div><div class="timeline-text">Promoted to Sergeant; received Purple Heart</div></div>
+    </div>
+    <div class="timeline-item">
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="timeline-dot"></div>
+      </div>
+      <div><div class="timeline-year">1969</div><div class="timeline-text">Honorably discharged, Fort Campbell, KY</div></div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <p class="section-title">Awards &amp; decorations</p>
+    <div class="medals">
+      <span class="medal">Purple Heart</span>
+      <span class="medal">Vietnam Service Medal</span>
+      <span class="medal">Combat Infantryman Badge</span>
+      <span class="medal">National Defense Service Medal</span>
+      <span class="medal">Vietnam Campaign Medal</span>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <p class="section-title">Biography</p>
+    <p style="font-size:14px;line-height:1.8;color:var(--color-text-primary);margin:0;">James Raymond Tillman was born in Decatur, Georgia and enlisted at age 21. Known for his steady courage and care for his fellow soldiers, he served two tours in Vietnam and was decorated for valor during the Tet Offensive. After returning home, James worked as a high school history teacher in Atlanta for over 30 years, sharing his experiences to educate future generations. He is survived by his wife, Margaret, and three children.</p>
+  </div>
+
+  <div class="section-card">
+    <p class="section-title">Tributes &amp; memories</p>
+    <div class="tribute">
+      <p class="tribute-text">"Dad never talked much about the war, but he lived its lessons every day — in the way he treated people, with respect and without judgment. We miss him deeply."</p>
+      <p class="tribute-author">— Robert Tillman, son · Added January 2024</p>
+    </div>
+    <div class="tribute">
+      <p class="tribute-text">"Sergeant Tillman was the kind of leader who led from the front. I served alongside him in '67 and owe my life to his quick thinking. A true American hero."</p>
+      <p class="tribute-author">— David Kowalski, fellow veteran · Added March 2024</p>
+    </div>
+    <button class="add-tribute-btn" onclick="sendPrompt('Help me write a tribute message for a veteran memorial page')">+ Add a tribute or memory ↗</button>
+  </div>
+
+  <div class="section-card">
+    <p class="section-title">Photos &amp; documents</p>
+    <div class="photo-grid">
+      <div class="photo-placeholder">Portrait</div>
+      <div class="photo-placeholder">Service photo</div>
+      <div class="photo-placeholder">+ Add photo</div>
+    </div>
+  </div>
+
+</div>
