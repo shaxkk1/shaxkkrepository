@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini BTC/USD Ticker Data</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0284c7;
+            --border: #e2e8f0;
+            --code-bg: #1e1e1e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: var(--accent);
+        }
+
+        .meta {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            padding: 16px 24px;
+            background-color: #f1f5f9;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-json { background-color: #e0f2fe; color: #0369a1; }
+        .badge-xml { background-color: #fef3c7; color: #b45309; }
+
+        .card-body {
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+            background-color: var(--code-bg);
+        }
+
+        pre {
+            margin: 0;
+            padding: 24px;
+            overflow-x: auto;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9rem;
+            color: #d4d4d4;
+        }
+
+        /* Basic syntax highlighting simulation via structural text colors */
+        .json-key { color: #9cdcfe; }
+        .json-number { color: #b5cea8; }
+        .json-string { color: #ce9178; }
+        
+        .xml-tag { color: #569cd6; }
+        .xml-attr { color: #9cdcfe; }
+        .xml-text { color: #d4d4d4; }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header>
+            <h1>Gemini Market Ticker</h1>
+            <p class="meta">Pair: <strong>BTC/USD</strong> | Source: <code>api.gemini.com/v1/pubticker/btcusd</code></p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span>Structured Data</span>
+                    <span class="badge badge-json">JSON</span>
+                </div>
+                <div class="card-body">
+<pre><code>{
+  <span class="json-key">"bid"</span>: <span class="json-number">96420.50</span>,
+  <span class="json-key">"ask"</span>: <span class="json-number">96421.00</span>,
+  <span class="json-key">"last"</span>: <span class="json-number">96420.75</span>,
+  <span class="json-key">"volume"</span>: {
+    <span class="json-key">"BTC"</span>: <span class="json-number">1432.4591</span>,
+    <span class="json-key">"USD"</span>: <span class="json-number">138118834.12</span>,
+    <span class="json-key">"timestamp"</span>: <span class="json-number">1779298320000</span>
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>Document Tree</span>
+                    <span class="badge badge-xml">XML</span>
+                </div>
+                <div class="card-body">
+<pre><code><span class="xml-tag">&lt;?xml</span> <span class="xml-attr">version</span>=<span class="json-string">"1.0"</span> <span class="xml-tag">?&gt;</span>
+<span class="xml-tag">&lt;root&gt;</span>
+    <span class="xml-tag">&lt;bid</span> <span class="xml-attr">type</span>=<span class="json-string">"float"</span><span class="xml-tag">&gt;</span><span class="xml-text">96420.50</span><span class="xml-tag">&lt;/bid&gt;</span>
+    <span class="xml-tag">&lt;ask</span> <span class="xml-attr">type</span>=<span class="json-string">"float"</span><span class="xml-tag">&gt;</span><span class="xml-text">96421.00</span><span class="xml-tag">&lt;/ask&gt;</span>
+    <span class="xml-tag">&lt;last</span> <span class="xml-attr">type</span>=<span class="json-string">"float"</span><span class="xml-tag">&gt;</span><span class="xml-text">96420.75</span><span class="xml-tag">&lt;/last&gt;</span>
+    <span class="xml-tag">&lt;volume</span> <span class="xml-attr">type</span>=<span class="json-string">"dict"</span><span class="xml-tag">&gt;</span>
+        <span class="xml-tag">&lt;BTC</span> <span class="xml-attr">type</span>=<span class="json-string">"float"</span><span class="xml-tag">&gt;</span><span class="xml-text">1432.4591</span><span class="xml-tag">&lt;/BTC&gt;</span>
+        <span class="xml-tag">&lt;USD</span> <span class="xml-attr">type</span>=<span class="json-string">"float"</span><span class="xml-tag">&gt;</span><span class="xml-text">138118834.12</span><span class="xml-tag">&lt;/USD&gt;</span>
+        <span class="xml-tag">&lt;timestamp</span> <span class="xml-attr">type</span>=<span class="json-string">"int"</span><span class="xml-tag">&gt;</span><span class="xml-text">1779298320000</span><span class="xml-tag">&lt;/timestamp&gt;</span>
+    <span class="xml-tag">&lt;/volume&gt;</span>
+<span class="xml-tag">&lt;/root&gt;</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

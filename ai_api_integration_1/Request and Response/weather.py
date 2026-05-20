@@ -1,11 +1,11 @@
 import requests
 
-# API Key from OpenWeatherMap
-api_key = "203e9e4bfebf9102b8dc87c90491d13c"  # Replace this with your API key
-city = "Stamford"  # You can change this to any city
+# API Key from OpenWeatherApp
+api_key = "203e9e4bfebf9102b8dc87c90491d13c" # Replace this with your API key
+city = "New York" # You can change this into any city
 
-# API endpoint
-url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+# API endpoint 
+url = f"http://api.opeweatherapp.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
 
 # Make a request to the Weather API
 response = requests.get(url)
@@ -22,15 +22,15 @@ else:
 
 # Create a basic HTML file to display the weather information
 html_content = f"""
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-dith, initial-scale=1.0">
     <title>Weather Information</title>
     <style>
         body {{
-            font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif
             margin: 40px;
         }}
         h1 {{
@@ -44,7 +44,7 @@ html_content = f"""
 <body>
     <h1>Weather in {city}</h1>
     <p>Weather: {weather_description}</p>
-    <p>Temperature: {temperature}°C</p>
+    <p>Temperatuere: {temperature}</p>
 </body>
 </html>
 """

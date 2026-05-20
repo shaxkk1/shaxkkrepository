@@ -1,240 +1,49 @@
+Here is your Python script with detailed comments added to explain what each section, Python function, and embedded JavaScript block is doing.
+
+```python
 import requests
 
 # ── Fetch posts from the API ───────────────────────────────────────────────────
 
-url = "https://jsonplaceholder.typicode.com/posts"
+# Target URL for the placeholder JSON API that provides mock post data
+url = 'https://jsonplaceholder.typicode.com/posts'
 
-try:
-    response = requests.get(url, timeout=10)
-    response.raise_for_status()
-    posts = response.json()
-    print(f"✓ Fetched {len(posts)} posts from API")
-except requests.exceptions.ConnectionError:
-    print("⚠️  Could not connect to API. The HTML will still work in the browser.")
-    posts = []
-except requests.exceptions.Timeout:
-    print("⚠️  Request timed out.")
-    posts = []
-except requests.exceptions.RequestException as e:
-    print(f"⚠️  Request failed: {e}")
-    posts = []
+# Send an HTTP GET request to the API to retrieve the posts
+response = requests.get(url)
 
 # ── Generate HTML ──────────────────────────────────────────────────────────────
 
+# Define a multi-line string containing the HTML, CSS, and JavaScript structure
 html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GET Request Example</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #f4f6fb;
-            color: #1a1a2e;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 760px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 24px;
-        }
-
-        button {
-            background: #1d4ed8;
-            color: #fff;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(29,78,216,0.3);
-            transition: background 0.2s, transform 0.1s;
-            margin-bottom: 24px;
-        }
-
-        button:hover  { background: #1e40af; }
-        button:active { transform: scale(0.97); }
-        button:disabled { background: #93c5fd; cursor: not-allowed; box-shadow: none; }
-
-        #status {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 12px;
-            min-height: 20px;
-        }
-
-        #status.error { color: #dc2626; }
-        #status.success { color: #16a34a; }
-
-        .post-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .post-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 18px 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-            animation: fadeIn 0.3s ease forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .post-id {
-            font-size: 11px;
-            font-weight: 700;
-            color: #3b82f6;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 6px;
-        }
-
-        .post-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a1a2e;
-            margin-bottom: 8px;
-            text-transform: capitalize;
-        }
-
-        .post-body {
-            font-size: 13px;
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        #rawToggle {
-            margin-top: 24px;
-            font-size: 13px;
-            color: #3b82f6;
-            background: none;
-            border: none;
-            padding: 0;
-            box-shadow: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        #rawToggle:hover { color: #1d4ed8; }
-
-        #rawOutput {
-            display: none;
-            margin-top: 14px;
-            background: #1e293b;
-            color: #e2e8f0;
-            border-radius: 10px;
-            padding: 20px;
-            font-size: 13px;
-            line-height: 1.6;
-            overflow-x: auto;
-            white-space: pre;
-        }
-    </style>
+    <title>GET Method Example</title>
 </head>
+
 <body>
-    <div class="container">
-        <h2>GET Request Example</h2>
-        <p class="subtitle">Fetches the first 5 posts from jsonplaceholder.typicode.com</p>
-
-        <button id="fetchBtn" onclick="fetchPosts()">Fetch Posts</button>
-
-        <div id="status"></div>
-        <div id="postList" class="post-list"></div>
-
-        <button id="rawToggle" onclick="toggleRaw()" style="display:none;">
-            Show raw JSON
-        </button>
-        <pre id="rawOutput"></pre>
+    <h2>GET Request Example</h2>
+    <button onclick="getData()">Fetch Posts</button>
+    
+    <div id="getResponse">
+        <pre id="getData"></pre>
     </div>
 
     <script>
-        let rawVisible = false;
-        let lastData = null;
-
-        async function fetchPosts() {
-            const btn    = document.getElementById("fetchBtn");
-            const status = document.getElementById("status");
-            const list   = document.getElementById("postList");
-
-            btn.disabled    = true;
-            btn.textContent = "Fetching...";
-            status.className = "";
-            status.textContent = "Sending GET request to API...";
-            list.innerHTML = "";
-
-            try {
-                const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error — status ${response.status}`);
-                }
-
-                const data  = await response.json();
-                const posts = data.slice(0, 5);
-                lastData = posts;
-
-                // Render cards
-                posts.forEach((post, index) => {
-                    const card = document.createElement("div");
-                    card.className = "post-card";
-                    card.style.animationDelay = `${index * 60}ms`;
-                    card.innerHTML = `
-                        <div class="post-id">Post #${post.id}</div>
-                        <div class="post-title">${post.title}</div>
-                        <div class="post-body">${post.body}</div>
-                    `;
-                    list.appendChild(card);
-                });
-
-                status.className   = "success";
-                status.textContent = `✓ ${posts.length} posts loaded successfully.`;
-
-                // Show raw JSON toggle
-                document.getElementById("rawToggle").style.display = "inline";
-                document.getElementById("rawOutput").textContent =
-                    JSON.stringify(posts, null, 2);
-
-            } catch (error) {
-                status.className   = "error";
-                status.textContent = `⚠️  Error: ${error.message}`;
-                console.error("Fetch error:", error);
-            } finally {
-                btn.disabled    = false;
-                btn.textContent = "Fetch Posts";
-            }
-        }
-
-        function toggleRaw() {
-            const raw    = document.getElementById("rawOutput");
-            const toggle = document.getElementById("rawToggle");
-            rawVisible = !rawVisible;
-            raw.style.display    = rawVisible ? "block" : "none";
-            toggle.textContent   = rawVisible ? "Hide raw JSON" : "Show raw JSON";
-        }
+    // JavaScript function to handle the frontend API request
+    function getData() {{
+        // Initiate an asynchronous fetch request to the API
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            // Convert the raw response into a usable JSON object
+            .then(response => response.json())
+            // Handle the parsed data
+            .then(data => {{
+                // Slice the array to get the first 5 posts, stringify it into pretty-printed JSON (2-space indent),
+                // and inject it directly into the text content of the <pre> element
+                document.getElementById('getData').textContent = JSON.stringify(data.slice(0, 5), null, 2); 
+            }});
+        }}
     </script>
 </body>
 </html>
@@ -242,9 +51,13 @@ html_content = """<!DOCTYPE html>
 
 # ── Save to file ───────────────────────────────────────────────────────────────
 
+# Define the filename for the output webpage
 output_file = "get_method.html"
 
+# Open the file in write mode ("w") with UTF-8 encoding to ensure correct character rendering
 with open(output_file, "w", encoding="utf-8") as f:
+    # Write the entire HTML string into the file
     f.write(html_content)
 
+# Print a success message to the console confirming the file was created
 print(f"✓ HTML file '{output_file}' created. Open it in your browser to view the posts.")

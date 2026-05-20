@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #2d3436;
+        }
+        .weather-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            color: #2d3436;
+            font-weight: 600;
+        }
+        .temp-display {
+            font-size: 64px;
+            font-weight: 700;
+            color: #0984e3;
+            margin: 20px 0;
+        }
+        .weather-desc {
+            font-size: 18px;
+            text-transform: capitalize;
+            color: #636e72;
+            letter-spacing: 0.5px;
+            background: #dfe6e9;
+            padding: 8px 16px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="weather-container">
+        <h1>Weather in New York</h1>
+        <div class="temp-display">18°C</div>
+        <div class="weather-desc">scattered clouds</div>
+    </div>
+
+</body>
+</html>
